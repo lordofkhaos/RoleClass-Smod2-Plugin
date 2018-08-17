@@ -8,19 +8,27 @@ using System.Collections.Generic;
 
 namespace Smod.TestPlugin
 {
-    class EventHandler : IEventHandlerPlayerJoin
+    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSpawn
     {
 		private Plugin plugin;
+        private Player player;
 
 		public EventHandler(Plugin plugin)
 		{
 			this.plugin = plugin;
 		}
 
+        public void OnRoundStart(RoundStartEvent ev)
+        {
+            string name = player.Name;
+            string rank = player.GetRankName();
+            string team = player.TeamRole.Name.ToLower();
+            plugin.Info(name + "is" + rank + "as" + team);
+        }
+
         public void OnPlayerJoin(PlayerJoinEvent ev)
         {
             var s64 = ev.Player.SteamId;
-            plugin.Info(s64);
             if (s64 == "76561198071607345")
             {
                 if (ev.Player.GetUserGroup().Name == string.Empty)
@@ -39,8 +47,8 @@ namespace Smod.TestPlugin
         public void OnPlayerSpawn(PlayerSpawnEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
-            plugin.Info(rank);
-            plugin.Info(team);
+            plugin.Info("Player rank: " + rank);
+            plugin.Info("Player team: " + team);
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_roleclass");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
