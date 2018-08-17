@@ -44,7 +44,7 @@ namespace Smod.TestPlugin
             }
         }
 
-        public void OnPlayerSpawn(PlayerSpawnEvent ev) {
+        public void OnSpawn(PlayerSpawnEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
             plugin.Info("Player rank: " + rank);
