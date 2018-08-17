@@ -8,11 +8,11 @@ using System.Collections.Generic;
 
 namespace Smod.TestPlugin
 {
-    class RoundEventHandler : IEventHandlerPlayerJoin
+    class EventHandler : IEventHandlerPlayerJoin
     {
 		private Plugin plugin;
 
-		public RoundEventHandler(Plugin plugin)
+		public EventHandler(Plugin plugin)
 		{
 			this.plugin = plugin;
 		}
@@ -24,21 +24,28 @@ namespace Smod.TestPlugin
 
         public void OnPlayerSpawn(PlayerSpawnEvent ev) {
             string rank = ev.Player.GetRankName();
+            string team = ev.Player.TeamRole.Name.ToLower();
+            plugin.Info(rank);
+            plugin.Info(team);
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_roleclass");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
             {
                 var j = Convert.ToInt32(x.Value);
                 dict.Add(x.Key, j);
+                plugin.Info(x.Key);
+                plugin.Info(x.Value);
             }
             foreach (KeyValuePair<string, int> m in dict) 
             {
-                if (rank != null) 
+                if (rank != null && team != "spectator") 
                 {
                     if (m.Key == rank)
                     {
                         var itemType = (ItemType)m.Value;
                         ev.Player.GiveItem(itemType);
+                        plugin.Info("Player" + ev.Player.Name + "given items" + itemType);
+                        plugin.Info(m.Key);
                     }
                 }
             }
