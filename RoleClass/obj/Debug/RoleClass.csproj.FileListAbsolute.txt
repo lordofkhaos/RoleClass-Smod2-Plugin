@@ -7,7 +7,11 @@
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/RoleClass.dll
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/RoleClass.pdb
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Smod2.dll
-/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csprojResolveAssemblyReference.cache
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csproj.CoreCompileInputs.cache
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.dll
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.pdb
+/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csprojResolveAssemblyReference.cache
+/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Newtonsoft.Json.dll
+/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Newtonsoft.Json.xml
+/Users/Liam/Desktop/coding/ExamplePlugin/Output/RoleClass.dll
+/Users/Liam/Desktop/coding/ExamplePlugin/Output/RoleClass.pdb

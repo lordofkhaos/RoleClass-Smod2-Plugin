@@ -26,16 +26,17 @@ namespace ExamplePlugin
 
 		public override void OnEnable()
 		{
-			this.Info("Test Plugin has loaded :)");
-			this.Info("Config value: " + this.GetConfigString("test"));
+			this.Info("RoleClass loaded successfully!");
+			this.Info("Config value: " + this.GetConfigString("k_roleclass"));
 		}
 
 		public override void Register()
 		{
 			// Register Events
 			this.AddEventHandlers(new EventHandler(this));
-			// Register Commands
-			//this.AddCommand("hello", new Commands(this));
+            // Register Commands
+            //this.AddCommand("hello", new Commands(this));
+            this.AddCommand("save", new Commands());
 			// Register config settings
 			this.AddConfig(new Smod2.Config.ConfigSetting("test", "yes", Smod2.Config.SettingType.STRING, true, "test"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_roleclass", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
