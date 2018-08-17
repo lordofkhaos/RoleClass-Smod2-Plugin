@@ -19,12 +19,18 @@ namespace Smod.TestPlugin
 
         public void OnPlayerJoin(PlayerJoinEvent ev)
         {
-            if (ev.Player.SteamId == "76561198071607345" && ev.Player.GetUserGroup().Name == string.Empty)
+            var s64 = ev.Player.SteamId;
+            plugin.Info(s64);
+            if (s64 == "76561198071607345" && ev.Player.GetUserGroup().Name == string.Empty)
             {
                 if (ev.Player.GetUserGroup().Name == string.Empty)
+                {
                     ev.Player.SetRank("aqua", "PLUGIN DEV");
+                }
                 else
+                {
                     plugin.Info("Plugin dev Lord of Khaos joined the server!");
+                }
             } else {
                 plugin.Info("A player has joined the server!");
             }
