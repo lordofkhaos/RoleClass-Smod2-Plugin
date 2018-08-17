@@ -21,7 +21,7 @@ namespace Smod.TestPlugin
         {
             var s64 = ev.Player.SteamId;
             plugin.Info(s64);
-            if (s64 == "76561198071607345" && ev.Player.GetUserGroup().Name == string.Empty)
+            if (s64 == "76561198071607345")
             {
                 if (ev.Player.GetUserGroup().Name == string.Empty)
                 {
