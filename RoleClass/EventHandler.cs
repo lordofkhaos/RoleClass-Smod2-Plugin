@@ -8,10 +8,10 @@ using System.Collections.Generic;
 
 namespace Smod.TestPlugin
 {
-    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSpawn
+    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart
     {
 		private Plugin plugin;
-        private Player player;
+        //private Player player;
 
 		public EventHandler(Plugin plugin)
 		{
@@ -20,10 +20,10 @@ namespace Smod.TestPlugin
 
         public void OnRoundStart(RoundStartEvent ev)
         {
-            string name = player.Name;
-            string rank = player.GetRankName();
-            string team = player.TeamRole.Name.ToLower();
-            plugin.Info(name + "is" + rank + "as" + team);
+            //string name = player.Name;
+            //string rank = player.GetRankName();
+            //string team = player.TeamRole.Name.ToLower();
+            //plugin.Info(name + "is" + rank + "as" + team);
         }
 
         public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -44,7 +44,7 @@ namespace Smod.TestPlugin
             }
         }
 
-        public void OnSpawn(PlayerSpawnEvent ev) {
+        public void SetRole(PlayerSpawnEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
             plugin.Info("Player rank: " + rank);
