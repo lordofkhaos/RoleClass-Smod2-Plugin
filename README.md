@@ -8,4 +8,4 @@ Navigate to your `config_gameplay.txt` file, and put the following in (anywhere)
 
 | Config Option  | Type | Default | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| k_roleclass  | Dictionary  | **EMPTY** | Use this config option to set the name of your role whatever items you want. NOTE: Affects globally (doesn't matter the class).
+| k_global_give  | Dictionary  | **EMPTY** | Use this config option to set the name of your role whatever items you want. Format: `role:item#`. A list of items is available on the Smod discord. NOTE: Affects globally (doesn't matter the class).
