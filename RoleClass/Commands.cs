@@ -35,13 +35,13 @@ namespace ExamplePlugin
         public string[] OnCall(ICommandSender sender, string[] args)
         {
             //string path = @"..\k.json";
-            if (args.Length > -1)
+            if (args.Length > 0)
             {
                 Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path = @"..\config.xml";
                 List<string> item = new List<string>();
-                if (args.Length > 0)
+                if (args.Length > 1)
                 {
                     string cl = args[1];
                     Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
