@@ -34,6 +34,7 @@ namespace ExamplePlugin
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
+            plugin.Info(args.Length.ToString());
             //string path = @"..\k.json";
             if (args.Length > 0)
             {
@@ -46,21 +47,28 @@ namespace ExamplePlugin
                     string cl = args[1];
                     Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
                     classitems.Add(cl, item);
-                    int i = 2;
-                    do
+                    if (args.Length > 2)
                     {
-                        item.Add(args[i]);
-                        i++;
-                    } while (i <= args.Length);
-                    _data.Add(x, classitems);
-                    using (StreamWriter file = File.CreateText(path))
-                    {
-                        XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
-                        ser.Serialize(file, _data);
-                        //JsonSerializer serializer = new JsonSerializer();
-                        //serializer.Serialize(file, _data);
+                        int i = 2;
+                        do
+                        {
+                            item.Add(args[i]);
+                            i++;
+                        } while (i <= args.Length);
+                        _data.Add(x, classitems);
+                        using (StreamWriter file = File.CreateText(path))
+                        {
+                            XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
+                            ser.Serialize(file, _data);
+                            //JsonSerializer serializer = new JsonSerializer();
+                            //serializer.Serialize(file, _data);
+                        }
+                        return new string[] { "Saved configuration" };
                     }
-                    return new string[] { "Saved configuration" };
+                    else
+                    {
+                        return new string[] { GetUsage() };
+                    }
                 }
                 else
                 {
