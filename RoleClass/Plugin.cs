@@ -5,7 +5,9 @@ using Smod2.EventHandlers;
 using Smod2.Events;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
+using System.Xml;
+using System.Text;
 
 namespace ExamplePlugin
 {
@@ -44,7 +46,8 @@ namespace ExamplePlugin
             string path = @"..\config.xml";
             if (!File.Exists(path))
             {
-                File.Create(@"..\config.xml");
+                //XmlWriter xmlWriter = XmlWriter.Create(@"..\config.xml");
+                //File.Create(@"..\config.xml");
             }
             else
             {

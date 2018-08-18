@@ -37,32 +37,47 @@ namespace ExamplePlugin
             //plugin.Info("Here");
             //return new string[] { args.Length.ToString() };
             //string path = @"..\k.json";
-            if (args.Length > 0)
+            if (args != null && args.Length > 0)
             {
-                Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
+                //Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path = @"..\config.xml";
-                List<string> item = new List<string>();
+                int len = args.Length - 2;
+                string[] items = new string[len];
                 if (args.Length > 1)
                 {
                     string cl = args[1];
-                    Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
-                    classitems.Add(cl, item);
-                    if (args.Length > 2) 
+                    //Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
+                    //classitems.Add(cl, items);
+                    if (args != null && args.Length > 2) 
                     {
-                        for (int i = 2; i <= args.Length + 1; i++)
+                        for (int i = 2; i < args.Length; i++)
                         {
-                            item.Add(args[i]);
+                            items[i - 2] = args[i];
                         }
 
-                        _data.Add(x, classitems);
-                        using (StreamWriter file = File.CreateText(path))
-                        {
-                            XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
-                            ser.Serialize(file, _data);
-                            //JsonSerializer serializer = new JsonSerializer();
-                            //serializer.Serialize(file, _data);
-                        }
+                        //_data.Add(x, classitems);
+
+                        XmlWriter xmlWriter = XmlWriter.Create(path);
+
+                        xmlWriter.WriteStartDocument();
+                        xmlWriter.WriteStartElement("ranks");
+
+                        xmlWriter.WriteStartElement(x);
+                        xmlWriter.WriteStartElement(args[1]);
+                        xmlWriter.WriteString(items[items.Length]);
+                        xmlWriter.WriteEndElement();
+
+                        xmlWriter.WriteEndDocument();
+                        xmlWriter.Close();
+                                 
+                        //using (StreamWriter file = File.CreateText(path))
+                        //{
+                        //    XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
+                        //    ser.Serialize(file, _data);
+                        //    //JsonSerializer serializer = new JsonSerializer();
+                        //    //serializer.Serialize(file, _data);
+                        //}
                         return new string[] { "Saved configuration" };
                     }
                     else
