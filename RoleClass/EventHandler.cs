@@ -47,16 +47,24 @@ namespace Smod.TestPlugin
         public void OnSetRole(PlayerSetRoleEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
-            plugin.Info("Player rank: " + rank);
-            plugin.Info("Player team: " + team);
+            //plugin.Info("Player rank: " + rank);
+            //plugin.Info("Player team: " + team);
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
             {
-                var j = Convert.ToInt32(x.Value);
-                dict.Add(x.Key, j);
-                plugin.Info(x.Key);
-                plugin.Info(x.Value);
+                if (int.TryParse(x.Value, out int myValue))
+                {
+                    dict.Add(x.Key, myValue);
+                }
+                else 
+                {
+                    plugin.Info(myValue + " is not a number!");
+                }
+                //var j = Convert.ToInt32(x.Value);
+                //dict.Add(x.Key, j);
+                //plugin.Info(x.Key);
+                //plugin.Info(x.Value);
             }
             foreach (KeyValuePair<string, int> m in dict) 
             {
@@ -66,7 +74,7 @@ namespace Smod.TestPlugin
                     {
                         var itemType = (ItemType)m.Value;
                         ev.Player.GiveItem(itemType);
-                        plugin.Info("Player " + ev.Player.Name + "given item " + itemType);
+                        plugin.Info("Player " + ev.Player.Name + " given item " + itemType);
                         plugin.Info(m.Key);
                     }
                 }

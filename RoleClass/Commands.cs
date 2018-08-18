@@ -35,17 +35,20 @@ namespace ExamplePlugin
             //string path = @"..\k.json";
             if (args.Length > 0)
             {
-                Dictionary<string, List<string>> _data = new Dictionary<string, List<string>>();
+                Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path = @"..\k.json";
                 List<string> item = new List<string>();
-                int i = 0;
+                string cl = args[1];
+                Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
+                classitems.Add(cl, item);
+                int i = 2;
                 do
                 {
                     item.Add(args[i]);
                     i++;
                 } while (i <= args.Length);
-                _data.Add(x, item);
+                _data.Add(x, classitems);
                 using (StreamWriter file = File.CreateText(path))
                 {
                     JsonSerializer serializer = new JsonSerializer();
