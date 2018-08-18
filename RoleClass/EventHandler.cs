@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Smod.TestPlugin
 {
-    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart
+    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSetRole
     {
 		private Plugin plugin;
         //private Player player;
@@ -44,7 +44,7 @@ namespace Smod.TestPlugin
             }
         }
 
-        public void SetRole(PlayerSpawnEvent ev) {
+        public void OnSetRole(PlayerSetRoleEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
             plugin.Info("Player rank: " + rank);
