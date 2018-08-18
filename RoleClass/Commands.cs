@@ -24,7 +24,7 @@ namespace ExamplePlugin
 
         public string GetUsage()
         {
-            return "SAVE";
+            return "SAVE" + " RANK " + "CLASS " + "ITEMS LIST";
         }
 
         //public string[] OnCall(ICommandSender sender, string[] args)
@@ -35,30 +35,37 @@ namespace ExamplePlugin
         public string[] OnCall(ICommandSender sender, string[] args)
         {
             //string path = @"..\k.json";
-            if (args.Length > 0)
+            if (args.Length > -1)
             {
                 Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path = @"..\config.xml";
                 List<string> item = new List<string>();
-                string cl = args[1];
-                Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
-                classitems.Add(cl, item);
-                int i = 2;
-                do
+                if (args.Length > 0)
                 {
-                    item.Add(args[i]);
-                    i++;
-                } while (i <= args.Length);
-                _data.Add(x, classitems);
-                using (StreamWriter file = File.CreateText(path))
-                {
-                    XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
-                    ser.Serialize(file, _data);
-                    //JsonSerializer serializer = new JsonSerializer();
-                    //serializer.Serialize(file, _data);
+                    string cl = args[1];
+                    Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
+                    classitems.Add(cl, item);
+                    int i = 2;
+                    do
+                    {
+                        item.Add(args[i]);
+                        i++;
+                    } while (i <= args.Length);
+                    _data.Add(x, classitems);
+                    using (StreamWriter file = File.CreateText(path))
+                    {
+                        XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
+                        ser.Serialize(file, _data);
+                        //JsonSerializer serializer = new JsonSerializer();
+                        //serializer.Serialize(file, _data);
+                    }
+                    return new string[] { "Saved configuration" };
                 }
-                return new string[] { "Saved configuration" };
+                else
+                {
+                    return new string[] { GetUsage() };
+                }
             }
             else
             {
