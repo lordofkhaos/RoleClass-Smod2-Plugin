@@ -41,10 +41,10 @@ namespace ExamplePlugin
 			// Register config settings
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // Register json file
-            string path = @"..\k.json";
+            string path = @"..\config.xml";
             if (!File.Exists(path))
             {
-                File.Create(@"..\k.json");
+                File.Create(@"..\config.xml");
             }
             else
             {

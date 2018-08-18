@@ -1,8 +1,10 @@
 ﻿using Smod2.Commands;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace ExamplePlugin
 {
@@ -37,7 +39,7 @@ namespace ExamplePlugin
             {
                 Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
-                string path = @"..\k.json";
+                string path = @"..\config.xml";
                 List<string> item = new List<string>();
                 string cl = args[1];
                 Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
@@ -51,8 +53,10 @@ namespace ExamplePlugin
                 _data.Add(x, classitems);
                 using (StreamWriter file = File.CreateText(path))
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(file, _data);
+                    XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
+                    ser.Serialize(file, _data);
+                    //JsonSerializer serializer = new JsonSerializer();
+                    //serializer.Serialize(file, _data);
                 }
                 return new string[] { "Saved configuration" };
             }
@@ -65,6 +69,6 @@ namespace ExamplePlugin
 
     }
 }
-//save something 15,2,26,1
-//save owner 1,2,3
-//save laneklfhak 
+//save something something 15,2,26,1
+//save owner something 1,2,3
+//save laneklfhak sakfneoiqoia 928,129u48,127487
