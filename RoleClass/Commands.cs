@@ -34,6 +34,7 @@ namespace ExamplePlugin
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
+            plugin.Info("Here");
             plugin.Info(args.Length.ToString());
             //string path = @"..\k.json";
             if (args.Length > 0)
