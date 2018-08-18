@@ -4,6 +4,8 @@ using Smod2.Attributes;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ExamplePlugin
 {
@@ -27,7 +29,6 @@ namespace ExamplePlugin
 		public override void OnEnable()
 		{
 			this.Info("RoleClass loaded successfully!");
-			this.Info("Config value: " + this.GetConfigString("k_roleclass"));
 		}
 
 		public override void Register()
@@ -38,8 +39,17 @@ namespace ExamplePlugin
             //this.AddCommand("hello", new Commands(this));
             this.AddCommand("save", new Commands());
 			// Register config settings
-			this.AddConfig(new Smod2.Config.ConfigSetting("test", "yes", Smod2.Config.SettingType.STRING, true, "test"));
-            this.AddConfig(new Smod2.Config.ConfigSetting("k_roleclass", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
+            // Register json file
+            string path = @"..\k.json";
+            if (!File.Exists(path))
+            {
+                File.Create(@"..\k.json");
+            }
+            else
+            {
+                
+            }
 		}
 	}
 }

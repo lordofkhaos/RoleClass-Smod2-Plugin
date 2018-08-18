@@ -49,7 +49,7 @@ namespace Smod.TestPlugin
             string team = ev.Player.TeamRole.Name.ToLower();
             plugin.Info("Player rank: " + rank);
             plugin.Info("Player team: " + team);
-            Dictionary<string, string> dictionary = plugin.GetConfigDict("k_roleclass");
+            Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
             {
@@ -60,16 +60,18 @@ namespace Smod.TestPlugin
             }
             foreach (KeyValuePair<string, int> m in dict) 
             {
-                if (rank != null && team != "spectator") 
+                if (rank != null && team != "spectator" && team != "ghost") 
                 {
                     if (m.Key == rank)
                     {
                         var itemType = (ItemType)m.Value;
                         ev.Player.GiveItem(itemType);
-                        plugin.Info("Player" + ev.Player.Name + "given items" + itemType);
+                        plugin.Info("Player " + ev.Player.Name + "given item " + itemType);
                         plugin.Info(m.Key);
                     }
                 }
+
+
             }
         }
     }
