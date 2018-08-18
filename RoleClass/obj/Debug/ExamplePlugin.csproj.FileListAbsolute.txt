@@ -1,7 +1,0 @@
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/obj/Debug/ExamplePlugin.csprojResolveAssemblyReference.cache
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/obj/Debug/ExamplePlugin.csproj.CoreCompileInputs.cache
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/ExamplePlugin.dll
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/ExamplePlugin.pdb
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Smod2.dll
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/obj/Debug/ExamplePlugin.dll
-/Users/Liam/Desktop/coding/ExamplePlugin/ExamplePlugin/obj/Debug/ExamplePlugin.pdb
