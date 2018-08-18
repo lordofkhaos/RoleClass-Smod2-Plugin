@@ -18,4 +18,4 @@ Navigate to your `config_gameplay.txt` file, and put the following in (anywhere)
 ### Commands
 | Command Name  | Arg | Arg | Arg | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| save | rank  | rank | itemlist | Use this command to save a configuration to a role. |
+| save | rank  | class | itemlist | Use this command to save a configuration to a role. |
