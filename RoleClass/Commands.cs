@@ -34,8 +34,8 @@ namespace ExamplePlugin
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
-            plugin.Info("Here");
-            plugin.Info(args.Length.ToString());
+            //plugin.Info("Here");
+            //return new string[] { args.Length.ToString() };
             //string path = @"..\k.json";
             if (args.Length > 0)
             {
@@ -48,14 +48,13 @@ namespace ExamplePlugin
                     string cl = args[1];
                     Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
                     classitems.Add(cl, item);
-                    if (args.Length > 2)
+                    if (args.Length > 2) 
                     {
-                        int i = 2;
-                        do
+                        for (int i = 2; i <= args.Length + 1; i++)
                         {
                             item.Add(args[i]);
-                            i++;
-                        } while (i <= args.Length);
+                        }
+
                         _data.Add(x, classitems);
                         using (StreamWriter file = File.CreateText(path))
                         {
