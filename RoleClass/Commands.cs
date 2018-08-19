@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Threading;
 
 namespace ExamplePlugin
 {
@@ -39,11 +40,10 @@ namespace ExamplePlugin
             //string path = @"..\k.json";
             if (args != null && args.Length > 0)
             {
+                //Server.Write("stuff", ConsoleColor.Magenta);
                 //Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path = @"..\config.xml";
-                int len = args.Length - 2;
-                string[] items = new string[len];
                 if (args.Length > 1)
                 {
                     string cl = args[1];
@@ -51,12 +51,8 @@ namespace ExamplePlugin
                     //classitems.Add(cl, items);
                     if (args != null && args.Length > 2) 
                     {
-                        for (int i = 2; i < args.Length; i++)
-                        {
-                            items[i - 2] = args[i];
-                        }
-
-                        //_data.Add(x, classitems);
+                        //int len = args.Length - 2;
+                        //string[] items = new string[len];
 
                         XmlWriter xmlWriter = XmlWriter.Create(path);
 
@@ -65,12 +61,20 @@ namespace ExamplePlugin
 
                         xmlWriter.WriteStartElement(x);
                         xmlWriter.WriteStartElement(args[1]);
-                        xmlWriter.WriteString(items[items.Length]);
+
+                        for (int i = 2; i < args.Length; i++)
+                        {
+                            //items[i - 2] = args[i];
+                            xmlWriter.WriteString(args[i]);
+                        }
+
                         xmlWriter.WriteEndElement();
 
                         xmlWriter.WriteEndDocument();
                         xmlWriter.Close();
-                                 
+
+                        //_data.Add(x, classitems);
+
                         //using (StreamWriter file = File.CreateText(path))
                         //{
                         //    XmlSerializer ser = new XmlSerializer(typeof(Dictionary<string, Dictionary<string, List<string>>>));
