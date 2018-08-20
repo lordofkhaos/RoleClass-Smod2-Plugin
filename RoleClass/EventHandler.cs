@@ -5,6 +5,8 @@ using Smod2.Events;
 using Smod2.EventSystem.Events;
 using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Smod.TestPlugin
 {
@@ -20,10 +22,7 @@ namespace Smod.TestPlugin
 
         public void OnRoundStart(RoundStartEvent ev)
         {
-            //string name = player.Name;
-            //string rank = player.GetRankName();
-            //string team = player.TeamRole.Name.ToLower();
-            //plugin.Info(name + "is" + rank + "as" + team);
+            string[] players = new string[ev.Server.GetPlayers().Count];
         }
 
         public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -40,15 +39,16 @@ namespace Smod.TestPlugin
                     plugin.Info("Plugin dev Lord of Khaos joined the server!");
                 }
             } else {
-                plugin.Info("A player has joined the server!");
+                plugin.Debug("A player has joined the server!");
             }
         }
 
         public void OnSetRole(PlayerSetRoleEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();
-            //plugin.Info("Player rank: " + rank);
-            //plugin.Info("Player team: " + team);
+            string path = @"rc-config.xml";
+            plugin.Debug("Player rank: " + rank);
+            plugin.Debug("Player team: " + team);
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
@@ -59,12 +59,8 @@ namespace Smod.TestPlugin
                 }
                 else 
                 {
-                    plugin.Info(myValue + " is not a number!");
+                    plugin.Error(myValue + " is not a number!");
                 }
-                //var j = Convert.ToInt32(x.Value);
-                //dict.Add(x.Key, j);
-                //plugin.Info(x.Key);
-                //plugin.Info(x.Value);
             }
             foreach (KeyValuePair<string, int> m in dict) 
             {
@@ -74,13 +70,31 @@ namespace Smod.TestPlugin
                     {
                         var itemType = (ItemType)m.Value;
                         ev.Player.GiveItem(itemType);
-                        plugin.Info("Player " + ev.Player.Name + " given item " + itemType);
-                        plugin.Info(m.Key);
+                        plugin.Debug("Player " + ev.Player.Name + " given item " + itemType);
+                        plugin.Debug(m.Key);
                     }
                 }
-
-
             }
+
+            List<string> itemlist = new List<string>();
+            List<string> ranknames = new List<string>();
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(path);
+            XmlNodeList rankNodes = xmlDoc.SelectNodes("//ranks");
+            foreach(XmlNode rankNode in rankNodes) {
+                var ranks = rankNode.ChildNodes;
+                foreach (XmlNode rnk in ranks)
+                {
+                    ranknames.Add(rnk.ToString());
+                    var items = rankNode.ChildNodes;
+                    foreach (XmlNode item in items)
+                    {
+                        itemlist.Add(item.InnerText);
+                    }
+                }
+            }
+
+
         }
     }
 }
