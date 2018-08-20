@@ -43,6 +43,15 @@ namespace Smod.TestPlugin
             }
         }
 
+        public class Details
+        {
+            public string RankName { get; set; }
+            public string Class { get; set; }
+            public List<string> Items { get; set; }
+            public string ItemNo { get; set; }
+            public string Item { get; set; }
+        }
+
         public void OnSetRole(PlayerSetRoleEvent ev) {
             string rank = ev.Player.GetRankName();
             string team = ev.Player.TeamRole.Name.ToLower();

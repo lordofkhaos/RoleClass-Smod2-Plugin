@@ -34,6 +34,21 @@ namespace ExamplePlugin
         //    return new string[] { "Currently all this command does is send this string!" };
         //}
 
+        [XmlRoot("ranks")]
+        public class Details
+        {
+            [XmlElement()]
+            public string RankName { get; set; }
+            [XmlAttribute("class")]
+            public string Class { get; set; }
+            [XmlArray("items")]
+            public string[] Items { get; set; }
+            [XmlArrayItem()]
+            public string ItemNo { get; set; }
+            [XmlText()]
+            public string Item { get; set; }
+        }
+
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
@@ -48,18 +63,17 @@ namespace ExamplePlugin
             //string path = @"..\k.json";
             if (args != null && args.Length > 0)
             {
-                //Dictionary<string, Dictionary<string, List<string>>> _data = new Dictionary<string, Dictionary<string, List<string>>>();
                 string x = args[0].ToLower();
                 string path1 = @"rc-config-1.xml";
                 if (args.Length > 1)
                 {
                     string cl = args[1].ToLower();
-                    //Dictionary<string, List<string>> classitems = new Dictionary<string, List<string>>();
-                    //classitems.Add(cl, items);
                     if (args != null && args.Length > 2) 
                     {
                         int len = args.Length - 2;
                         //string[] itemlist = new string[len];
+                        List<string> itemlist = new List<string>();
+                        List<int> itemno = new List<int>();
 
                         XmlDocument xmlDoc = new XmlDocument();
                         XmlNode rootNode = xmlDoc.CreateElement("ranks");
@@ -75,6 +89,8 @@ namespace ExamplePlugin
                         for (int i = 2; i < args.Length; i++)
                         {
                             int itemint = i - 2;
+                            itemno.Add(itemint);
+                            itemlist.Add(args[i]);
                             string itemname = "item" + itemint;
                             XmlNode item = xmlDoc.CreateElement(itemname);
                             item.InnerText = args[i];
@@ -84,24 +100,22 @@ namespace ExamplePlugin
                         rootNode.AppendChild(rank);
 
                         xmlDoc.Save(path1);
-                        //XmlWriter xmlWriter = XmlWriter.Create(path);
 
-                        //xmlWriter.WriteStartDocument();
-                        //xmlWriter.WriteStartElement("ranks");
+                        Details details = new Details();
+                        details.RankName = x;
+                        details.Class = cl;
 
-                        //xmlWriter.WriteStartElement(x);
-                        //xmlWriter.WriteStartElement(args[1]);
+                        string[] itemarray = itemlist.ToArray();
+                        details.Items = itemarray;
 
-                        //for (int i = 2; i < args.Length; i++)
-                        //{
-                        //    //itemlist[i - 2] = args[i];
-                        //    //xmlWriter.WriteString(args[i]);
-                        //}
+                        List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
+                        string[] itemnums = itemnumbers.ToArray();
 
-                        //xmlWriter.WriteEndElement();
-
-                        //xmlWriter.WriteEndDocument();
-                        //xmlWriter.Close();
+                        for (int i = 0; i < itemarray.Length; i++)
+                        {
+                            details.ItemNo = itemnums[i];
+                            details.Item = itemarray[i];
+                        }
 
                         return new string[] { "Saved configuration for " + x + ":" + cl };
                     }
@@ -121,9 +135,13 @@ namespace ExamplePlugin
             }
         }
 
-        static public void Serialize()
+        static public void Serialize(Details details)
         {
-            
+            XmlSerializer serializer = new XmlSerializer(typeof(Details));
+            using (TextWriter writer = new StreamWriter(@"rc-config-2.xml"))
+            {
+                serializer.Serialize(writer, details);
+            }
         }
     }
 }
