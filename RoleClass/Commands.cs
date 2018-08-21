@@ -69,7 +69,7 @@ namespace ExamplePlugin
             if (args != null && args.Length > 0)
             {
                 string x = args[0].ToLower();
-                //string path1 = @"rc-config-1.xml";
+                string path = @"rc-config.xml";
                 if (args.Length > 1)
                 {
                     string cl = args[1].ToLower();
@@ -93,7 +93,7 @@ namespace ExamplePlugin
                         //xmlDoc.AppendChild(items);
                         //rootNode.AppendChild(rank);
 
-                        //xmlDoc.Save(path1);
+                        //xmlDoc.Save(path);
 
                         Details details = new Details();
                         details.RankName = x;
@@ -111,12 +111,24 @@ namespace ExamplePlugin
                             details.Item = itemarray[i];
                         }
 
-
-                        XmlSerializer serializer = new XmlSerializer(typeof(Details));
-                        using(TextWriter writer = new StreamWriter(@"rc-config.xml"))
+                        if (File.Exists(path))
                         {
-                            serializer.Serialize(writer, details);
-                         }
+                            XmlSerializer serializer = new XmlSerializer(typeof(Details));
+                            using (TextWriter writer = new StreamWriter(path))
+                            {
+                                serializer.Serialize(writer, details);
+                            }
+                        }
+                        else
+                        {
+                            File.Create(path);
+                            XmlSerializer serializer = new XmlSerializer(typeof(Details));
+                            using (TextWriter writer = new StreamWriter(@"rc-config.xml"))
+                            {
+                                serializer.Serialize(writer, details);
+                            }
+                        }
+
 
                         return new string[] { "Saved configuration for " + x + ":" + cl };
                     }
