@@ -81,10 +81,11 @@ namespace ExamplePlugin
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2) 
                     {
-                        XRanks ranks = new XRanks();
                         XmlSerializer ser = 
-                        new XmlSerializer(ranks.GetType());
+                            new XmlSerializer(typeof(List<XRanks>));
                         TextWriter writer = new StreamWriter(path);
+                        XRanks ranks = new XRanks();
+
                         ranks.GetType();
 
                         int len = args.Length - 2;
