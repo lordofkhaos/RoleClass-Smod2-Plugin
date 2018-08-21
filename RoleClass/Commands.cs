@@ -35,8 +35,8 @@ namespace ExamplePlugin
         //    return new string[] { "Currently all this command does is send this string!" };
         //}
 
-        [XmlRoot("ranks")]
-        public class Details
+        [XmlRoot()]
+        public class Ranks
         {
             [XmlElement()]
             public string RankName { get; set; }
@@ -75,6 +75,10 @@ namespace ExamplePlugin
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2) 
                     {
+                        XmlSerializer ser = 
+                        new XmlSerializer(typeof(Ranks));
+                        TextWriter writer = new StreamWriter(path);
+                        Ranks ranks = new Ranks();
                         int len = args.Length - 2;
                         //string[] itemlist = new string[len];
                         List<string> itemlist = new List<string>();
@@ -85,49 +89,43 @@ namespace ExamplePlugin
                             int itemint = i - 2;
                             itemno.Add(itemint);
                             itemlist.Add(args[i]);
-                            //string itemname = "item" + itemint;
-                            //XmlNode item = xmlDoc.CreateElement(itemname);
-                            //item.InnerText = args[i];
                         }
 
-                        //xmlDoc.AppendChild(items);
-                        //rootNode.AppendChild(rank);
-
-                        //xmlDoc.Save(path);
-
-                        Details details = new Details();
-                        details.RankName = x;
-                        details.Class = cl;
+                        //Ranks ranks = new Ranks();
+                        ranks.RankName = x;
+                        ranks.Class = cl;
 
                         string[] itemarray = itemlist.ToArray();
-                        details.Items = itemarray;
+                        ranks.Items = itemarray;
 
                         List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
                         string[] itemnums = itemnumbers.ToArray();
 
                         for (int i = 0; i < itemarray.Length; i++)
                         {
-                            details.ItemNo = itemnums[i];
-                            details.Item = itemarray[i];
+                            ranks.ItemNo = itemnums[i];
+                            ranks.Item = itemarray[i];
                         }
+                        ser.Serialize(writer, ranks);
+                        writer.Close();
 
-                        if (File.Exists(path))
-                        {
-                            XmlSerializer serializer = new XmlSerializer(typeof(Details));
-                            using (TextWriter writer = new StreamWriter(path))
-                            {
-                                serializer.Serialize(writer, details);
-                            }
-                        }
-                        else
-                        {
-                            File.Create(path);
-                            XmlSerializer serializer = new XmlSerializer(typeof(Details));
-                            using (TextWriter writer = new StreamWriter(@"rc-config.xml"))
-                            {
-                                serializer.Serialize(writer, details);
-                            }
-                        }
+                        //if (File.Exists(path))
+                        //{
+                        //    XmlSerializer serializer = new XmlSerializer(Ranks.GetType());
+                        //    using (TextWriter writer = new StreamWriter(path))
+                        //    {
+                        //        serializer.Serialize(writer, ranks);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    File.Create(path);
+                        //    XmlSerializer serializer = new XmlSerializer(typeof(Ranks));
+                        //    using (TextWriter writer = new StreamWriter(@"rc-config.xml"))
+                        //    {
+                        //        serializer.Serialize(writer, ranks);
+                        //    }
+                        //}
 
 
                         return new string[] { "Saved configuration for " + x + ":" + cl };
@@ -148,12 +146,12 @@ namespace ExamplePlugin
             }
         }
 
-        //static public void Serialize(Details details)
+        //static public void Serialize(Ranks ranks)
         //{
-        //    XmlSerializer serializer = new XmlSerializer(typeof(Details));
+        //    XmlSerializer serializer = new XmlSerializer(typeof(Ranks));
         //    using (TextWriter writer = new StreamWriter(@"rc-config-2.xml"))
         //    {
-        //        serializer.Serialize(writer, details);
+        //        serializer.Serialize(writer, ranks);
         //    }
         //}
     }
