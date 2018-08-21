@@ -4,6 +4,7 @@ using Smod2.API;
 //using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -57,6 +58,7 @@ namespace ExamplePlugin
         }
 
 
+
         public string[] OnCall(ICommandSender sender, string[] args)
         {
             //if (sender is Player pl)
@@ -75,18 +77,18 @@ namespace ExamplePlugin
             if (args != null && args.Length > 0)
             {
                 string x = args[0].ToLower();
-                string path = @"rc-config.xml";
+                string path = @"rc-config.dat";
                 if (args.Length > 1)
                 {
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2) 
                     {
-                        XmlSerializer ser = 
-                            new XmlSerializer(typeof(List<XRanks>));
-                        TextWriter writer = new StreamWriter(path);
-                        XRanks ranks = new XRanks();
+                        //XmlSerializer ser = 
+                        //    new XmlSerializer(typeof(List<XRanks>));
+                        //TextWriter writer = new StreamWriter(path);
+                        //XRanks ranks = new XRanks();
 
-                        ranks.GetType();
+                        //ranks.GetType();
 
                         int len = args.Length - 2;
                         //string[] itemlist = new string[len];
@@ -101,22 +103,32 @@ namespace ExamplePlugin
                         }
 
                         //Ranks ranks = new Ranks();
-                        ranks.RankName = x;
-                        ranks.Class = cl;
+                        //ranks.RankName = x;
+                        //ranks.Class = cl;
 
                         string[] itemarray = itemlist.ToArray();
-                        ranks.Items = itemarray;
+                        //ranks.Items = itemarray;
 
                         List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
                         string[] itemnums = itemnumbers.ToArray();
 
-                        for (int i = 0; i < itemarray.Length; i++)
+                        //for (int i = 0; i < itemarray.Length; i++)
+                        //{
+                        //    ranks.ItemNo = itemnums[i];
+                        //    ranks.Item = itemarray[i];
+                        //}
+                        //ser.Serialize(writer, ranks);
+                        //writer.Close();
+
+                        using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
                         {
-                            ranks.ItemNo = itemnums[i];
-                            ranks.Item = itemarray[i];
+                            writer.Write(x);
+                            writer.Write(cl);
+                            foreach (string item in itemarray)
+                            {
+                                writer.Write(item);
+                            }
                         }
-                        ser.Serialize(writer, ranks);
-                        writer.Close();
 
                         //if (File.Exists(path))
                         //{
