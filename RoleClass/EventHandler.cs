@@ -84,26 +84,6 @@ namespace Smod.TestPlugin
                     }
                 }
             }
-
-            //List<string> itemlist = new List<string>();
-            //List<string> ranknames = new List<string>();
-            //XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.Load(path);
-            //XmlNodeList rankNodes = xmlDoc.SelectNodes("//ranks");
-            //foreach(XmlNode rankNode in rankNodes) {
-            //    var ranks = rankNode.ChildNodes;
-            //    foreach (XmlNode rnk in ranks)
-            //    {
-            //        ranknames.Add(rnk.ToString());
-            //        var items = rankNode.ChildNodes;
-            //        foreach (XmlNode item in items)
-            //        {
-            //            itemlist.Add(item.InnerText);
-            //        }
-            //    }
-            //}
-
-
         }
     }
 }
