@@ -36,17 +36,23 @@ namespace ExamplePlugin
         //}
 
         [XmlRoot()]
-        public class Ranks
+        //[XmlIgnore]
+        public class XRanks
         {
             [XmlElement()]
+            //[XmlIgnore]
             public string RankName { get; set; }
             [XmlAttribute("class")]
+            //[XmlIgnore]
             public string Class { get; set; }
             [XmlArray("items")]
+            //[XmlIgnore]
             public string[] Items { get; set; }
             [XmlArrayItem()]
+            //[XmlIgnore]
             public string ItemNo { get; set; }
             [XmlText()]
+            //[XmlIgnore]
             public string Item { get; set; }
         }
 
@@ -75,10 +81,12 @@ namespace ExamplePlugin
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2) 
                     {
+                        XRanks ranks = new XRanks();
                         XmlSerializer ser = 
-                        new XmlSerializer(typeof(Ranks));
+                        new XmlSerializer(ranks.GetType());
                         TextWriter writer = new StreamWriter(path);
-                        Ranks ranks = new Ranks();
+                        ranks.GetType();
+
                         int len = args.Length - 2;
                         //string[] itemlist = new string[len];
                         List<string> itemlist = new List<string>();
