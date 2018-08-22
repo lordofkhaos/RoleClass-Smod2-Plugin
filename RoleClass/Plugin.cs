@@ -5,7 +5,6 @@ using Smod2.EventHandlers;
 using Smod2.Events;
 using System.Collections.Generic;
 using System.IO;
-//using Newtonsoft.Json;
 using System.Xml;
 using System.Text;
 

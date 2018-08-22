@@ -1,7 +1,6 @@
 ﻿using Smod2.Commands;
 using Smod2;
 using Smod2.API;
-//using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Collections;
@@ -33,19 +32,15 @@ namespace ExamplePlugin
             return "SAVE" + " RANK " + "CLASS " + "ITEMS LIST";
         }
 
-        //public string[] OnCall(ICommandSender sender, string[] args)
-        //{
-        //    return new string[] { "Currently all this command does is send this string!" };
-        //}
 
-        public class XRanks
-        {
-            public string RankName { get; set; }
-            public string Class { get; set; }
-            public string[] Items { get; set; }
-            public string ItemNo { get; set; }
-            public string Item { get; set; }
-        }
+        //public class XRanks
+        //{
+        //    public string RankName { get; set; }
+        //    public string Class { get; set; }
+        //    public string[] Items { get; set; }
+        //    public string ItemNo { get; set; }
+        //    public string Item { get; set; }
+        //}
 
 
 
@@ -108,9 +103,8 @@ namespace ExamplePlugin
 
                         BinaryFormatter formatter = new BinaryFormatter();
                         if (!File.Exists(path)) 
-                        { 
-                            FileStream fs = new FileStream(path, FileMode.Create); 
-
+                        {
+                            FileStream fs = new FileStream(path, FileMode.Create);
                             try
                             {
                                 formatter.Serialize(fs, table);
@@ -133,7 +127,7 @@ namespace ExamplePlugin
                             try
                             {
                                 formatter.Serialize(fs, table);
-                                return new string[] { "Saved configuration for " + x + ":" + cl };
+                                //return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
                             catch (SerializationException e)
                             {
@@ -144,6 +138,7 @@ namespace ExamplePlugin
                             {
                                 fs.Close();
                             }
+                            return new string[] { "Saved configuration for " + x + ":" + cl };
                         }
 
                         //using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))

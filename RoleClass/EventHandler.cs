@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
@@ -25,45 +26,27 @@ namespace Smod.TestPlugin
 			this.plugin = plugin;
 		}
 
+        public class Info
+        {
+            public ListDictionary SCPs { get; set; }
+            public ListDictionary Humans { get; set; }
+            public ListDictionary Other { get; set; }
+            public List<ListDictionary> Cls { get; set; }
+            public ListDictionary Keycards { get; set; }
+            public ListDictionary Weapons { get; set; }
+            public ListDictionary Ammo { get; set; }
+            public ListDictionary Accessories { get; set; }
+            public ListDictionary Masteritems { get; set; }
+        }
+
         public void OnRoundStart(RoundStartEvent ev)
         {
+            Info info = new Info();
+            info.SCPs = new ListDictionary();
+            info.Humans = new ListDictionary();
+            info.Other = new ListDictionary();
+            info.Cls = new List<ListDictionary>();
             string[] players = new string[ev.Server.GetPlayers().Count];
-        }
-
-        public void OnPlayerJoin(PlayerJoinEvent ev)
-        {
-            var s64 = ev.Player.SteamId;
-            if (s64 == "76561198071607345")
-            {
-                if (ev.Player.GetUserGroup().Name == string.Empty)
-                {
-                    ev.Player.SetRank("aqua", "PLUGIN DEV");
-                }
-                else
-                {
-                    plugin.Info("Plugin dev Lord of Khaos joined the server!");
-                }
-            } else {
-                plugin.Debug("A player has joined the server!");
-            }
-        }
-
-        public class Ranks
-        {
-            public string RankName { get; set; }
-            public string Class { get; set; }
-            public List<string> Items { get; set; }
-            public string ItemNo { get; set; }
-            public string Item { get; set; }
-        }
-
-        public void OnSetRole(PlayerSetRoleEvent ev)
-        {
-            #region assign player info
-            string player = ev.Player.Name;
-            string rank = ev.Player.GetRankName();
-            var team = ev.Player.TeamRole.Role;
-            #endregion
             #region assign vars to roles
             var ntfc = Role.NTF_COMMANDER.ToString();
             var ntfl = Role.NTF_LIEUTENANT.ToString();
@@ -104,7 +87,7 @@ namespace Smod.TestPlugin
             var kc_ce = ItemType.CONTAINMENT_ENGINEER_KEYCARD.ToString();
             var cup = ItemType.CUP.ToString();
             var disarm = ItemType.DISARMER.ToString();
-            var mtfammo = ItemType.DROPPED_5.ToString();
+            var fusion = ItemType.DROPPED_5.ToString();
             var pat = ItemType.DROPPED_7.ToString();
             var rat = ItemType.DROPPED_9.ToString();
             var e11 = ItemType.E11_STANDARD_RIFLE.ToString();
@@ -133,7 +116,7 @@ namespace Smod.TestPlugin
             List<string> weapons = new List<string>();
             weapons.AddRange(new string[] { pew, micro, cigun, e11, mp7, p90, frag, fb });
             List<string> ammo = new List<string>();
-            ammo.AddRange(new string[] { mtfammo, pat, rat });
+            ammo.AddRange(new string[] { fusion, pat, rat });
             List<string> accessories = new List<string>();
             accessories.AddRange(new string[] { fl, coin, cup, wmt });
             List<string> masteritems = new List<string>();
@@ -144,6 +127,42 @@ namespace Smod.TestPlugin
             #endregion
             string[] clss = cls.ToArray();
             foreach (string line in clss) { plugin.Debug(line); }
+        }
+
+        public void OnPlayerJoin(PlayerJoinEvent ev)
+        {
+            var s64 = ev.Player.SteamId;
+            if (s64 == "76561198071607345")
+            {
+                if (ev.Player.GetUserGroup().Name == string.Empty)
+                {
+                    ev.Player.SetRank("aqua", "PLUGIN DEV");
+                }
+                else
+                {
+                    plugin.Info("Plugin dev Lord of Khaos joined the server!");
+                }
+            } else {
+                plugin.Debug("A player has joined the server!");
+            }
+        }
+
+        //public class XRanks
+        //{
+        //    public string RankName { get; set; }
+        //    public string Class { get; set; }
+        //    public List<string> Items { get; set; }
+        //    public string ItemNo { get; set; }
+        //    public string Item { get; set; }
+        //}
+
+        public void OnSetRole(PlayerSetRoleEvent ev)
+        {
+            #region assign player info
+            string player = ev.Player.Name;
+            string rank = ev.Player.GetRankName();
+            var team = ev.Player.TeamRole.Role;
+            #endregion
             string path = @"rc-config.dat";
             plugin.Debug("Player " + player + " rank: " + rank);
             plugin.Debug("Player " + player + "team: " + team);
@@ -209,28 +228,28 @@ namespace Smod.TestPlugin
 
             items = classitems.Skip(1).ToArray();
 
-            if (rank == rankName && cls.Contains(cl))
-            {
-                try 
-                {
-                    if (scps.Contains(cl))
-                    {
-                        plugin.Warn("Trying to give items to SCPs is inadvisable");
-                        foreach (string item in items)
-                        {
-                            if (masteritems.Contains(item))
-                            {
-                                //ev.Player.GiveItem(item);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    plugin.Error("Cannot exeute code. Error: " + e);
-                    throw;
-                }
-            }
+            //if (rank == rankName && cls.Contains(cl))
+            //{
+            //    try 
+            //    {
+            //        if (scps.Contains(cl))
+            //        {
+            //            plugin.Warn("Trying to give items to SCPs is inadvisable");
+            //            foreach (string item in items)
+            //            {
+            //                if (masteritems.Contains(item))
+            //                {
+            //                    //ev.Player.GiveItem(item);
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        plugin.Error("Cannot exeute code. Error: " + e);
+            //        throw;
+            //    }
+            //}
 
         }
     }
