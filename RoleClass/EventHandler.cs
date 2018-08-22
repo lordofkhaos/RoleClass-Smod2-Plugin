@@ -48,7 +48,7 @@ namespace Smod.TestPlugin
             }
         }
 
-        public class Details
+        public class Ranks
         {
             public string RankName { get; set; }
             public string Class { get; set; }
@@ -96,6 +96,9 @@ namespace Smod.TestPlugin
             #endregion
             #region items and stuff
             var kc_ci = ItemType.CHAOS_INSURGENCY_DEVICE.ToString();
+            Dictionary<string, ItemType> cidev = new Dictionary<string, ItemType>();
+            cidev.Add("CI_DEVICE", ItemType.CHAOS_INSURGENCY_DEVICE);
+            cidev.Add("10", ItemType.CHAOS_INSURGENCY_DEVICE);
             var coin = ItemType.COIN.ToString();
             var pew = ItemType.COM15.ToString();
             var kc_ce = ItemType.CONTAINMENT_ENGINEER_KEYCARD.ToString();
@@ -139,6 +142,8 @@ namespace Smod.TestPlugin
             masteritems.AddRange(ammo);
             masteritems.AddRange(accessories);
             #endregion
+            string[] clss = cls.ToArray();
+            foreach (string line in clss) { plugin.Debug(line); }
             string path = @"rc-config.dat";
             plugin.Debug("Player " + player + " rank: " + rank);
             plugin.Debug("Player " + player + "team: " + team);

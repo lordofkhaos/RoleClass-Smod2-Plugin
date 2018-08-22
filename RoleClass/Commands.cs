@@ -103,7 +103,7 @@ namespace ExamplePlugin
 
                         }
 
-                        Hashtable table = new Hashtable();
+                        Dictionary<string, string[]> table = new Dictionary<string, string[]>();
                         table.Add(x, classitems);
 
                         BinaryFormatter formatter = new BinaryFormatter();
