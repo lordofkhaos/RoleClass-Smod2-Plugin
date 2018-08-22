@@ -40,14 +40,14 @@ namespace ExamplePlugin
             // Register Commands
             //this.AddCommand("hello", new Commands(this));
             this.AddCommand("save", new Commands());
-			// Register config settings
+            // Register config settings
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_enable_save", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass 'Save' command"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // Register json file
             string path = @"..\config.xml";
             if (!File.Exists(path))
             {
-                //XmlWriter xmlWriter = XmlWriter.Create(@"..\config.xml");
-                //File.Create(@"..\config.xml");
+                
             }
             else
             {

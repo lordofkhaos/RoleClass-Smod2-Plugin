@@ -5,9 +5,11 @@ using Smod2.API;
 using System;
 using System.IO;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Serialization;
+//using System.Xml;
+//using System.Xml.Serialization;
 using System.Threading;
 
 namespace ExamplePlugin
@@ -36,24 +38,12 @@ namespace ExamplePlugin
         //    return new string[] { "Currently all this command does is send this string!" };
         //}
 
-        [XmlRoot()]
-        //[XmlIgnore]
         public class XRanks
         {
-            [XmlElement()]
-            //[XmlIgnore]
             public string RankName { get; set; }
-            [XmlAttribute("class")]
-            //[XmlIgnore]
             public string Class { get; set; }
-            [XmlArray("items")]
-            //[XmlIgnore]
             public string[] Items { get; set; }
-            [XmlArrayItem()]
-            //[XmlIgnore]
             public string ItemNo { get; set; }
-            [XmlText()]
-            //[XmlIgnore]
             public string Item { get; set; }
         }
 
@@ -83,73 +73,91 @@ namespace ExamplePlugin
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2) 
                     {
-                        //XmlSerializer ser = 
-                        //    new XmlSerializer(typeof(List<XRanks>));
-                        //TextWriter writer = new StreamWriter(path);
-                        //XRanks ranks = new XRanks();
-
-                        //ranks.GetType();
-
                         int len = args.Length - 2;
                         //string[] itemlist = new string[len];
                         List<string> itemlist = new List<string>();
-                        List<int> itemno = new List<int>();
+                        //List<int> itemno = new List<int>();
 
                         for (int i = 2; i < args.Length; i++)
                         {
-                            int itemint = i - 2;
-                            itemno.Add(itemint);
+                            //int itemint = i - 2;
+                            //itemno.Add(itemint);
                             itemlist.Add(args[i]);
                         }
 
-                        //Ranks ranks = new Ranks();
-                        //ranks.RankName = x;
-                        //ranks.Class = cl;
-
                         string[] itemarray = itemlist.ToArray();
-                        //ranks.Items = itemarray;
 
-                        List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                        string[] itemnums = itemnumbers.ToArray();
+                        //List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
+                        //string[] itemnums = itemnumbers.ToArray();
 
-                        //for (int i = 0; i < itemarray.Length; i++)
-                        //{
-                        //    ranks.ItemNo = itemnums[i];
-                        //    ranks.Item = itemarray[i];
-                        //}
-                        //ser.Serialize(writer, ranks);
-                        //writer.Close();
-
-                        using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+                        string[] classitems = null;
+                        if (cl != null)
                         {
-                            writer.Write(x);
-                            writer.Write(cl);
-                            foreach (string item in itemarray)
+                            classitems[0] = cl;
+                        }
+
+                        for (int i = 0; i < itemarray.Length; i++)
+                        {
+                            int j = i + 1;
+                            itemarray[i] = classitems[j];
+
+                        }
+
+                        Hashtable table = new Hashtable();
+                        table.Add(x, classitems);
+
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        if (!File.Exists(path)) 
+                        { 
+                            FileStream fs = new FileStream(path, FileMode.Create); 
+
+                            try
                             {
-                                writer.Write(item);
+                                formatter.Serialize(fs, table);
+                                return new string[] { "Saved configuration for " + x + ":" + cl };
+                            }
+                            catch (SerializationException e)
+                            {
+                                return new string[] { "Encountered exception: " + e };
+                                throw;
+                            }
+                            finally
+                            {
+                                fs.Close();
+                            }
+                        }
+                        else 
+                        { 
+                            FileStream fs = new FileStream(path, FileMode.Append);
+
+                            try
+                            {
+                                formatter.Serialize(fs, table);
+                                return new string[] { "Saved configuration for " + x + ":" + cl };
+                            }
+                            catch (SerializationException e)
+                            {
+                                return new string[] { "Encountered exception: " + e };
+                                throw;
+                            }
+                            finally
+                            {
+                                fs.Close();
                             }
                         }
 
-                        //if (File.Exists(path))
+                        //using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
                         //{
-                        //    XmlSerializer serializer = new XmlSerializer(Ranks.GetType());
-                        //    using (TextWriter writer = new StreamWriter(path))
+                        //    writer.Write(x);
+                        //    writer.Write(cl);
+                        //    foreach (string item in itemarray)
                         //    {
-                        //        serializer.Serialize(writer, ranks);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    File.Create(path);
-                        //    XmlSerializer serializer = new XmlSerializer(typeof(Ranks));
-                        //    using (TextWriter writer = new StreamWriter(@"rc-config.xml"))
-                        //    {
-                        //        serializer.Serialize(writer, ranks);
+                        //        writer.Write(item);
                         //    }
                         //}
 
 
-                        return new string[] { "Saved configuration for " + x + ":" + cl };
+
                     }
                     else
                     {
@@ -166,15 +174,6 @@ namespace ExamplePlugin
                 return new string[] { GetUsage() };
             }
         }
-
-        //static public void Serialize(Ranks ranks)
-        //{
-        //    XmlSerializer serializer = new XmlSerializer(typeof(Ranks));
-        //    using (TextWriter writer = new StreamWriter(@"rc-config-2.xml"))
-        //    {
-        //        serializer.Serialize(writer, ranks);
-        //    }
-        //}
     }
 }
 
@@ -187,6 +186,7 @@ namespace ExamplePlugin
 //save laneklfhak sakfneoiqoia 928,129u48,127487
 //
 //** Example Xml: **
+//* Note: XML is to-be-added *
 //<ranks>
 //  <owner class="scientist">
 //      <items>
