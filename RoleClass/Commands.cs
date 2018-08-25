@@ -85,10 +85,12 @@ namespace ExamplePlugin
                         //List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
                         //string[] itemnums = itemnumbers.ToArray();
 
-                        string[] classitems = null;
+                        List<string> classitems = new List<string>();
+                        //string[] classitems = { };
                         if (cl != null)
                         {
-                            classitems[0] = cl;
+                            classitems.Add(cl);
+                            //classitems[0] = cl;
                         }
 
                         for (int i = 0; i < itemarray.Length; i++)
@@ -98,16 +100,17 @@ namespace ExamplePlugin
 
                         }
 
-                        Dictionary<string, string[]> table = new Dictionary<string, string[]>();
+                        Dictionary<string, List<string>> table = new Dictionary<string, List<string>>();
                         table.Add(x, classitems);
 
                         BinaryFormatter formatter = new BinaryFormatter();
                         if (!File.Exists(path)) 
                         {
-                            FileStream fs = new FileStream(path, FileMode.Create);
+                            //StreamWriter sw = new StreamWriter(path)
+                            StreamWriter sw = new StreamWriter(path);
                             try
                             {
-                                formatter.Serialize(fs, table);
+                                formatter.Serialize(sw.BaseStream, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
                             catch (SerializationException e)
@@ -117,16 +120,15 @@ namespace ExamplePlugin
                             }
                             finally
                             {
-                                fs.Close();
+                                sw.Close();
                             }
                         }
                         else 
                         { 
-                            FileStream fs = new FileStream(path, FileMode.Append);
-
+                            StreamWriter sw = new StreamWriter(path);
                             try
                             {
-                                formatter.Serialize(fs, table);
+                                formatter.Serialize(sw.BaseStream, table);
                                 //return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
                             catch (SerializationException e)
@@ -136,7 +138,7 @@ namespace ExamplePlugin
                             }
                             finally
                             {
-                                fs.Close();
+                                sw.Close();
                             }
                             return new string[] { "Saved configuration for " + x + ":" + cl };
                         }
