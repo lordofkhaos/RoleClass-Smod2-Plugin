@@ -100,8 +100,10 @@ namespace ExamplePlugin
 
                         }
 
-                        Dictionary<string, List<string>> table = new Dictionary<string, List<string>>();
-                        table.Add(x, classitems);
+                        Dictionary<string, List<string>> table = new Dictionary<string, List<string>>()
+                        {
+                            [x] = classitems
+                        };
 
                         BinaryFormatter formatter = new BinaryFormatter();
                         if (!File.Exists(path)) 

@@ -18,7 +18,7 @@ namespace Smod.TestPlugin
 {
     class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSetRole
     {
-        private Plugin plugin;
+        readonly Plugin plugin;
         //private Player player;
 
         public EventHandler(Plugin plugin)
@@ -43,331 +43,420 @@ namespace Smod.TestPlugin
         {
             Info info = new Info();
             string[] players = new string[ev.Server.GetPlayers().Count];
-            #region assign roles
-            // set info stuff
+            #region dare ordini agnomes
+            // prae perficio
             info.SCPs = new List<Dictionary<string, Role>>();
             info.Humans = new List<Dictionary<string, Role>>();
             info.Other = new List<Dictionary<string, Role>>();
             info.Cls = new List<List<Dictionary<string, Role>>>();
-            // set role stuff
+            // perficio
             var ntfc = Role.NTF_COMMANDER.ToString().ToLower();
-            Dictionary<string, Role> mtfc = new Dictionary<string, Role>();
-            mtfc.Add("mtfc", Role.NTF_COMMANDER);
-            mtfc.Add("ntfc", Role.NTF_COMMANDER);
-            mtfc.Add("commander", Role.NTF_COMMANDER);
-            mtfc.Add("12", Role.NTF_COMMANDER);
-            mtfc.Add(ntfc, Role.NTF_COMMANDER);
+            Dictionary<string, Role> mtfc = new Dictionary<string, Role>()
+            {
+                ["mtfc"] = Role.NTF_COMMANDER,
+                ["ntfc"] = Role.NTF_COMMANDER,
+                ["commander"] = Role.NTF_COMMANDER,
+                ["12"] = Role.NTF_COMMANDER,
+                [ntfc] = Role.NTF_COMMANDER
+            };
             info.Humans.Add(mtfc);
 
             var ntfl = Role.NTF_LIEUTENANT.ToString().ToLower();
-            Dictionary<string, Role> mtfl = new Dictionary<string, Role>();
-            mtfl.Add("mtfl", Role.NTF_LIEUTENANT);
-            mtfl.Add("ntfl", Role.NTF_LIEUTENANT);
-            mtfl.Add("lieutenant", Role.NTF_LIEUTENANT);
-            mtfl.Add("11", Role.NTF_LIEUTENANT);
-            mtfl.Add(ntfl, Role.NTF_LIEUTENANT);
+            Dictionary<string, Role> mtfl = new Dictionary<string, Role>()
+            {
+                ["mtfl"] = Role.NTF_LIEUTENANT,
+                ["ntfl"] = Role.NTF_LIEUTENANT,
+                ["lieutenant"] = Role.NTF_LIEUTENANT,
+                ["11"] = Role.NTF_LIEUTENANT,
+                [ntfl] = Role.NTF_LIEUTENANT
+            };
             info.Humans.Add(mtfl);
 
             var ntf = Role.NTF_CADET.ToString().ToLower();
-            Dictionary<string, Role> mtfcad = new Dictionary<string, Role>();
-            mtfcad.Add("cadet", Role.NTF_CADET);
-            mtfcad.Add("mtf", Role.NTF_CADET);
-            mtfcad.Add("ntf", Role.NTF_CADET);
-            mtfcad.Add("13", Role.NTF_CADET);
-            mtfcad.Add(ntf, Role.NTF_CADET);
+            Dictionary<string, Role> mtfcad = new Dictionary<string, Role>()
+            {
+                ["cadet"] = Role.NTF_CADET,
+                ["mtf"] = Role.NTF_CADET,
+                ["ntf"] = Role.NTF_CADET,
+                ["13"] = Role.NTF_CADET,
+                [ntf] = Role.NTF_CADET
+            };
             info.Humans.Add(mtfcad);
 
             var ntfs = Role.NTF_SCIENTIST.ToString().ToLower();
-            Dictionary<string, Role> mtfs = new Dictionary<string, Role>();
-            mtfs.Add("mtfs", Role.NTF_SCIENTIST);
-            mtfs.Add("ntfs", Role.NTF_SCIENTIST);
-            mtfs.Add("mtfsci", Role.NTF_SCIENTIST);
-            mtfs.Add("ntfsci", Role.NTF_SCIENTIST);
-            mtfs.Add("4", Role.NTF_SCIENTIST);
-            mtfs.Add(ntfs, Role.NTF_SCIENTIST);
+            Dictionary<string, Role> mtfs = new Dictionary<string, Role>()
+            {
+                ["mtfs"] = Role.NTF_SCIENTIST,
+                ["ntfs"] = Role.NTF_SCIENTIST,
+                ["mtfsci"] = Role.NTF_SCIENTIST,
+                ["ntfsci"] = Role.NTF_SCIENTIST,
+                ["4"] = Role.NTF_SCIENTIST,
+                [ntfs] = Role.NTF_SCIENTIST
+            };
             info.Humans.Add(mtfs);
 
             var ci = Role.CHAOS_INSUGENCY.ToString().ToLower();
-            Dictionary<string, Role> ceeeye = new Dictionary<string, Role>();
-            ceeeye.Add("ci", Role.CHAOS_INSUGENCY);
-            ceeeye.Add("chaos", Role.CHAOS_INSUGENCY);
-            ceeeye.Add("insurgency", Role.CHAOS_INSUGENCY);
-            ceeeye.Add("insurgent", Role.CHAOS_INSUGENCY);
-            ceeeye.Add("8", Role.CHAOS_INSUGENCY);
-            ceeeye.Add(ci, Role.CHAOS_INSUGENCY);
+            Dictionary<string, Role> ceeeye = new Dictionary<string, Role>()
+            {
+                ["ci"] = Role.CHAOS_INSUGENCY,
+                ["chaos"] = Role.CHAOS_INSUGENCY,
+                ["insurgency"] = Role.CHAOS_INSUGENCY,
+                ["insurgent"] = Role.CHAOS_INSUGENCY,
+                ["8"] = Role.CHAOS_INSUGENCY,
+                [ci] = Role.CHAOS_INSUGENCY
+            };
             info.Humans.Add(ceeeye);
 
             var cd = Role.CLASSD.ToString().ToLower();
-            Dictionary<string, Role> dclass = new Dictionary<string, Role>();
-            dclass.Add("classd", Role.CLASSD);
-            dclass.Add("class-d", Role.CLASSD);
-            dclass.Add("cd", Role.CLASSD);
-            dclass.Add("dc", Role.CLASSD);
-            dclass.Add("personnel", Role.CLASSD);
-            dclass.Add("1", Role.CLASSD);
-            dclass.Add(cd, Role.CLASSD);
+            Dictionary<string, Role> dclass = new Dictionary<string, Role>()
+            {
+                ["classd"] = Role.CLASSD,
+                ["class-d"] = Role.CLASSD,
+                ["dclass"] = Role.CLASSD,
+                ["d-class"] = Role.CLASSD,
+                ["cd"] = Role.CLASSD,
+                ["dc"] = Role.CLASSD,
+                ["personnel"] = Role.CLASSD,
+                ["1"] = Role.CLASSD,
+                [cd] = Role.CLASSD
+            };
             info.Humans.Add(dclass);
 
             var fg = Role.FACILITY_GUARD.ToString().ToLower();
-            Dictionary<string, Role> guard = new Dictionary<string, Role>();
-            guard.Add("guard", Role.FACILITY_GUARD);
-            guard.Add("fg", Role.FACILITY_GUARD);
-            guard.Add("15", Role.FACILITY_GUARD);
-            guard.Add(fg, Role.FACILITY_GUARD);
+            Dictionary<string, Role> guard = new Dictionary<string, Role>()
+            {
+                ["guard"] = Role.FACILITY_GUARD,
+                ["fg"] = Role.FACILITY_GUARD,
+                ["15"] = Role.FACILITY_GUARD,
+                [fg] = Role.FACILITY_GUARD
+            };
             info.Humans.Add(guard);
 
             var sci = Role.SCIENTIST.ToString().ToLower();
-            Dictionary<string, Role> nerd = new Dictionary<string, Role>();
-            nerd.Add("sci", Role.SCIENTIST);
-            nerd.Add("nerd", Role.SCIENTIST);
-            nerd.Add("scientist", Role.SCIENTIST);
-            nerd.Add("science", Role.SCIENTIST);
-            nerd.Add("6", Role.SCIENTIST);
-            nerd.Add(sci, Role.SCIENTIST);
+            Dictionary<string, Role> nerd = new Dictionary<string, Role>()
+            {
+                ["sci"] = Role.SCIENTIST,
+                ["nerd"] = Role.SCIENTIST,
+                ["scientist"] = Role.SCIENTIST,
+                ["science"] = Role.SCIENTIST,
+                ["science"] = Role.SCIENTIST,
+                ["6"] = Role.SCIENTIST,
+                [sci] = Role.SCIENTIST
+            };
             info.Humans.Add(nerd);
 
             var plaguedaddy = Role.SCP_049.ToString().ToLower();
-            Dictionary<string, Role> s049 = new Dictionary<string, Role>();
-            s049.Add("plaguedaddy", Role.SCP_049);
-            s049.Add("doctor", Role.SCP_049);
-            s049.Add("scp049", Role.SCP_049);
-            s049.Add("scp-049", Role.SCP_049);
-            s049.Add("scp_049", Role.SCP_049);
-            s049.Add("049", Role.SCP_049);
-            s049.Add("5", Role.SCP_049);
-            s049.Add(plaguedaddy, Role.SCP_049);
+            Dictionary<string, Role> s049 = new Dictionary<string, Role>()
+            {
+                ["plaguedaddy"] = Role.SCP_049,
+                ["doctor"] = Role.SCP_049,
+                ["scp049"] = Role.SCP_049,
+                ["scp-049"] = Role.SCP_049,
+                ["scp_049"] = Role.SCP_049,
+                ["049"] = Role.SCP_049,
+                ["5"] = Role.SCP_049,
+                [plaguedaddy] = Role.SCP_049
+            };
             info.SCPs.Add(s049);
 
             var zombie = Role.SCP_049_2.ToString().ToLower();
-            Dictionary<string, Role> s049_2 = new Dictionary<string, Role>();
-            s049_2.Add("zombie", Role.SCP_049_2);
-            s049_2.Add("scp0492", Role.SCP_049_2);
-            s049_2.Add("scp-049-2", Role.SCP_049_2);
-            s049_2.Add("scp-049_2", Role.SCP_049_2);
-            s049_2.Add("scp_049-2", Role.SCP_049_2);
-            s049_2.Add("scp_049_2", Role.SCP_049_2);
-            s049_2.Add("scp049-2", Role.SCP_049_2);
-            s049_2.Add("scp049_2", Role.SCP_049_2);
-            s049_2.Add("helicopter", Role.SCP_049_2);
-            s049_2.Add("10", Role.SCP_049_2);
-            s049_2.Add(zombie, Role.SCP_049_2);
+            Dictionary<string, Role> s049_2 = new Dictionary<string, Role>()
+            {
+                ["zombie"] = Role.SCP_049_2,
+                ["scp0492"] = Role.SCP_049_2,
+                ["scp-049-2"] = Role.SCP_049_2,
+                ["scp-049_2"] = Role.SCP_049_2,
+                ["scp_049-2"] = Role.SCP_049_2,
+                ["scp_049_2"] = Role.SCP_049_2,
+                ["scp049-2"] = Role.SCP_049_2,
+                ["scp049_2"] = Role.SCP_049_2,
+                ["helicopter"] = Role.SCP_049_2,
+                ["10"] = Role.SCP_049_2,
+                [zombie] = Role.SCP_049_2
+            };
             info.SCPs.Add(s049_2);
 
             var larry = Role.SCP_106.ToString().ToLower();
-            Dictionary<string, Role> s106 = new Dictionary<string, Role>();
-            s106.Add("larry", Role.SCP_106);
-            s106.Add("scp-106", Role.SCP_106);
-            s106.Add("scp_106", Role.SCP_106);
-            s106.Add("106", Role.SCP_106);
-            s106.Add("3", Role.SCP_106);
-            s106.Add(larry, Role.SCP_106);
+            Dictionary<string, Role> s106 = new Dictionary<string, Role>()
+            {
+                ["larry"] = Role.SCP_106,
+                ["scp-106"] = Role.SCP_106,
+                ["scp_106"] = Role.SCP_106,
+                ["scp106"] = Role.SCP_106,
+                ["106"] = Role.SCP_106,
+                ["3"] = Role.SCP_106,
+                [larry] = Role.SCP_106
+            };
             info.SCPs.Add(s106);
 
             var shyguy = Role.SCP_096.ToString().ToLower();
-            Dictionary<string, Role> s096 = new Dictionary<string, Role>();
-            s096.Add("shyguy", Role.SCP_096);
-            s096.Add("096", Role.SCP_096);
-            s096.Add("scp-096", Role.SCP_096);
-            s096.Add("scp_096", Role.SCP_096);
-            s096.Add("9", Role.SCP_096);
-            s096.Add(shyguy, Role.SCP_096);
+            Dictionary<string, Role> s096 = new Dictionary<string, Role>()
+            {
+                ["shyguy"] = Role.SCP_096,
+                ["096"] = Role.SCP_096,
+                ["scp-096"] = Role.SCP_096,
+                ["scp_096"] = Role.SCP_096,
+                ["scp096"] = Role.SCP_096,
+                ["9"] = Role.SCP_096,
+                [shyguy] = Role.SCP_096
+            };
             info.SCPs.Add(s096);
 
             var comp = Role.SCP_079.ToString().ToLower();
-            Dictionary<string, Role> s079 = new Dictionary<string, Role>();
-            s079.Add("scp-079", Role.SCP_079);
-            s079.Add("scp079", Role.SCP_079);
-            s079.Add("scp_079", Role.SCP_079);
-            s079.Add("comp", Role.SCP_079);
-            s079.Add("computer", Role.SCP_079);
-            s079.Add("7", Role.SCP_079);
-            s079.Add(comp, Role.SCP_079);
+            Dictionary<string, Role> s079 = new Dictionary<string, Role>()
+            {
+                ["scp079"] = Role.SCP_079,
+                ["scp-079"] = Role.SCP_079,
+                ["scp_079"] = Role.SCP_079,
+                ["comp"] = Role.SCP_079,
+                ["computer"] = Role.SCP_079,
+                ["7"] = Role.SCP_079,
+                [comp] = Role.SCP_079
+            };
             info.SCPs.Add(s079);
 
             var peanut = Role.SCP_173.ToString().ToLower();
-            Dictionary<string, Role> s173 = new Dictionary<string, Role>();
-            s173.Add("peanut", Role.SCP_173);
-            s173.Add("scp-173", Role.SCP_173);
-            s173.Add("scp173", Role.SCP_173);
-            s173.Add("scp_173", Role.SCP_173);
-            s173.Add("0", Role.SCP_173);
-            s173.Add(peanut, Role.SCP_173);
+            Dictionary<string, Role> s173 = new Dictionary<string, Role>()
+            {
+                ["peanut"] = Role.SCP_173,
+                ["scp173"] = Role.SCP_173,
+                ["scp-173"] = Role.SCP_173,
+                ["scp_173"] = Role.SCP_173,
+                ["0"] = Role.SCP_173,
+                [peanut] = Role.SCP_173
+            };
             info.SCPs.Add(s173);
 
             var doggo1 = Role.SCP_939_53.ToString().ToLower();
-            Dictionary<string, Role> s93953 = new Dictionary<string, Role>();
-            s93953.Add("939-53", Role.SCP_939_53);
-            s93953.Add("939_53", Role.SCP_939_53);
-            s93953.Add("16", Role.SCP_939_53);
-            s93953.Add(doggo1, Role.SCP_939_53);
+            Dictionary<string, Role> s93953 = new Dictionary<string, Role>()
+            {
+                ["939-53"] = Role.SCP_939_53,
+                ["939_53"] = Role.SCP_939_53,
+                ["scp93953"] = Role.SCP_939_53,
+                ["scp-939-53"] = Role.SCP_939_53,
+                ["scp_939_53"] = Role.SCP_939_53,
+                ["16"] = Role.SCP_939_53,
+                [doggo1] = Role.SCP_939_53
+            };
             info.SCPs.Add(s93953);
 
             var doggo2 = Role.SCP_939_89.ToString().ToLower();
-            Dictionary<string, Role> s93989 = new Dictionary<string, Role>();
-            s93989.Add("939-89", Role.SCP_939_53);
-            s93989.Add("939_89", Role.SCP_939_53);
-            s93989.Add("17", Role.SCP_939_53);
-            s93989.Add(doggo2, Role.SCP_939_53);
+            Dictionary<string, Role> s93989 = new Dictionary<string, Role>()
+            {
+                ["939-89"] = Role.SCP_939_89,
+                ["939_89"] = Role.SCP_939_89,
+                ["scp93989"] = Role.SCP_939_89,
+                ["scp-939-89"] = Role.SCP_939_89,
+                ["scp_939_89"] = Role.SCP_939_89,
+                ["17"] = Role.SCP_939_89,
+                [doggo2] = Role.SCP_939_89
+            };
             info.SCPs.Add(s93989);
 
             var tut = Role.TUTORIAL.ToString().ToLower();
-            Dictionary<string, Role> tutor = new Dictionary<string, Role>();
-            tutor.Add("tut", Role.TUTORIAL);
-            tutor.Add("tutor", Role.TUTORIAL);
-            tutor.Add("tutorial", Role.TUTORIAL);
-            tutor.Add("14", Role.TUTORIAL);
-            tutor.Add(tut, Role.TUTORIAL);
+            Dictionary<string, Role> tutor = new Dictionary<string, Role>()
+            {
+                ["tut"] = Role.TUTORIAL,
+                ["tutor"] = Role.TUTORIAL,
+                ["tutorial"] = Role.TUTORIAL,
+                ["14"] = Role.TUTORIAL,
+                [tut] = Role.TUTORIAL
+            };
             info.Humans.Add(tutor);
 
             var spec = Role.SPECTATOR.ToString().ToLower();
-            Dictionary<string, Role> ghost = new Dictionary<string, Role>();
-            ghost.Add("spec", Role.SPECTATOR);
-            ghost.Add("specboi", Role.SPECTATOR);
-            ghost.Add("ghost", Role.SPECTATOR);
-            ghost.Add("2", Role.SPECTATOR);
-            ghost.Add(spec, Role.SPECTATOR);
+            Dictionary<string, Role> ghost = new Dictionary<string, Role>()
+            {
+                ["spec"] = Role.SPECTATOR,
+                ["specboi"] = Role.SPECTATOR,
+                ["ghost"] = Role.SPECTATOR,
+                ["2"] = Role.SPECTATOR,
+                [spec] = Role.SPECTATOR
+            };
             info.Other.Add(ghost);
 
             var un = Role.UNASSIGNED.ToString().ToLower();
-            Dictionary<string, Role> unass = new Dictionary<string, Role>();
-            unass.Add("un", Role.UNASSIGNED);
-            unass.Add("none", Role.UNASSIGNED);
-            unass.Add("", Role.UNASSIGNED);
-            unass.Add(un, Role.UNASSIGNED);
+            Dictionary<string, Role> unass = new Dictionary<string, Role>()
+            {
+                ["un"] = Role.UNASSIGNED,
+                ["none"] = Role.UNASSIGNED,
+                [un] = Role.UNASSIGNED
+            };
             info.Other.Add(unass);
 
             info.Cls.Add(info.Humans);
             info.Cls.Add(info.SCPs);
             info.Cls.Add(info.Other);
+
+            foreach (List<Dictionary<string, Role>> x in info.Cls)
+            {
+                foreach (Dictionary<string, Role> v in x)
+                {
+                    string[] m = v.Keys.ToArray();
+                    foreach (string s in m)
+                        plugin.Debug(s);
+                    string n = v.Values.ToString();
+                    plugin.Debug(n);
+                }
+
+            }
             #endregion
-            #region items and stuff
-            // set info stuff
+            #region dare rei agnomes
+            // prae perficio
             info.Keycards = new List<Dictionary<string, ItemType>>();
             info.Weapons = new List<Dictionary<string, ItemType>>();
             info.Ammo = new List<Dictionary<string, ItemType>>();
             info.Accessories = new List<Dictionary<string, ItemType>>();
             info.Masteritems = new List<List<Dictionary<string, ItemType>>>();
-            // set item stuff
+            // perficio
             var kc_ci = ItemType.CHAOS_INSURGENCY_DEVICE.ToString().ToLower();
-            Dictionary<string, ItemType> cidev = new Dictionary<string, ItemType>();
-            cidev.Add("ci_device", ItemType.CHAOS_INSURGENCY_DEVICE);
-            cidev.Add("10", ItemType.CHAOS_INSURGENCY_DEVICE);
-            cidev.Add("kc-ci", ItemType.CHAOS_INSURGENCY_DEVICE);
-            cidev.Add("ci", ItemType.CHAOS_INSURGENCY_DEVICE);
-            cidev.Add(kc_ci, ItemType.CHAOS_INSURGENCY_DEVICE);
+            Dictionary<string, ItemType> cidev = new Dictionary<string, ItemType>()
+            {
+                ["ci_device"] = ItemType.CHAOS_INSURGENCY_DEVICE,
+                ["ci-device"] = ItemType.CHAOS_INSURGENCY_DEVICE,
+                ["cidevice"] = ItemType.CHAOS_INSURGENCY_DEVICE,
+                ["kc-ci"] = ItemType.CHAOS_INSURGENCY_DEVICE,
+                ["ci"] = ItemType.CHAOS_INSURGENCY_DEVICE,
+                [kc_ci] = ItemType.CHAOS_INSURGENCY_DEVICE
+            };
             info.Keycards.Add(cidev);
 
             var coin = ItemType.COIN.ToString().ToLower();
-            Dictionary<string, ItemType> money = new Dictionary<string, ItemType>();
-            money.Add("coin", ItemType.COIN);
-            money.Add("quarter", ItemType.COIN);
-            money.Add("25c", ItemType.COIN);
-            money.Add("50c", ItemType.COIN);
-            money.Add("17", ItemType.COIN);
-            money.Add(coin, ItemType.COIN);
+            Dictionary<string, ItemType> money = new Dictionary<string, ItemType>()
+            {
+                ["coin"] = ItemType.COIN,
+                ["quarter"] = ItemType.COIN,
+                ["25c"] = ItemType.COIN,
+                ["50c"] = ItemType.COIN,
+                ["17"] = ItemType.COIN,
+                [coin] = ItemType.COIN
+            };
             info.Accessories.Add(money);
 
             var pew = ItemType.COM15.ToString().ToLower();
-            Dictionary<string, ItemType> com15 = new Dictionary<string, ItemType>();
-            com15.Add("pistol", ItemType.COM15);
-            com15.Add("com15", ItemType.COM15);
-            com15.Add("handgun", ItemType.COM15);
-            com15.Add("13", ItemType.COM15);
+            Dictionary<string, ItemType> com15 = new Dictionary<string, ItemType>()
+            {
+                ["pistol"] = ItemType.COM15,
+                ["com15"] = ItemType.COM15,
+                ["handgun"] = ItemType.COM15,
+                ["13"] = ItemType.COM15,
+                [pew] = ItemType.COM15
+            };
             info.Weapons.Add(com15);
 
             var kc_ce = ItemType.CONTAINMENT_ENGINEER_KEYCARD.ToString().ToLower();
-            Dictionary<string, ItemType> conteng = new Dictionary<string, ItemType>();
-            conteng.Add("ce", ItemType.CONTAINMENT_ENGINEER_KEYCARD);
-            conteng.Add("containment_engineer", ItemType.CONTAINMENT_ENGINEER_KEYCARD);
-            conteng.Add("pinkcard", ItemType.CONTAINMENT_ENGINEER_KEYCARD);
-            conteng.Add("kc-ce", ItemType.CONTAINMENT_ENGINEER_KEYCARD);
-            conteng.Add("6", ItemType.CONTAINMENT_ENGINEER_KEYCARD);
-            conteng.Add(kc_ce, ItemType.CONTAINMENT_ENGINEER_KEYCARD);
+            Dictionary<string, ItemType> conteng = new Dictionary<string, ItemType>()
+            {
+                ["ce"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["containment_engineer"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["containment-engineer"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["pinkcard"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["pink"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["kc-ce"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                ["6"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD,
+                [kc_ce] = ItemType.CONTAINMENT_ENGINEER_KEYCARD
+            };
             info.Keycards.Add(conteng);
 
             var cup = ItemType.CUP.ToString().ToLower();
-            Dictionary<string, ItemType> dictcup = new Dictionary<string, ItemType>();
-            dictcup.Add("cup", ItemType.CUP);
-            dictcup.Add("18", ItemType.CUP);
-            dictcup.Add(cup, ItemType.CUP);
+            Dictionary<string, ItemType> dictcup = new Dictionary<string, ItemType>()
+            {
+                ["cup"] = ItemType.CUP,
+                ["18"] = ItemType.CUP,
+                [cup] = ItemType.CUP
+            };
             info.Accessories.Add(dictcup);
 
             var disarm = ItemType.DISARMER.ToString().ToLower();
-            Dictionary<string, ItemType> disarmer = new Dictionary<string, ItemType>();
-            disarmer.Add("disarm", ItemType.DISARMER);
-            disarmer.Add("disarmer", ItemType.DISARMER);
-            disarmer.Add("27", ItemType.DISARMER);
-            disarmer.Add("detainer", ItemType.DISARMER);
-            disarmer.Add("detain", ItemType.DISARMER);
-            disarmer.Add(disarm, ItemType.DISARMER);
+            Dictionary<string, ItemType> disarmer = new Dictionary<string, ItemType>()
+            {
+                ["disarm"] = ItemType.DISARMER,
+                ["disarmer"] = ItemType.DISARMER,
+                ["detainer"] = ItemType.DISARMER,
+                ["detain"] = ItemType.DISARMER,
+                ["handcuffs"] = ItemType.DISARMER,
+                ["27"] = ItemType.DISARMER,
+                [disarm] = ItemType.DISARMER
+            };
             info.Accessories.Add(disarmer);
 
             var fusion = ItemType.DROPPED_5.ToString().ToLower();
-            Dictionary<string, ItemType> e11ammo = new Dictionary<string, ItemType>();
-            e11ammo.Add("fusion", ItemType.DROPPED_5);
-            e11ammo.Add("mtfammo", ItemType.DROPPED_5);
-            e11ammo.Add("ntfammo", ItemType.DROPPED_5);
-            e11ammo.Add("e11ammo", ItemType.DROPPED_5);
-            e11ammo.Add("ammo5", ItemType.DROPPED_5);
-            e11ammo.Add("556mm", ItemType.DROPPED_5);
-            e11ammo.Add("22", ItemType.DROPPED_5);
-            e11ammo.Add(fusion, ItemType.DROPPED_5);
+            Dictionary<string, ItemType> e11ammo = new Dictionary<string, ItemType>()
+            {
+                ["fusion"] = ItemType.DROPPED_5,
+                ["mtfammo"] = ItemType.DROPPED_5,
+                ["ntfammo"] = ItemType.DROPPED_5,
+                ["e11ammo"] = ItemType.DROPPED_5,
+                ["ammo5"] = ItemType.DROPPED_5,
+                ["556mm"] = ItemType.DROPPED_5,
+                ["22"] = ItemType.DROPPED_5,
+                [fusion] = ItemType.DROPPED_5
+            };
             info.Ammo.Add(e11ammo);
 
             var pat = ItemType.DROPPED_7.ToString().ToLower();
-            Dictionary<string, ItemType> mm9 = new Dictionary<string, ItemType>();
-            mm9.Add("9mm", ItemType.DROPPED_7);
-            mm9.Add("pat", ItemType.DROPPED_7);
-            mm9.Add("ammo7", ItemType.DROPPED_7);
-            mm9.Add("29", ItemType.DROPPED_7);
-            mm9.Add(pat, ItemType.DROPPED_7);
+            Dictionary<string, ItemType> mm9 = new Dictionary<string, ItemType>()
+            {
+                ["9mm"] = ItemType.DROPPED_7,
+                ["pat"] = ItemType.DROPPED_7,
+                ["ammo7"] = ItemType.DROPPED_7,
+                ["29"] = ItemType.DROPPED_7,
+                [pat] = ItemType.DROPPED_7
+            };
             info.Ammo.Add(mm9);
 
             var rat = ItemType.DROPPED_9.ToString().ToLower();
-            Dictionary<string, ItemType> mm762 = new Dictionary<string, ItemType>();
-            mm762.Add("762mm", ItemType.DROPPED_9);
-            mm762.Add("rat", ItemType.DROPPED_9);
-            mm762.Add("ammo9", ItemType.DROPPED_9);
-            mm762.Add("28", ItemType.DROPPED_9);
-            mm762.Add(rat, ItemType.DROPPED_9);
+            Dictionary<string, ItemType> mm762 = new Dictionary<string, ItemType>()
+            {
+                ["762mm"] = ItemType.DROPPED_9,
+                ["rat"] = ItemType.DROPPED_9,
+                ["ammo9"] = ItemType.DROPPED_9,
+                ["28"] = ItemType.DROPPED_9,
+                [rat] = ItemType.DROPPED_9
+            };
             info.Ammo.Add(mm762);
 
             var e11 = ItemType.E11_STANDARD_RIFLE.ToString().ToLower();
-            Dictionary<string, ItemType> esr = new Dictionary<string, ItemType>();
-            esr.Add("mtfgun", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("ntfgun", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilon", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilon11", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilonstandard", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilon11standard", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilonstandardrifle", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilonrifle", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilon11standardrifle", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("epsilon11rifle", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("esr", ItemType.E11_STANDARD_RIFLE);
-            esr.Add("20", ItemType.E11_STANDARD_RIFLE);
-            esr.Add(e11, ItemType.E11_STANDARD_RIFLE);
+            Dictionary<string, ItemType> esr = new Dictionary<string, ItemType>()
+            {
+                ["mtfgun"] = ItemType.E11_STANDARD_RIFLE,
+                ["ntfgun"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilon"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilon11"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilonstandard"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilon11standard"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilonstandardrifle"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilon11standardrifle"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilonrifle"] = ItemType.E11_STANDARD_RIFLE,
+                ["epsilon11rifle"] = ItemType.E11_STANDARD_RIFLE,
+                ["esr"] = ItemType.E11_STANDARD_RIFLE,
+                ["20"] = ItemType.E11_STANDARD_RIFLE,
+                [e11] = ItemType.E11_STANDARD_RIFLE
+            };
             info.Weapons.Add(esr);
 
             var kc_fm = ItemType.FACILITY_MANAGER_KEYCARD.ToString().ToLower();
-            Dictionary<string, ItemType> red = new Dictionary<string, ItemType>();
-            red.Add("redcard", ItemType.FACILITY_MANAGER_KEYCARD);
-            red.Add("red", ItemType.FACILITY_MANAGER_KEYCARD);
-            red.Add("facilitymanager", ItemType.FACILITY_MANAGER_KEYCARD);
-            red.Add("kc-fm", ItemType.FACILITY_MANAGER_KEYCARD);
-            red.Add("9", ItemType.FACILITY_MANAGER_KEYCARD);
-            red.Add(kc_fm, ItemType.FACILITY_MANAGER_KEYCARD);
+            Dictionary<string, ItemType> red = new Dictionary<string, ItemType>()
+            {
+                ["9"] = ItemType.FACILITY_MANAGER_KEYCARD,
+                ["red"] = ItemType.FACILITY_MANAGER_KEYCARD,
+                ["kc=fm"] = ItemType.FACILITY_MANAGER_KEYCARD,
+                ["redcard"] = ItemType.FACILITY_MANAGER_KEYCARD,
+                [kc_fm] = ItemType.FACILITY_MANAGER_KEYCARD
+            };
             info.Keycards.Add(red);
 
             var fb = ItemType.FLASHBANG.ToString().ToLower();
-            Dictionary<string, ItemType> sg = new Dictionary<string, ItemType>();
-            sg.Add("flashbang", ItemType.FLASHBANG);
-            sg.Add("flashgrenade", ItemType.FLASHBANG);
-            sg.Add("stungrenade", ItemType.FLASHBANG);
-            sg.Add("stun", ItemType.FLASHBANG);
-            sg.Add("fb", ItemType.FLASHBANG);
-            sg.Add("26", ItemType.FLASHBANG);
-            sg.Add(fb, ItemType.FLASHBANG);
+            Dictionary<string, ItemType> sg = new Dictionary<string, ItemType>()
+            {
+                ["26"] = ItemType.FLASHBANG,
+                ["fb"] = ItemType.FLASHBANG,
+                ["stun"] = ItemType.FLASHBANG,
+                ["flashbang"] = ItemType.FLASHBANG,
+                ["stungrenade"] = ItemType.FLASHBANG,
+                ["flashgrenade"] = ItemType.FLASHBANG,
+                [fb] = ItemType.FLASHBANG
+            };
             info.Weapons.Add(sg);
 
             var fl = ItemType.FLASHLIGHT.ToString().ToLower();
@@ -501,6 +590,7 @@ namespace Smod.TestPlugin
                 ["o5"] = ItemType.O5_LEVEL_KEYCARD,
                 ["kc-o5"] = ItemType.O5_LEVEL_KEYCARD,
                 ["black"] = ItemType.O5_LEVEL_KEYCARD,
+                ["blackcard"] = ItemType.O5_LEVEL_KEYCARD,
                 ["11"] = ItemType.O5_LEVEL_KEYCARD,
                 [kc_o5] = ItemType.O5_LEVEL_KEYCARD
             };
@@ -633,7 +723,7 @@ namespace Smod.TestPlugin
 
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
-            #region assign player info
+            #region dare player res
             string player = ev.Player.Name;
             string rank = ev.Player.GetRankName();
             var team = ev.Player.TeamRole.Role;
@@ -674,25 +764,28 @@ namespace Smod.TestPlugin
             string cl = null;
             string[] items = null;
 
-            Hashtable table = null;
+            Dictionary<string, List<string>> table = new Dictionary<string, List<string>>();
 
-            FileStream fs = new FileStream(path, FileMode.Open);
-            try
+            if (File.Exists(path))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                table = (Hashtable)formatter.Deserialize(fs);
-            }
-            catch (SerializationException e)
-            {
-                plugin.Error("Failed to load file: " + e);
-                throw;
-            }
-            finally
-            {
-                fs.Close();
+                FileStream fs = new FileStream(path, FileMode.Open);
+                try
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    table = (Dictionary<string, List<string>>)formatter.Deserialize(fs);
+                }
+                catch (SerializationException e)
+                {
+                    plugin.Error("Failed to load file: " + e);
+                    throw;
+                }
+                finally
+                {
+                    fs.Close();
+                }
             }
 
-            foreach (DictionaryEntry x in table)
+            foreach (KeyValuePair<string, List<string>> x in table)
             {
                 rankName = x.Key.ToString();
                 clitems.Add(x.Value.ToString());
