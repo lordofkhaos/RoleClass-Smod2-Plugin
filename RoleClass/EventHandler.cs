@@ -14,7 +14,7 @@ using System.Runtime.Serialization;
 //using System.Xml;
 //using System.Xml.Serialization;
 
-namespace Smod.TestPlugin
+namespace RoleClass
 {
     class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSetRole
     {
@@ -703,7 +703,7 @@ namespace Smod.TestPlugin
                 }
                 else
                 {
-                    plugin.Info("Plugin dev Lord of Khaos joined the server!");
+                    plugin.Info("Plugin dev " + ev.Player.Name + "joined the server!");
                 }
             }
             else

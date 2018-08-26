@@ -11,12 +11,12 @@ using System.Collections.Generic;
 //using System.Xml.Serialization;
 using System.Threading;
 
-namespace ExamplePlugin
+namespace RoleClass
 {
     class Commands : ICommandHandler
     {
-        private ExamplePlugin plugin;
-        public void SaveCommand(ExamplePlugin plugin)
+        private RoleClass plugin;
+        public void SaveCommand(RoleClass plugin)
         {
             this.plugin = plugin;
         }
@@ -31,18 +31,6 @@ namespace ExamplePlugin
         {
             return "SAVE" + " RANK " + "CLASS " + "ITEMS LIST";
         }
-
-
-        //public class XRanks
-        //{
-        //    public string RankName { get; set; }
-        //    public string Class { get; set; }
-        //    public string[] Items { get; set; }
-        //    public string ItemNo { get; set; }
-        //    public string Item { get; set; }
-        //}
-
-
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
@@ -96,7 +84,7 @@ namespace ExamplePlugin
                         for (int i = 0; i < itemarray.Length; i++)
                         {
                             int j = i + 1;
-                            itemarray[i] = classitems[j];
+                            classitems.Add(itemarray[i]);
 
                         }
 

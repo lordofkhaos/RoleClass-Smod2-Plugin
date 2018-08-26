@@ -1,4 +1,4 @@
-﻿using Smod.TestPlugin;
+﻿using RoleClass;
 using Smod2;
 using Smod2.Attributes;
 using Smod2.EventHandlers;
@@ -8,19 +8,19 @@ using System.IO;
 using System.Xml;
 using System.Text;
 
-namespace ExamplePlugin
+namespace RoleClass
 {
 	[PluginDetails(
 		author = "lordofkhaos",
 		name = "RoleClass",
 		description = "Give certain items to roles",
-		id = "lordofkhaos.roleclass",
+		id = "com.lordofkhaos.roleclass",
 		version = "3.0",
 		SmodMajor = 3,
 		SmodMinor = 1,
 		SmodRevision = 12
 		)]
-	class ExamplePlugin : Plugin
+	class RoleClass : Plugin
 	{
 		public override void OnDisable()
         {
@@ -37,21 +37,11 @@ namespace ExamplePlugin
 			// Register Events
 			this.AddEventHandlers(new EventHandler(this));
             // Register Commands
-            //this.AddCommand("hello", new Commands(this));
             this.AddCommand("save", new Commands());
             // Register config settings
             this.AddConfig(new Smod2.Config.ConfigSetting("k_enable_save", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass 'Save' command"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
-            // Register json file
-            string path = @"..\config.xml";
-            if (!File.Exists(path))
-            {
-                
-            }
-            else
-            {
-                
-            }
+            // tba
 		}
 	}
 }
