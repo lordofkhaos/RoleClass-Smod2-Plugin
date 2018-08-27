@@ -39,8 +39,8 @@ namespace RoleClass
             // Register Commands
             this.AddCommand("save", new Commands());
             // Register config settings
-            this.AddConfig(new Smod2.Config.ConfigSetting("k_enable_save", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass 'Save' command"));
-            this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>(), true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass 'Save' command"));
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>() {}, true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // tba
 		}
 	}

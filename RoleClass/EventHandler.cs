@@ -1,4 +1,5 @@
-﻿using Smod2;
+﻿using RoleClass;
+using Smod2;
 using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
@@ -16,6 +17,19 @@ using System.Runtime.Serialization;
 
 namespace RoleClass
 {
+    public class Info
+    {
+        public List<Dictionary<string, Role>> SCPs { get; set; }
+        public List<Dictionary<string, Role>> Humans { get; set; }
+        public List<Dictionary<string, Role>> Other { get; set; }
+        public List<List<Dictionary<string, Role>>> Cls { get; set; }
+        public List<Dictionary<string, ItemType>> Keycards { get; set; }
+        public List<Dictionary<string, ItemType>> Weapons { get; set; }
+        public List<Dictionary<string, ItemType>> Ammo { get; set; }
+        public List<Dictionary<string, ItemType>> Accessories { get; set; }
+        public List<List<Dictionary<string, ItemType>>> Masteritems { get; set; }
+    }
+
     class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSetRole
     {
         readonly Plugin plugin;
@@ -26,23 +40,10 @@ namespace RoleClass
             this.plugin = plugin;
         }
 
-        public class Info
+        public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
         {
-            public List<Dictionary<string, Role>> SCPs { get; set; }
-            public List<Dictionary<string, Role>> Humans { get; set; }
-            public List<Dictionary<string, Role>> Other { get; set; }
-            public List<List<Dictionary<string, Role>>> Cls { get; set; }
-            public List<Dictionary<string, ItemType>> Keycards { get; set; }
-            public List<Dictionary<string, ItemType>> Weapons { get; set; }
-            public List<Dictionary<string, ItemType>> Ammo { get; set; }
-            public List<Dictionary<string, ItemType>> Accessories { get; set; }
-            public List<List<Dictionary<string, ItemType>>> Masteritems { get; set; }
-        }
-
-        public void OnRoundStart(RoundStartEvent ev)
-        {
+            string ip = ev.Server.IpAddress;
             Info info = new Info();
-            string[] players = new string[ev.Server.GetPlayers().Count];
             #region dare ordini agnomes
             // prae perficio
             info.SCPs = new List<Dictionary<string, Role>>();
@@ -674,22 +675,26 @@ namespace RoleClass
             info.Masteritems.Add(info.Ammo);
             info.Masteritems.Add(info.Keycards);
             info.Masteritems.Add(info.Weapons);
-
-            foreach (List<Dictionary<string, ItemType>> x in info.Masteritems)
-            {
-                foreach (Dictionary<string, ItemType> v in x)
-                {
-                    string[] m = v.Keys.ToArray();
-                    foreach (string s in m)
-                        plugin.Debug(s);
-                    string n = v.Values.ToString();
-                    plugin.Debug(n);
-                }
-                
-            }
             #endregion
-            //string[] clss = cls.ToArray();
-            //foreach (string line in clss) { plugin.Debug(line); }
+        }
+
+        public void OnRoundStart(RoundStartEvent ev)
+        {
+            //Info info = new Info();
+            string[] players = new string[ev.Server.GetPlayers().Count];
+
+            //foreach (List<Dictionary<string, ItemType>> x in info.Masteritems)
+            //{
+            //    foreach (Dictionary<string, ItemType> v in x)
+            //    {
+            //        string[] m = v.Keys.ToArray();
+            //        foreach (string s in m)
+            //            plugin.Debug(s);
+            //        string n = v.Values.ToString();
+            //        plugin.Debug(n);
+            //    }
+
+            //}
         }
 
         public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -723,7 +728,8 @@ namespace RoleClass
 
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
-            #region dare player res
+            // this stuff is fine
+            #region dare player nominibus res
             string player = ev.Player.Name;
             string rank = ev.Player.GetRankName();
             var team = ev.Player.TeamRole.Role;
@@ -758,49 +764,123 @@ namespace RoleClass
                 }
             }
 
-            string rankName = null;
-            string[] classitems = null;
-            List<string> clitems = new List<string>();
-            string cl = null;
-            string[] items = null;
+            //this stuff is broken somewhere
+            List<string> rankNames = new List<string>();
+            List<string> classitems = new List<string>();
+            //List<string> clitems = new List<string>();
+            IEnumerable<string> items = new List<string>();
 
             Dictionary<string, List<string>> table = new Dictionary<string, List<string>>();
 
+            BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(path))
             {
-                FileStream fs = new FileStream(path, FileMode.Open);
+                StreamReader sr = new StreamReader(path);
                 try
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    table = (Dictionary<string, List<string>>)formatter.Deserialize(fs);
+                    table = (Dictionary<string, List<string>>) formatter.Deserialize(sr.BaseStream);
                 }
                 catch (SerializationException e)
                 {
-                    plugin.Error("Failed to load file: " + e);
+                    plugin.Error( "Encountered exception: " + e.Message );
                     throw;
                 }
                 finally
                 {
-                    fs.Close();
+                    sr.Close();
                 }
             }
 
             foreach (KeyValuePair<string, List<string>> x in table)
             {
-                rankName = x.Key.ToString();
-                clitems.Add(x.Value.ToString());
-            }
+                rankNames.Add(x.Key);
+                classitems.Add(x.Value.ToString());
 
-            classitems = clitems.ToArray();
-            cl = classitems[0];
+                string cl = classitems[0];
 
-            items = classitems.Skip(1).ToArray();
+                items = classitems.Skip(1);
 
-            Info info = new Info();
+                int PlayerItemCount(Player pl)
+                {
+                    int itemInt = 0;
+                    foreach (Item item in pl.GetInventory())
+                        if (item.ItemType != ItemType.NULL)
+                            itemInt++;
+                    return itemInt;
+                }
 
-            foreach (Dictionary<string, Role> xm in info.Humans)
-            {
+                Info info = new Info();
 
+                foreach (Dictionary<string, Role> xm in info.Humans)
+                {
+                    Role myRole;
+                    if (xm.TryGetValue(cl, out myRole))
+                    {
+                        foreach (string item in items)
+                        {
+                            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
+                            {
+                                foreach (Dictionary<string, ItemType> v in list)
+                                {
+                                    ItemType myItem;
+                                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole && PlayerItemCount(ev.Player) != 8)
+                                        ev.Player.GiveItem(myItem);
+                                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole && PlayerItemCount(ev.Player) == 8)
+                                    {
+                                        Vector myPos = ev.Player.GetPosition();
+                                        Vector myRot = ev.Player.GetRotation();
+                                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (Dictionary<string, Role> j in info.SCPs)
+                {
+                    Role myRole;
+                    if (j.TryGetValue(cl, out myRole))
+                    {
+                        foreach (string item in items)
+                        {
+                            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
+                            {
+                                foreach (Dictionary<string, ItemType> v in list)
+                                {
+                                    ItemType myItem;
+                                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole)
+                                    {
+                                        Vector myPos = ev.Player.GetPosition();
+                                        Vector myRot = ev.Player.GetRotation();
+                                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (Dictionary<string, Role> g in info.Other)
+                {
+                    Role myRole;
+                    if (g.TryGetValue(cl, out myRole))
+                    {
+                        foreach (string item in items)
+                        {
+                            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
+                            {
+                                foreach (Dictionary<string, ItemType> v in list)
+                                {
+                                    if (ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole)
+                                    {
+                                        plugin.Warn("Trying to assign items to spectators....");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             //if (rank == rankName && cls.Contains(cl))

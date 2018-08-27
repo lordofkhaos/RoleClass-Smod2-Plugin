@@ -1,4 +1,5 @@
-﻿using Smod2.Commands;
+﻿using RoleClass;
+using Smod2.Commands;
 using Smod2;
 using Smod2.API;
 using System;
@@ -57,28 +58,19 @@ namespace RoleClass
                     if (args != null && args.Length > 2) 
                     {
                         int len = args.Length - 2;
-                        //string[] itemlist = new string[len];
                         List<string> itemlist = new List<string>();
-                        //List<int> itemno = new List<int>();
 
                         for (int i = 2; i < args.Length; i++)
                         {
-                            //int itemint = i - 2;
-                            //itemno.Add(itemint);
                             itemlist.Add(args[i]);
                         }
 
                         string[] itemarray = itemlist.ToArray();
 
-                        //List<string> itemnumbers = itemno.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                        //string[] itemnums = itemnumbers.ToArray();
-
                         List<string> classitems = new List<string>();
-                        //string[] classitems = { };
                         if (cl != null)
                         {
                             classitems.Add(cl);
-                            //classitems[0] = cl;
                         }
 
                         for (int i = 0; i < itemarray.Length; i++)
@@ -96,7 +88,24 @@ namespace RoleClass
                         BinaryFormatter formatter = new BinaryFormatter();
                         if (!File.Exists(path)) 
                         {
-                            //StreamWriter sw = new StreamWriter(path)
+                            StreamWriter sw = new StreamWriter(path);
+                            try
+                            {
+                                formatter.Serialize(sw.BaseStream, table);
+                                return new string[] { "Saved configuration for " + x + ":" + cl };
+                            }
+                            catch (SerializationException e)
+                            {
+                                return new string[] { "Encountered exception: " + e.Message };
+                                throw;
+                            }
+                            finally
+                            {
+                                sw.Close();
+                            }
+                        }
+                        else 
+                        { 
                             StreamWriter sw = new StreamWriter(path);
                             try
                             {
@@ -112,39 +121,8 @@ namespace RoleClass
                             {
                                 sw.Close();
                             }
+                            //return new string[] { "Saved configuration for " + x + ":" + cl };
                         }
-                        else 
-                        { 
-                            StreamWriter sw = new StreamWriter(path);
-                            try
-                            {
-                                formatter.Serialize(sw.BaseStream, table);
-                                //return new string[] { "Saved configuration for " + x + ":" + cl };
-                            }
-                            catch (SerializationException e)
-                            {
-                                return new string[] { "Encountered exception: " + e };
-                                throw;
-                            }
-                            finally
-                            {
-                                sw.Close();
-                            }
-                            return new string[] { "Saved configuration for " + x + ":" + cl };
-                        }
-
-                        //using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
-                        //{
-                        //    writer.Write(x);
-                        //    writer.Write(cl);
-                        //    foreach (string item in itemarray)
-                        //    {
-                        //        writer.Write(item);
-                        //    }
-                        //}
-
-
-
                     }
                     else
                     {
