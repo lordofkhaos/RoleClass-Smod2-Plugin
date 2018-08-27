@@ -708,7 +708,7 @@ namespace RoleClass
                 }
                 else
                 {
-                    plugin.Info("Plugin dev " + ev.Player.Name + "joined the server!");
+                    plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
                 }
             }
             else
@@ -736,7 +736,7 @@ namespace RoleClass
             #endregion
             string path = @"rc-config.dat";
             plugin.Debug("Player " + player + " rank: " + rank);
-            plugin.Debug("Player " + player + "team: " + team);
+            plugin.Debug("Player " + player + " team: " + team);
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
@@ -770,7 +770,7 @@ namespace RoleClass
             //List<string> clitems = new List<string>();
             IEnumerable<string> items = new List<string>();
 
-            Dictionary<string, List<string>> table = new Dictionary<string, List<string>>();
+            var table = new Dictionary<string, List<string>>();
 
             BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(path))
