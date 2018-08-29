@@ -32,14 +32,18 @@ namespace RoleClass
 			this.Info("RoleClass loaded successfully!");
 		}
 
+        private EventHandler events;
+
 		public override void Register()
 		{
+            events = new EventHandler(this);
 			// Register Events
-			this.AddEventHandlers(new EventHandler(this));
+            this.AddEventHandler(typeof(IEventHandlerPlayerJoin), events, Priority.Low);
+            this.AddEventHandler(typeof(IEventHandlerSetRole), events, Priority.Highest);
             // Register Commands
             this.AddCommand("save", new Commands());
             // Register config settings
-            this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass 'Save' command"));
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>() {}, true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // tba
 		}

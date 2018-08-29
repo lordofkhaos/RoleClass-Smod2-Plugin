@@ -85,42 +85,54 @@ namespace RoleClass
                             [x] = classitems
                         };
 
-                        BinaryFormatter formatter = new BinaryFormatter();
+                        IFormatter formatter = new BinaryFormatter();
                         if (!File.Exists(path)) 
                         {
-                            StreamWriter sw = new StreamWriter(path);
-                            try
+                            using (FileStream s = File.Open("dictionary.bin", FileMode.OpenOrCreate))
                             {
-                                formatter.Serialize(sw.BaseStream, table);
+                                formatter.Serialize(s, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
-                            catch (SerializationException e)
-                            {
-                                return new string[] { "Encountered exception: " + e.Message };
-                                throw;
-                            }
-                            finally
-                            {
-                                sw.Close();
-                            }
+                            //// old serialize
+                            //StreamWriter sw = new StreamWriter(path);
+                            //try
+                            //{
+                            //    formatter.Serialize(sw.BaseStream, table);
+                            //    return new string[] { "Saved configuration for " + x + ":" + cl };
+                            //}
+                            //catch (SerializationException e)
+                            //{
+                            //    return new string[] { "Encountered exception: " + e.Message };
+                            //    throw;
+                            //}
+                            //finally
+                            //{
+                            //    sw.Close();
+                            //}
                         }
                         else 
                         { 
-                            StreamWriter sw = new StreamWriter(path);
-                            try
+                            using (FileStream s = File.Open("dictionary.bin", FileMode.OpenOrCreate))
                             {
-                                formatter.Serialize(sw.BaseStream, table);
+                                formatter.Serialize(s, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
-                            catch (SerializationException e)
-                            {
-                                return new string[] { "Encountered exception: " + e };
-                                throw;
-                            }
-                            finally
-                            {
-                                sw.Close();
-                            }
+                            //// old serialize
+                            //StreamWriter sw = new StreamWriter(path);
+                            //try
+                            //{
+                            //    formatter.Serialize(sw.BaseStream, table);
+                            //    return new string[] { "Saved configuration for " + x + ":" + cl };
+                            //}
+                            //catch (SerializationException e)
+                            //{
+                            //    return new string[] { "Encountered exception: " + e };
+                            //    throw;
+                            //}
+                            //finally
+                            //{
+                            //    sw.Close();
+                            //}
                             //return new string[] { "Saved configuration for " + x + ":" + cl };
                         }
                     }

@@ -28,7 +28,7 @@ namespace RoleClass
         public Dictionary<string, ItemType> Accessories { get; set; }
     }
 
-    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerRoundStart, IEventHandlerSetRole
+    class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole
     {
         readonly Plugin plugin;
         //private Player player;
@@ -405,25 +405,6 @@ namespace RoleClass
             #endregion
         }
 
-        public void OnRoundStart(RoundStartEvent ev)
-        {
-            //Info info = new Info();
-            string[] players = new string[ev.Server.GetPlayers().Count];
-
-            //foreach (List<Dictionary<string, ItemType>> x in info.Masteritems)
-            //{
-            //    foreach (Dictionary<string, ItemType> v in x)
-            //    {
-            //        string[] m = v.Keys.ToArray();
-            //        foreach (string s in m)
-            //            plugin.Debug(s);
-            //        string n = v.Values.ToString();
-            //        plugin.Debug(n);
-            //    }
-
-            //}
-        }
-
         public void OnPlayerJoin(PlayerJoinEvent ev)
         {
             var s64 = ev.Player.SteamId;
@@ -513,84 +494,104 @@ namespace RoleClass
             if (File.Exists(path))
             {
                 plugin.Debug("8");
-                StreamReader sr = new StreamReader(path);
-                try
+
+                using (FileStream s = File.OpenRead("dictionary.bin"))
                 {
-                    plugin.Debug("9");
-                    table = (Dictionary<string, List<string>>) formatter.Deserialize(sr.BaseStream);
+                    table = (Dictionary<string, List<string>>)formatter.Deserialize(s);
                 }
-                catch (SerializationException e)
+                //check if it wokred
+                foreach (string key in table.Keys)
                 {
-                    plugin.Error( "Encountered exception: " + e.Message );
-                    throw;
+                    Console.WriteLine("Key = {0}, Value = {1}", key, table[key]);
+                    plugin.Debug("Key: " + key);
                 }
-                finally
+
+                //// old deserialzie
+                //StreamReader sr = new StreamReader(path);
+                //try
+                //{
+                //    plugin.Debug("9");
+                //    table = (Dictionary<string, List<string>>) formatter.Deserialize(sr.BaseStream);
+                //}
+                //catch (SerializationException e)
+                //{
+                //    plugin.Error( "Encountered exception: " + e.Message );
+                //    throw;
+                //}
+                //finally
+                //{
+                //    plugin.Debug("10");
+                //    sr.Close();
+                //}
+
+                foreach (KeyValuePair<string, List<string>> x in table)
                 {
-                    plugin.Debug("10");
-                    sr.Close();
-                }
+                    plugin.Debug(x.Key);
+                    plugin.Debug(x.Value.ToString());
+                    plugin.Debug("11");
+                    rankNames.Add(x.Key);
+                    classitems.Add(x.Value.ToString());
+
+                    string cl = classitems[0].ToString();
+
+                    items = classitems.Skip(1).ToList<string>();
+
+                    plugin.Debug("12");
+                    Info info = new Info();
+
+                    plugin.Debug("13");
+                    Role myHuman = Role.UNASSIGNED;
+                    Role mySCP = Role.UNASSIGNED;
+                    Role myRole = Role.UNASSIGNED;
+                    ItemType myItem = ItemType.NULL;
+                    //ItemType myKeycard = ItemType.NULL;
+                    //ItemType myWeapon = ItemType.NULL;
+                    //ItemType myAccessory = ItemType.NULL;
+
+                    plugin.Debug(cl);
+                    plugin.Debug("14");
+                    if (info.Humans.ContainsKey(cl))
+                        myHuman = info.Humans[cl];
+                    else if (info.SCPs.ContainsKey(cl))
+                        mySCP = info.SCPs[cl];
+                    else if (info.Other.ContainsKey(cl))
+                        myRole = info.Other[cl];
+                    else
+                        plugin.Warn("Class name not found!");
+
+                    plugin.Debug("15");
+                    foreach (string myRank in rankNames)
+                    {
+                        foreach (string item in items)
+                        {
+                            if (info.Keycards.ContainsKey(item))
+                                myItem = info.Keycards[item];
+                            else if (info.Weapons.ContainsKey(item))
+                                myItem = info.Weapons[item];
+                            else if (info.Accessories.ContainsKey(item))
+                                myItem = info.Accessories[item];
+
+                            plugin.Debug("16");
+                            if (PlayerItemCount(ev.Player) != 8 && ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myHuman)
+                                ev.Player.GiveItem(myItem);
+                            if (PlayerItemCount(ev.Player) == 8 && ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myHuman)
+                            {
+                                Vector myPos = ev.Player.GetPosition();
+                                Vector myRot = ev.Player.GetRotation();
+                                PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
+                            }
+                            if (ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == mySCP)
+                            {
+                                Vector myPos = ev.Player.GetPosition();
+                                Vector myRot = ev.Player.GetRotation();
+                                PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
+                            }
+                            if (ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myRole)
+                                plugin.Warn("Trying to give items to spectators is weird");
+                        }
+                    }
             }
 
-            foreach (KeyValuePair<string, List<string>> x in table)
-            {
-                plugin.Debug("11");
-                rankNames.Add(x.Key);
-                classitems.Add(x.Value.ToString());
-
-                string cl = classitems[0];
-
-                items = classitems.Skip(1);
-
-                plugin.Debug("12");
-                Info info = new Info();
-
-                plugin.Debug("13");
-                Role myHuman = Role.UNASSIGNED;
-                Role mySCP = Role.UNASSIGNED;
-                Role myRole = Role.UNASSIGNED;
-                ItemType myItem = ItemType.NULL;
-                //ItemType myKeycard = ItemType.NULL;
-                //ItemType myWeapon = ItemType.NULL;
-                //ItemType myAccessory = ItemType.NULL;
-
-                plugin.Debug("14");
-                if (info.Humans.ContainsKey(cl))
-                    myHuman = info.Humans[cl];
-                else if (info.SCPs.ContainsKey(cl))
-                    mySCP = info.SCPs[cl];
-                else if (info.Other.ContainsKey(cl))
-                    myRole = info.Other[cl];
-                else
-                    plugin.Warn("Class name not found!");
-
-                plugin.Debug("15");
-                foreach (string item in items)
-                {
-                    if (info.Keycards.ContainsKey(item))
-                        myItem = info.Keycards[item];
-                    else if (info.Weapons.ContainsKey(item))
-                        myItem = info.Weapons[item];
-                    else if (info.Accessories.ContainsKey(item))
-                        myItem = info.Accessories[item];
-
-                    plugin.Debug("16");
-                    if (PlayerItemCount(ev.Player) != 8 && ev.Player.GetUserGroup().Name == rank && ev.Player.TeamRole.Role == myHuman)
-                        ev.Player.GiveItem(myItem);
-                    if (PlayerItemCount(ev.Player) == 8 && ev.Player.GetUserGroup().Name == rank && ev.Player.TeamRole.Role == myHuman)
-                    {
-                        Vector myPos = ev.Player.GetPosition();
-                        Vector myRot = ev.Player.GetRotation();
-                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
-                    }
-                    if (ev.Player.GetUserGroup().Name == rank && ev.Player.TeamRole.Role == mySCP)
-                    {
-                        Vector myPos = ev.Player.GetPosition();
-                        Vector myRot = ev.Player.GetRotation();
-                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
-                    }
-                    if (ev.Player.GetUserGroup().Name == rank && ev.Player.TeamRole.Role == myRole)
-                        plugin.Warn("Trying to give items to spectators is weird");
-                }
                 //foreach (Dictionary<string, Role> xm in info.Humans)
                 //{
                 //    plugin.Debug("13");
