@@ -512,13 +512,13 @@ namespace RoleClass
                 foreach (KeyValuePair<string, List<string>> x in table)
                 {
                     plugin.Debug(x.Key);
-                    plugin.Debug(x.Value.ToString());
                     plugin.Debug("11");
                     rankNames.Add(x.Key);
-                    classitems.Add(x.Value.ToString());
+                    foreach (string y in x.Value)
+                        classitems.Add(y);
 
                     string cl = classitems[0].ToString();
-
+                    plugin.Debug(cl);
                     items = classitems.Skip(1).ToList<string>();
 
                     plugin.Debug("12");
