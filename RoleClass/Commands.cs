@@ -93,22 +93,6 @@ namespace RoleClass
                                 formatter.Serialize(s, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
                             }
-                            //// old serialize
-                            //StreamWriter sw = new StreamWriter(path);
-                            //try
-                            //{
-                            //    formatter.Serialize(sw.BaseStream, table);
-                            //    return new string[] { "Saved configuration for " + x + ":" + cl };
-                            //}
-                            //catch (SerializationException e)
-                            //{
-                            //    return new string[] { "Encountered exception: " + e.Message };
-                            //    throw;
-                            //}
-                            //finally
-                            //{
-                            //    sw.Close();
-                            //}
                         }
                         else 
                         { 

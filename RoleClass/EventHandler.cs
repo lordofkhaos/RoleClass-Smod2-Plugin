@@ -502,27 +502,12 @@ namespace RoleClass
                 //check if it wokred
                 foreach (string key in table.Keys)
                 {
-                    Console.WriteLine("Key = {0}, Value = {1}", key, table[key]);
-                    plugin.Debug("Key: " + key);
-                }
+                    plugin.Debug("Key = " + key + " Value = " + table[key]);
+                    List<string> m = table[key];
+                    foreach (string b in m)
+                        plugin.Debug(b);
 
-                //// old deserialzie
-                //StreamReader sr = new StreamReader(path);
-                //try
-                //{
-                //    plugin.Debug("9");
-                //    table = (Dictionary<string, List<string>>) formatter.Deserialize(sr.BaseStream);
-                //}
-                //catch (SerializationException e)
-                //{
-                //    plugin.Error( "Encountered exception: " + e.Message );
-                //    throw;
-                //}
-                //finally
-                //{
-                //    plugin.Debug("10");
-                //    sr.Close();
-                //}
+                }
 
                 foreach (KeyValuePair<string, List<string>> x in table)
                 {
@@ -590,82 +575,7 @@ namespace RoleClass
                                 plugin.Warn("Trying to give items to spectators is weird");
                         }
                     }
-            }
-
-                //foreach (Dictionary<string, Role> xm in info.Humans)
-                //{
-                //    plugin.Debug("13");
-                //    Role myRole;
-                //    if (xm.TryGetValue(cl, out myRole))
-                //    {
-                //        plugin.Debug("14");
-                //        foreach (string item in items)
-                //        {
-                //            plugin.Debug("15");
-                //            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
-                //            {
-                //                plugin.Debug("16");
-                //                foreach (Dictionary<string, ItemType> v in list)
-                //                {
-                //                    ItemType myItem;
-                //                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole && PlayerItemCount(ev.Player) != 8)
-                //                        ev.Player.GiveItem(myItem);
-                //                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole && PlayerItemCount(ev.Player) == 8)
-                //                    {
-                //                        Vector myPos = ev.Player.GetPosition();
-                //                        Vector myRot = ev.Player.GetRotation();
-                //                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-
-                //foreach (Dictionary<string, Role> j in info.SCPs)
-                //{
-                //    Role myRole;
-                //    if (j.TryGetValue(cl, out myRole))
-                //    {
-                //        foreach (string item in items)
-                //        {
-                //            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
-                //            {
-                //                foreach (Dictionary<string, ItemType> v in list)
-                //                {
-                //                    ItemType myItem;
-                //                    if (v.TryGetValue(item, out myItem) && ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole)
-                //                    {
-                //                        Vector myPos = ev.Player.GetPosition();
-                //                        Vector myRot = ev.Player.GetRotation();
-                //                        PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-
-                //foreach (Dictionary<string, Role> g in info.Other)
-                //{
-                //    Role myRole;
-                //    if (g.TryGetValue(cl, out myRole))
-                //    {
-                //        foreach (string item in items)
-                //        {
-                //            foreach (List<Dictionary<string, ItemType>> list in info.Masteritems)
-                //            {
-                //                foreach (Dictionary<string, ItemType> v in list)
-                //                {
-                //                    if (ev.Player.GetUserGroup().Name == x.Key && ev.Player.TeamRole.Role == myRole)
-                //                    {
-                //                        plugin.Warn("Trying to assign items to spectators....");
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
+                }
             }
 
         }

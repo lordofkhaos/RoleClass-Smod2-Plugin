@@ -10,8 +10,9 @@
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csproj.CoreCompileInputs.cache
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.dll
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.pdb
-/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csprojResolveAssemblyReference.cache
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Newtonsoft.Json.dll
 /Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/E:/SteamLibrary/steamapps/common/SCP Secret Laboratory2/sm_plugins/Newtonsoft.Json.xml
 /Users/Liam/Desktop/coding/ExamplePlugin/Output/RoleClass.dll
 /Users/Liam/Desktop/coding/ExamplePlugin/Output/RoleClass.pdb
+/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csprojAssemblyReference.cache
+/Users/Liam/Desktop/coding/ExamplePlugin/RoleClass/obj/Debug/RoleClass.csproj.CopyComplete
