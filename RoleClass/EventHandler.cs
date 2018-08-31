@@ -72,9 +72,7 @@ namespace RoleClass
             var team = ev.Player.TeamRole.Role;
             #endregion
             #region primus - config
-            string path = @"rc-config.dat";
-            plugin.Debug("Player " + player + " rank: " + rank);
-            plugin.Debug("Player " + player + " team: " + team);
+            string path = @"dictionary.bin";
             Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in dictionary)
@@ -97,24 +95,17 @@ namespace RoleClass
                         var itemType = (ItemType)m.Value;
                         ev.Player.GiveItem(itemType);
                         plugin.Debug("Player " + ev.Player.Name + " given item " + itemType);
-                        plugin.Debug(m.Key);
                     }
                 }
             }
             #endregion
 
-            //this stuff is broken somewhere
-            plugin.Debug("1");
             List<string> rankNames = new List<string>();
-            plugin.Debug("2");
             List<string> classitems = new List<string>();
             //List<string> clitems = new List<string>();
-            plugin.Debug("3");
             IEnumerable<string> items = new List<string>();
-            plugin.Debug("4");
 
             var table = new Dictionary<string, List<string>>();
-            plugin.Debug("5");
 
             int PlayerItemCount(Player pl)
             {
@@ -125,32 +116,17 @@ namespace RoleClass
                 return itemInt;
             }
 
-            plugin.Debug("6");
-
             BinaryFormatter formatter = new BinaryFormatter();
-            plugin.Debug("7");
             if (File.Exists(path))
             {
-                plugin.Debug("8");
 
                 using (FileStream s = File.OpenRead("dictionary.bin"))
                 {
                     table = (Dictionary<string, List<string>>)formatter.Deserialize(s);
                 }
-                //check if it wokred
-                foreach (string key in table.Keys)
-                {
-                    plugin.Debug("Key = " + key + " Value = " + table[key]);
-                    List<string> m = table[key];
-                    foreach (string b in m)
-                        plugin.Debug(b);
-
-                }
 
                 foreach (KeyValuePair<string, List<string>> x in table)
                 {
-                    plugin.Debug(x.Key);
-                    plugin.Debug("11");
                     rankNames.Add(x.Key);
                     foreach (string y in x.Value)
                         classitems.Add(y);
@@ -158,10 +134,7 @@ namespace RoleClass
                     string cl = classitems[0].ToString();
                     cl.Trim('-', '_');
                     cl.Replace("scp", "");
-                    plugin.Debug(cl);
                     items = classitems.Skip(1).ToList<string>();
-
-                    plugin.Debug("12");
 
                     Info info = new Info();
                     #region dare ordini agnomes
@@ -526,7 +499,6 @@ namespace RoleClass
                     info.Accessories[rad] = ItemType.RADIO;
                     #endregion
 
-                    plugin.Debug("13");
                     Role myHuman = Role.UNASSIGNED;
                     Role mySCP = Role.UNASSIGNED;
                     Role myRole = Role.UNASSIGNED;
@@ -535,40 +507,31 @@ namespace RoleClass
                     //ItemType myWeapon = ItemType.NULL;
                     //ItemType myAccessory = ItemType.NULL;
 
-                    plugin.Debug("14");
                     if (info.Humans.ContainsKey(cl))
                     {
                         myHuman = info.Humans[cl];
-                        plugin.Debug(myHuman.ToString());
                     }
                     else if (info.SCPs.ContainsKey(cl))
                     {
                         mySCP = info.SCPs[cl];
-                        plugin.Debug(mySCP.ToString());
                     }
                     else if (info.Other.ContainsKey(cl))
                     {
                         myRole = info.Other[cl];
-                        plugin.Debug(myRole.ToString());
                     }
                     else
                         plugin.Warn("Class name not found!");
 
-                    plugin.Debug("15");
                     foreach (string myRank in rankNames)
                     {
                         foreach (string item in items)
                         {
-                            plugin.Debug("16");
                             int h = 0;
                             if (info.Keycards.ContainsKey(item)) { h = 0; }
                             else if (info.Weapons.ContainsKey(item)) { h = 1; }
                             else if (info.Accessories.ContainsKey(item)) { h = 2; }
                             else if (info.Ammo.ContainsKey(item)) { h = 3; }
                             else { h = -1; }
-                            plugin.Debug(ev.Player.GetUserGroup().Name);
-                            plugin.Debug(ev.Player.GetRankName());
-                            plugin.Debug(ev.Player.TeamRole.Role.ToString());
                             bool A = true;
                             if (PlayerItemCount(ev.Player) == 8) { A = true; }
                             else { A = false; }
