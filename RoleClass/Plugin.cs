@@ -15,7 +15,7 @@ namespace RoleClass
 		name = "RoleClass",
 		description = "Give certain items to roles",
 		id = "com.lordofkhaos.roleclass",
-		version = "3.0",
+		version = "1.0",
 		SmodMajor = 3,
 		SmodMinor = 1,
 		SmodRevision = 12
