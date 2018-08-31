@@ -567,8 +567,16 @@ namespace RoleClass
                             else if (info.Ammo.ContainsKey(item)) { h = 3; }
                             else { h = -1; }
                             plugin.Debug(ev.Player.GetUserGroup().Name);
+                            plugin.Debug(ev.Player.GetRankName());
                             plugin.Debug(ev.Player.TeamRole.Role.ToString());
-                            if (PlayerItemCount(ev.Player) != 8 && ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myHuman)
+                            bool A = true;
+                            if (PlayerItemCount(ev.Player) == 8) { A = true; }
+                            else { A = false; }
+                            bool B = false;
+                            if (ev.Player.GetUserGroup().Name == myRank) { B = true; }
+                            else if (ev.Player.GetRankName() == myRank) { B = true; }
+                            else { B = false; }
+                            if (A == false && B == true && ev.Player.TeamRole.Role == myHuman)
                             {
                                 switch (h)
                                 {
@@ -598,14 +606,56 @@ namespace RoleClass
                                         break;
                                 }
                             }
-                            if (PlayerItemCount(ev.Player) == 8 && ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myHuman)
+                            if (A == true && B == true && ev.Player.TeamRole.Role == myHuman)
                             {
+                                switch (h)
+                                {
+                                    case 0:
+                                        myItem = info.Keycards[item];
+                                        break;
+                                    case 1:
+                                        myItem = info.Weapons[item];
+                                        break;
+                                    case 2:
+                                        myItem = info.Accessories[item];
+                                        break;
+                                    case 3:
+                                        myItem = info.Ammo[item];
+                                        break;
+                                    case -1:
+                                        plugin.Warn("Item not found!");
+                                        break;
+                                    default:
+                                        plugin.Warn("Item unavailable!");
+                                        break;
+                                }
                                 Vector myPos = ev.Player.GetPosition();
                                 Vector myRot = ev.Player.GetRotation();
                                 PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
                             }
-                            if (ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == mySCP)
+                            if (B == true && ev.Player.TeamRole.Role == mySCP)
                             {
+                                switch (h)
+                                {
+                                    case 0:
+                                        myItem = info.Keycards[item];
+                                        break;
+                                    case 1:
+                                        myItem = info.Weapons[item];
+                                        break;
+                                    case 2:
+                                        myItem = info.Accessories[item];
+                                        break;
+                                    case 3:
+                                        myItem = info.Ammo[item];
+                                        break;
+                                    case -1:
+                                        plugin.Warn("Item not found!");
+                                        break;
+                                    default:
+                                        plugin.Warn("Item unavailable!");
+                                        break;
+                                }
                                 Vector myPos = ev.Player.GetPosition();
                                 Vector myRot = ev.Player.GetRotation();
                                 PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
