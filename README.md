@@ -16,6 +16,7 @@ Navigate to your `config_gameplay.txt` file, and put the following in (anywhere)
 | k_global_give  | Dictionary  | **EMPTY** | Use this config option to give any role whatever item you want. Format: `role:item#`. A list of items is available on the Smod discord. NOTE: Affects globally (doesn't matter the class). |
 
 ### Commands
-| Command Name  | Arg | Arg | Arg | Description |
+| Command Name (Aliases) | Arg | Arg | Arg | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| save | rank  | class | itemlist | Use this command to save a configuration to a role. |
+| save (nentry, add) | rank  | class | itemlist | Use this command to save a configuration to a role. |
+| del (rentry, rem) | rank | class |  | Use this command to remove a previously created configuration. **COMING SOON** |
