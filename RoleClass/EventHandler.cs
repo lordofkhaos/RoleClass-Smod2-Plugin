@@ -93,7 +93,8 @@ namespace RoleClass
                     if (m.Key == rank)
                     {
                         var itemType = (ItemType)m.Value;
-                        ev.Player.GiveItem(itemType);
+                        ev.Items.Add(itemType);
+                        //ev.Player.GiveItem(itemType);
                         plugin.Debug("Player " + ev.Player.Name + " given item " + itemType);
                     }
                 }
@@ -545,15 +546,18 @@ namespace RoleClass
                                 {
                                     case 0:
                                         myItem = info.Keycards[item];
-                                        ev.Player.GiveItem(myItem);
+                                        ev.Items.Add(myItem);
+                                        //ev.Player.GiveItem(myItem);
                                         break;
                                     case 1:
                                         myItem = info.Weapons[item];
-                                        ev.Player.GiveItem(myItem);
+                                        ev.Items.Add(myItem);
+                                        //ev.Player.GiveItem(myItem);
                                         break;
                                     case 2:
                                         myItem = info.Accessories[item];
-                                        ev.Player.GiveItem(myItem);
+                                        ev.Items.Add(myItem);
+                                        //ev.Player.GiveItem(myItem);
                                         break;
                                     case 3:
                                         myItem = info.Ammo[item];
@@ -623,7 +627,7 @@ namespace RoleClass
                                 Vector myRot = ev.Player.GetRotation();
                                 PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
                             }
-                            if (ev.Player.GetUserGroup().Name == myRank && ev.Player.TeamRole.Role == myRole)
+                            if (B == true && ev.Player.TeamRole.Role == myRole)
                                 plugin.Warn("Trying to give items to spectators is weird");
                         }
                     }

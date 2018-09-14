@@ -7,7 +7,7 @@
     <ProjectGuid>{0952A53A-A70E-4DAA-86A6-6560F2F3607B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExamplePlugin</RootNamespace>
+    <RootNamespace>RoleClass</RootNamespace>
     <AssemblyName>RoleClass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -37,15 +37,16 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Smod2">
-      <HintPath>..\..\..\..\Downloads\Smod2.dll</HintPath>
+    <Reference Include="Smod2 (2)">
+      <HintPath>..\..\..\..\Downloads\Smod2 %282%29.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands.cs" />
+    <Compile Include="SaveCommand.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DeleteCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
