@@ -1,4 +1,4 @@
-using RoleClass;
+﻿using RoleClass;
 using RoleClass.Commands;
 using Smod2;
 using Smod2.Attributes;
@@ -45,6 +45,7 @@ namespace RoleClass
             this.AddCommands(new string[] { "save", "add", "nentry" }, new Commands.SaveCommand());
             //this.AddCommands(new string[] { "del", "rem", "rentry" }, new Commands.DeleteCommand());
             // Register config settings
+            //this.AddConfig(new Smod2.Config.ConfigSetting("k_whitelist", null, Smod2.Config.SettingType.LIST, true, ""));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>() { }, true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // tba

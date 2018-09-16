@@ -103,6 +103,7 @@ namespace RoleClass
 
             List<string> rankNames = new List<string>();
             List<string> classitems = new List<string>();
+            List<Item> useritems = new List<Item>();
             //List<string> clitems = new List<string>();
             IEnumerable<string> items = new List<string>();
 
@@ -546,21 +547,42 @@ namespace RoleClass
                                 {
                                     case 0:
                                         myItem = info.Keycards[item];
-                                        ev.Items.Add(myItem);
+                                        plugin.Debug(myItem.ToString());
+                                        foreach (Item t in ev.Player.GetInventory())
+                                        {
+                                            useritems.Add(t);
+                                        }
+                                        try { ev.Items.Add(myItem); }
+                                        catch (Exception e)
+                                        {
+                                            plugin.Error("Encountered exception: " + e);
+                                        }
+
                                         //ev.Player.GiveItem(myItem);
                                         break;
                                     case 1:
                                         myItem = info.Weapons[item];
-                                        ev.Items.Add(myItem);
+                                        plugin.Debug(myItem.ToString());
+                                        try { ev.Items.Add(myItem); }
+                                        catch (Exception e)
+                                        {
+                                            plugin.Error("Encountered exception: " + e);
+                                        }
                                         //ev.Player.GiveItem(myItem);
                                         break;
                                     case 2:
                                         myItem = info.Accessories[item];
-                                        ev.Items.Add(myItem);
+                                        plugin.Debug(myItem.ToString());
+                                        try { ev.Items.Add(myItem); }
+                                        catch (Exception e)
+                                        {
+                                            plugin.Error("Encountered exception: " + e);
+                                        }
                                         //ev.Player.GiveItem(myItem);
                                         break;
                                     case 3:
                                         myItem = info.Ammo[item];
+                                        plugin.Debug(myItem.ToString());
                                         Vector myPos = ev.Player.GetPosition();
                                         Vector myRot = ev.Player.GetRotation();
                                         PluginManager.Manager.Server.Map.SpawnItem(myItem, myPos, myRot);
