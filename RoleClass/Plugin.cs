@@ -16,7 +16,7 @@ namespace RoleClass
         name = "RoleClass",
         description = "Give certain items to roles",
         id = "com.lordofkhaos.roleclass",
-        version = "1.1",
+        version = "1.3",
         SmodMajor = 3,
         SmodMinor = 1,
         SmodRevision = 16
@@ -25,7 +25,7 @@ namespace RoleClass
     {
         public override void OnDisable()
         {
-            this.Info("Plugin disabled!");
+            this.Info("RoleClass disabled!");
         }
 
         public override void OnEnable()
@@ -48,6 +48,8 @@ namespace RoleClass
             //this.AddConfig(new Smod2.Config.ConfigSetting("k_whitelist", null, Smod2.Config.SettingType.LIST, true, ""));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>() { }, true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
+            // experimental config
+            this.AddConfig(new Smod2.Config.ConfigSetting("k_roleclass", string.Empty, Smod2.Config.SettingType.STRING, true, ""));
             // tba
         }
     }

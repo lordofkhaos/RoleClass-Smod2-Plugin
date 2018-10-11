@@ -51,7 +51,14 @@ namespace RoleClass.Commands
             if (args != null && args.Length > 0)
             {
                 string x = args[0].ToLower();
+                // cleanup old files
                 string path = @"rc-config.dat";
+                string path2 = @"dictionar.bin";
+                if (File.Exists(path))
+                    File.Delete(path);
+                if (File.Exists(path2))
+                    File.Delete(path2);
+                //
                 if (args.Length > 1)
                 {
                     string cl = args[1].ToLower();
@@ -86,9 +93,9 @@ namespace RoleClass.Commands
                         };
 
                         IFormatter formatter = new BinaryFormatter();
-                        if (!File.Exists(path))
+                        if (!File.Exists("roleclass.cfgbin"))
                         {
-                            using (FileStream s = File.Open("dictionary.bin", FileMode.OpenOrCreate))
+                            using (FileStream s = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
                             {
                                 formatter.Serialize(s, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
@@ -96,7 +103,7 @@ namespace RoleClass.Commands
                         }
                         else
                         {
-                            using (FileStream s = File.Open("dictionary.bin", FileMode.OpenOrCreate))
+                            using (FileStream s = File.Open("roleclass.cfgbin", FileMode.Append))
                             {
                                 formatter.Serialize(s, table);
                                 return new string[] { "Saved configuration for " + x + ":" + cl };
