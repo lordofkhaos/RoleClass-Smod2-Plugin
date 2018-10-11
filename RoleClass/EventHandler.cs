@@ -1,17 +1,17 @@
-﻿using RoleClass;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using RoleClass;
 using Smod2;
 using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using Smod2.EventSystem.Events;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 //using System.Xml;
 //using System.Xml.Serialization;
 
@@ -33,6 +33,9 @@ namespace RoleClass
         readonly Plugin plugin;
         //private Player player;
 
+        Dictionary<string, string> myGlobalGive { get; set;}
+        Dictionary<string, int> dict { get; set; }
+
         public EventHandler(Plugin plugin)
         {
             this.plugin = plugin;
@@ -41,6 +44,19 @@ namespace RoleClass
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
         {
             float time = ev.Server.Round.Duration;
+            myGlobalGive = plugin.GetConfigDict("k_global_give");
+            dict = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, string> x in myGlobalGive)
+            {
+                if (int.TryParse(x.Value, out int myValue))
+                {
+                    dict.Add(x.Key, myValue);
+                }
+                else
+                {
+                    plugin.Error(myValue + " is not a number!");
+                }
+            }
         }
 
         public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -70,21 +86,7 @@ namespace RoleClass
             string rank = ev.Player.GetRankName();
             var team = ev.Player.TeamRole.Role;
             #endregion
-            #region primus - config
-            string path = @"dictionary.bin";
-            Dictionary<string, string> dictionary = plugin.GetConfigDict("k_global_give");
-            Dictionary<string, int> dict = new Dictionary<string, int>();
-            foreach (KeyValuePair<string, string> x in dictionary)
-            {
-                if (int.TryParse(x.Value, out int myValue))
-                {
-                    dict.Add(x.Key, myValue);
-                }
-                else
-                {
-                    plugin.Error(myValue + " is not a number!");
-                }
-            }
+            string path = @"roleclass.cfgbin";
             foreach (KeyValuePair<string, int> m in dict)
             {
                 if (rank != null && team != Role.SPECTATOR)
@@ -94,11 +96,10 @@ namespace RoleClass
                         var itemType = (ItemType)m.Value;
                         ev.Items.Add(itemType);
                         //ev.Player.GiveItem(itemType);
-                        plugin.Debug("Player " + ev.Player.Name + " given item " + itemType);
+                        plugin.Debug("Player " + player + " given item " + itemType);
                     }
                 }
             }
-            #endregion
 
             List<string> rankNames = new List<string>();
             List<string> classitems = new List<string>();

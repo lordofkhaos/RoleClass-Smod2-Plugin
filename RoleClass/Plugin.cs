@@ -43,13 +43,13 @@ namespace RoleClass
             this.AddEventHandler(typeof(IEventHandlerSetRole), events, Priority.Highest);
             // Register Commands
             this.AddCommands(new string[] { "save", "add", "nentry" }, new Commands.SaveCommand());
-            //this.AddCommands(new string[] { "del", "rem", "rentry" }, new Commands.DeleteCommand());
             // Register config settings
             //this.AddConfig(new Smod2.Config.ConfigSetting("k_whitelist", null, Smod2.Config.SettingType.LIST, true, ""));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
             this.AddConfig(new Smod2.Config.ConfigSetting("k_global_give", new Dictionary<string, string>() { }, true, Smod2.Config.SettingType.DICTIONARY, true, "Roles and items"));
             // experimental config
             this.AddConfig(new Smod2.Config.ConfigSetting("k_roleclass", string.Empty, Smod2.Config.SettingType.STRING, true, ""));
+            //this.AddCommands(new string[] { "del", "rem", "rentry" }, new Commands.DeleteCommand());
             // tba
         }
     }

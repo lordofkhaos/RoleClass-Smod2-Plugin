@@ -1,16 +1,16 @@
-﻿using RoleClass;
-using Smod2.Commands;
-using Smod2;
-using Smod2.API;
-using System;
-using System.IO;
+﻿using System;
 using System.Collections;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 //using System.Xml;
 //using System.Xml.Serialization;
 using System.Threading;
+using RoleClass;
+using Smod2;
+using Smod2.API;
+using Smod2.Commands;
 
 namespace RoleClass.Commands
 {
@@ -50,7 +50,7 @@ namespace RoleClass.Commands
 
             if (args != null && args.Length > 0)
             {
-                string x = args[0].ToLower();
+                string trueRankName = args[0].ToLower();
                 // cleanup old files
                 string path = @"rc-config.dat";
                 string path2 = @"dictionar.bin";
@@ -61,10 +61,12 @@ namespace RoleClass.Commands
                 //
                 if (args.Length > 1)
                 {
+                    // parse class
                     string cl = args[1].ToLower();
                     if (args != null && args.Length > 2)
                     {
                         int len = args.Length - 2;
+                        // parse items
                         List<string> itemlist = new List<string>();
 
                         for (int i = 2; i < args.Length; i++)
@@ -89,7 +91,7 @@ namespace RoleClass.Commands
 
                         Dictionary<string, List<string>> table = new Dictionary<string, List<string>>()
                         {
-                            [x] = classitems
+                            [trueRankName] = classitems
                         };
 
                         IFormatter formatter = new BinaryFormatter();
@@ -98,32 +100,20 @@ namespace RoleClass.Commands
                             using (FileStream s = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
                             {
                                 formatter.Serialize(s, table);
-                                return new string[] { "Saved configuration for " + x + ":" + cl };
+                                return new string[] { "Saved configuration for " + trueRankName + ":" + cl };
                             }
                         }
-                        else
+                        using (FileStream s = File.Open("roleclass.cfgbin", FileMode.Append))
                         {
-                            using (FileStream s = File.Open("roleclass.cfgbin", FileMode.Append))
-                            {
-                                formatter.Serialize(s, table);
-                                return new string[] { "Saved configuration for " + x + ":" + cl };
-                            }
+                            formatter.Serialize(s, table);
+                            return new string[] { "Saved configuration for " + trueRankName + ":" + cl };
                         }
                     }
-                    else
-                    {
-                        return new string[] { GetUsage() };
-                    }
-                }
-                else
-                {
                     return new string[] { GetUsage() };
                 }
-            }
-            else
-            {
                 return new string[] { GetUsage() };
             }
+            return new string[] { GetUsage() };
 
         }
     }
