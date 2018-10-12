@@ -33,8 +33,8 @@ namespace RoleClass
         readonly Plugin plugin;
         //private Player player;
 
-        Dictionary<string, string> myGlobalGive { get; set;}
-        Dictionary<string, int> dict { get; set; }
+        private Dictionary<string, string> myGlobalGive = new Dictionary<string, string>();
+        private Dictionary<string, int> glabalGiveSettings = new Dictionary<string, int>();
 
         public EventHandler(Plugin plugin)
         {
@@ -45,12 +45,12 @@ namespace RoleClass
         {
             float time = ev.Server.Round.Duration;
             myGlobalGive = plugin.GetConfigDict("k_global_give");
-            dict = new Dictionary<string, int>();
+            glabalGiveSettings = new Dictionary<string, int>();
             foreach (KeyValuePair<string, string> x in myGlobalGive)
             {
                 if (int.TryParse(x.Value, out int myValue))
                 {
-                    dict.Add(x.Key, myValue);
+                    glabalGiveSettings.Add(x.Key, myValue);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace RoleClass
             var team = ev.Player.TeamRole.Role;
             #endregion
             string path = @"roleclass.cfgbin";
-            foreach (KeyValuePair<string, int> m in dict)
+            foreach (KeyValuePair<string, int> m in glabalGiveSettings)
             {
                 if (rank != null && team != Role.SPECTATOR)
                 {
