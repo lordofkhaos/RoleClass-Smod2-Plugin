@@ -14,10 +14,10 @@ using Smod2.Commands;
 
 namespace RoleClass.Commands
 {
-	class SaveCommand : ICommandHandler
+	class ListCommand : ICommandHandler
 	{
 		private RoleClass plugin;
-		public void SaveCmd(RoleClass plugin)
+		public void ListCmd(RoleClass plugin)
 		{
 			this.plugin = plugin;
 		}
@@ -25,12 +25,12 @@ namespace RoleClass.Commands
 		public string GetCommandDescription()
 		{
 			// This prints when someone types HELP SAVE
-			return "Saves a set of items for the role/class.";
+			return "Deletes a set of items for the role/class.";
 		}
 
 		public string GetUsage()
 		{
-			return "SAVE" + " RANK " + "CLASS " + "ITEMS LIST";
+			return "DEL" + " RANK " + "CLASS";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -47,7 +47,7 @@ namespace RoleClass.Commands
 			//        //plugin.Debug(inf2);
 			//    }
 			//}
-
+			Dictionary<string, string> myDeserializedData = new Dictionary<string, string>();
 			if (args != null && args.Length > 0)
 			{
 				string trueRankName = args[0].ToLower();
@@ -59,62 +59,50 @@ namespace RoleClass.Commands
 				if (File.Exists(path2))
 					File.Delete(path2);
 				//
-				if (args.Length > 1)
+				// parse class
+				string trueClassName = args[1].ToLower();
+				IFormatter formatter = new BinaryFormatter();
+				List<string> configurations = new List<string>();
+				if (File.Exists("roleclass.cfgbin"))
 				{
-					// parse class
-					string trueClassName = args[1].ToLower();
-					if (args != null && args.Length > 2)
+					using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
 					{
-						int len = args.Length - 2;
-						// parse items
-						List<string> itemList = new List<string>();
-
-						int i = 2;
-						while (i < args.Length)
+						myDeserializedData = (Dictionary<string, string>)formatter.Deserialize(fileStream);
+					}
+					foreach (KeyValuePair<string, string> pair in myDeserializedData)
+					{
+						string myClassName = pair.Value.Substring(trueClassName.Length);
+						if (pair.Key == trueRankName && pair.Value.StartsWith(myClassName, StringComparison.Ordinal))
 						{
-							itemList.Add(args[i]);
-							i++;
-						}
-
-						string[] itemArray = itemList.ToArray();
-
-						List<string> classItems = new List<string>();
-						if (trueClassName != null)
-						{
-							classItems.Add(trueClassName);
-						}
-
-						i = 0;
-						while (i < itemArray.Length)
-						{
-							int j = i + 1;
-							classItems.Add(itemArray[i]);
-							i++;
-						}
-
-						Dictionary<string, List<string>> serializingData = new Dictionary<string, List<string>>()
-						{
-							[trueRankName] = classItems
-						};
-
-						IFormatter formatter = new BinaryFormatter();
-						if (!File.Exists("roleclass.cfgbin"))
-						{
-							using (FileStream fileSteam = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
-							{
-								formatter.Serialize(fileSteam, serializingData);
-								return new string[] { "Saved configuration for " + trueRankName + ":" + trueClassName };
-							}
-						}
-						using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.Append))
-						{
-							formatter.Serialize(fileStream, serializingData);
-							return new string[] { "Saved configuration for " + trueRankName + ":" + trueClassName };
+							configurations.Add(pair.Value);
 						}
 					}
-					return new string[] { GetUsage() };
+					string confClassName = string.Empty;
+					string confItems = string.Empty;
+					foreach (string configuration in configurations)
+					{
+						Aliases aliases = new Aliases();
+						int i = configuration.Length;
+						while (!aliases.Humans.ContainsKey(configuration) && !aliases.SCPs.ContainsKey(configuration) && aliases.Other.ContainsKey(configuration))
+						{
+							configuration.Remove(i);
+							i--;
+							if (i == 0)
+								break;
+						}
+						confClassName = configuration;
+					}
+					foreach (string configuration in configurations)
+					{
+						if (configuration.StartsWith(confClassName, StringComparison.Ordinal) && !string.IsNullOrEmpty(confClassName))
+							confItems = configuration.Replace(confClassName, "");
+					}
+					return new string[] { };
 				}
-				return new string[] { GetUsage() };
+				else
+				{
+					return new string[] { "No configuration file found!" };
+				}
 			}
 			return new string[] { GetUsage() };
 
