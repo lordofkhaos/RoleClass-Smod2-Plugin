@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using RoleClass;
 using Smod2;
 using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
-using Smod2.EventSystem.Events;
 //using System.Xml;
 //using System.Xml.Serialization;
 
@@ -54,26 +49,26 @@ namespace RoleClass
 					plugin.Error(intifiedValue + " is not a number!");
 			}
 
-			myRoleClass = plugin.GetConfigString("k_roleclass");
-			string[] rcArr = myRoleClass.Split(':'); // foreach entry
-			for (int i = 0; i < rcArr.Length; i++)
-			{
-				string[] entry = rcArr[i].Split(','); // split into role,class,[items]
-				IEnumerable<string> items = new List<string>();
-				string role = entry.First();
-				fullRoleClass.Add(role); // role is first
-				entry = entry.Where(r => r != entry[0]).ToArray();
-				string klasy = entry.First();
-				fullRoleClass.Add(klasy); // class is next
-				entry = entry.Where(r => r != entry[0]).ToArray();
-				string entryItems = entry.First(); // items yay
-				entryItems = string.Concat(entryItems.Split('['));
-				entryItems = entryItems.Trim('[').Trim(']');
-				string[] itemArr = entryItems.Split('.');
-				items = itemArr.Where(r => r != entry[0]);
+			//myRoleClass = plugin.GetConfigString("k_roleclass");
+			//string[] rcArr = myRoleClass.Split(':'); // foreach entry
+			//for (int i = 0; i < rcArr.Length; i++)
+			//{
+			//	string[] entry = rcArr[i].Split(','); // split into role,class,[items]
+			//	IEnumerable<string> items = new List<string>();
+			//	string role = entry.First();
+			//	fullRoleClass.Add(role); // role is first
+			//	entry = entry.Where(r => r != entry[0]).ToArray();
+			//	string klasy = entry.First();
+			//	fullRoleClass.Add(klasy); // class is next
+			//	entry = entry.Where(r => r != entry[0]).ToArray();
+			//	string entryItems = entry.First(); // items yay
+			//	entryItems = string.Concat(entryItems.Split('['));
+			//	entryItems = entryItems.Trim('[').Trim(']');
+			//	string[] itemArr = entryItems.Split('.');
+			//	items = itemArr.Where(r => r != entry[0]);
 
-				items.ToList().ForEach(x => fullRoleClass.Add(x));
-			}
+			//	items.ToList().ForEach(x => fullRoleClass.Add(x));
+			//}
 		}
 
 		public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -108,12 +103,12 @@ namespace RoleClass
 				var itemType = (ItemType)globalGivePair.Value;
 				ev.Items.Add(itemType);
 				//ev.Player.GiveItem(itemType);
-				plugin.Debug("Player " + player + " given item " + itemType);
+				plugin.Debug($"Player {player} given item {itemType}");
 			}
 
 			List<string> rankNames = new List<string>();
 			List<string> classItems = new List<string>();
-			List<Item> userItems = new List<Item>();
+			List<Smod2.API.Item> userItems = new List<Smod2.API.Item>();
 			//List<string> clitems = new List<string>();
 			IEnumerable<string> items = new List<string>();
 
@@ -123,12 +118,13 @@ namespace RoleClass
 			int PlayerItemCount(Player pl)
 			{
 				int itemInt = 0;
-				foreach (Item item in pl.GetInventory())
+				foreach (Smod2.API.Item item in pl.GetInventory())
 					if (item.ItemType != ItemType.NULL)
 						itemInt++;
 				return itemInt;
 			}
 
+			fullRoleClass = GetRoleClassConfig();
 			#region Read config entry
 			configData.Add(key: fullRoleClass[0], value: fullRoleClass.Skip(1).ToList<string>());
 
@@ -158,17 +154,11 @@ namespace RoleClass
 				//ItemType myAccessory = ItemType.NULL;
 
 				if (aliases.Humans.ContainsKey(assignedClass))
-				{
 					myHuman = aliases.Humans[assignedClass];
-				}
 				else if (aliases.SCPs.ContainsKey(assignedClass))
-				{
 					mySCP = aliases.SCPs[assignedClass];
-				}
 				else if (aliases.Other.ContainsKey(assignedClass))
-				{
 					myRole = aliases.Other[assignedClass];
-				}
 				else
 					plugin.Warn("Invalid class name!");
 
@@ -204,7 +194,7 @@ namespace RoleClass
 								case 0:
 									myItem = aliases.Keycards[item];
 									plugin.Debug(myItem.ToString());
-									foreach (Item playerItem in ev.Player.GetInventory())
+									foreach (Smod2.API.Item playerItem in ev.Player.GetInventory())
 									{
 										userItems.Add(playerItem);
 									}
@@ -395,7 +385,7 @@ namespace RoleClass
 									case 0:
 										myItem = aliases.Keycards[item];
 										plugin.Debug(myItem.ToString());
-										foreach (Item playerItem in ev.Player.GetInventory())
+										foreach (Smod2.API.Item playerItem in ev.Player.GetInventory())
 										{
 											userItems.Add(playerItem);
 										}
