@@ -309,10 +309,11 @@ namespace RoleClass
 							plugin.Warn("Trying to give items to spectators is weird");
 					}
 				}
+				// TODO: clear lists
 			}
 			#endregion
 
-			#region File config stuff
+			#region Binary file config stuff
 			BinaryFormatter formatter = new BinaryFormatter();
 			if (File.Exists(path))
 			{
