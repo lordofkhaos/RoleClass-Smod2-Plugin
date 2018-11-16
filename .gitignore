@@ -333,3 +333,4 @@ ASALocalRun/
 .DS_Store
 Output/
 RoleClass/obj/
+*.cache
