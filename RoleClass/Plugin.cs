@@ -1,16 +1,8 @@
-﻿using RoleClass;
-using RoleClass.Commands;
-using Smod2;
+﻿using Smod2;
 using Smod2.Attributes;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using System.Text;
-using Smod2.API;
-using System.Linq;
-using System;
 
 namespace RoleClass
 {
@@ -55,8 +47,6 @@ namespace RoleClass
 			this.AddCommands(new string[] { "del", "rem", "rentry" }, new Commands.DeleteCommand());
 			this.AddCommands(new string[] { "list", "entries" }, new Commands.ListCommand());
 			// tba
-
-
 		}
 	}
 }
