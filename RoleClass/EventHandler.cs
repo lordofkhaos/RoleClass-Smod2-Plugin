@@ -120,20 +120,13 @@ namespace RoleClass
 
 				var yeet = GLaDOS.GetRoleClassConfig();
 				#region Read config entry
-				configData.Add(key: yeet[0], value: yeet.Skip(1).ToList<string>());
-				foreach (KeyValuePair<string, List<string>> savedPair in configData)
+				//configData.Add(key: yeet[0], value: yeet.Skip(1).ToList<string>());
+				foreach (var savedPair in yeet)
 				{
 					rankNames.Add(savedPair.Key);
-					for (int i = 0, savedPairValueCount = savedPair.Value.Count; i < savedPairValueCount; i++)
-					{
-						string y = savedPair.Value[i];
-						classItems.Add(y);
-					}
-
-					string assignedClass = classItems[0].ToString();
+					string assignedClass = yeet.Keys.First().ToString();
 					assignedClass.Trim('-', '_');
 					assignedClass.Replace("scp", "");
-					items = classItems.Skip(1).ToList<string>();
 
 					Aliases aliases = new Aliases();
 					aliases.AssignAliases();
