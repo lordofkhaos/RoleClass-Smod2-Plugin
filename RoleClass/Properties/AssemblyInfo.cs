@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RoleClass")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle(MetaData.Name)]
+[assembly: AssemblyDescription(MetaData.Description)]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RoleClass")]
+[assembly: AssemblyCompany("Quantum Interactive Studios")]
+[assembly: AssemblyProduct(MetaData.Name)]
 [assembly: AssemblyCopyright("Copyright © lordofkhaos 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,5 +33,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(MetaData.MajorVersion + "."+ MetaData.MinorVersion + "." + MetaData.Build)]
+[assembly: AssemblyVersion(MetaData.MajorVersion + "." + MetaData.MinorVersion + "." + MetaData.Build)]
 [assembly: AssemblyFileVersion(MetaData.MajorVersion + "." + MetaData.MinorVersion + "." + MetaData.Build)]
