@@ -7,6 +7,7 @@ using Smod2;
 using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
+using RoleClass;
 //using System.Xml;
 //using System.Xml.Serialization;
 
@@ -115,19 +116,9 @@ namespace RoleClass
 			var deseralizedData = new Dictionary<string, List<string>>();
 			var configData = new Dictionary<string, List<string>>();
 
-			int PlayerItemCount(Player pl)
-			{
-				int itemInt = 0;
-				foreach (Smod2.API.Item item in pl.GetInventory())
-					if (item.ItemType != ItemType.NULL)
-						itemInt++;
-				return itemInt;
-			}
-
-			fullRoleClass = GetRoleClassConfig();
+			var yeet = GetRoleClassConfig();
 			#region Read config entry
-			configData.Add(key: fullRoleClass[0], value: fullRoleClass.Skip(1).ToList<string>());
-
+			configData.Add(key: yeet[0], value: yeet.Skip(1).ToList<string>());
 			foreach (KeyValuePair<string, List<string>> savedPair in configData)
 			{
 				rankNames.Add(savedPair.Key);
@@ -153,40 +144,31 @@ namespace RoleClass
 				//ItemType myWeapon = ItemType.NULL;
 				//ItemType myAccessory = ItemType.NULL;
 
-				if (aliases.Humans.ContainsKey(assignedClass))
-					myHuman = aliases.Humans[assignedClass];
-				else if (aliases.SCPs.ContainsKey(assignedClass))
-					mySCP = aliases.SCPs[assignedClass];
-				else if (aliases.Other.ContainsKey(assignedClass))
-					myRole = aliases.Other[assignedClass];
-				else
-					plugin.Warn("Invalid class name!");
+				int typeOfClass = GLaDOS.TypeOfPlayerClass(assignedClass);
+				switch (typeOfClass)
+				{
+					case 0:
+						myHuman = aliases.Humans[assignedClass];
+						break;
+					case 1:
+						mySCP = aliases.SCPs[assignedClass];
+						break;
+					case 2:
+						myRole = aliases.Other[assignedClass];
+						break;
+					default:
+						plugin.Warn("Invalid class name!");
+						break;
+				}
 
 				foreach (string myRank in rankNames)
 				{
 					foreach (string item in items)
 					{
-						int typeOfItem = aliases.Keycards.ContainsKey(item)
-							? 0
-							: aliases.Weapons.ContainsKey(item)
-							? 1
-							: aliases.Accessories.ContainsKey(item)
-							? 2
-							: aliases.Ammo.ContainsKey(item)
-							? 3
-							: -1;
-						bool isEightItems = true;
-						switch (PlayerItemCount(ev.Player))
-						{
-							case 8:
-								isEightItems = true;
-								break;
-							default:
-								isEightItems = false;
-								break;
-						}
-						bool isMyRank = false;
-						isMyRank = ev.Player.GetUserGroup().Name == myRank || ev.Player.GetRankName() == myRank;
+						int typeOfItem = GLaDOS.TypeOfItem(item);
+						bool isEightItems = GLaDOS.PlayerItemCount(ev.Player) == 8;
+
+						bool isMyRank = ev.Player.GetUserGroup().Name == myRank || ev.Player.GetRankName() == myRank;
 						if (isEightItems == false && isMyRank == true && ev.Player.TeamRole.Role == myHuman)
 						{
 							switch (typeOfItem)
@@ -357,17 +339,9 @@ namespace RoleClass
 					{
 						foreach (string item in items)
 						{
-							int typeOfItem = aliases.Keycards.ContainsKey(item)
-								? 0
-								: aliases.Weapons.ContainsKey(item)
-								? 1
-								: aliases.Accessories.ContainsKey(item)
-								? 2
-								: aliases.Ammo.ContainsKey(item)
-								? 3
-								: -1;
+							int typeOfItem = GLaDOS.TypeOfItem(item);
 							bool isEightItems = true;
-							switch (PlayerItemCount(ev.Player))
+							switch (GLaDOS.PlayerItemCount(ev.Player))
 							{
 								case 8:
 									isEightItems = true;
