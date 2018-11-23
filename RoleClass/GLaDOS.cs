@@ -8,60 +8,44 @@ namespace RoleClass
 {
 	public static class GLaDOS
 	{
-		private static readonly Plugin plugin;
 		private static Aliases aliases = new Aliases();
 
 
 		// read my pretty config entry
 		public static Dictionary<string, Dictionary<string, List<ItemType>>> GetRoleClassConfig()
 		{
-			aliases.AssignAliases();
-			var yeet = ConfigFile.GetDict("k_roleclass"); // format= string: list,of,strings
 			var endyeet = new Dictionary<string, Dictionary<string, List<ItemType>>>();
-			foreach (KeyValuePair<string, string> roleClassPair in yeet)
+			try
 			{
-				string rank = roleClassPair.Key;
-				string klasy = roleClassPair.Value.Split('[')[0];
-				string[] itemsArray = roleClassPair.Value.Split('[');
-				List<string> itemsButTheyreStrings = new List<string>(itemsArray).Skip(1).ToList();
-				List<ItemType> items = new List<ItemType>();
-				Dictionary<string, List<ItemType>> classItems = new Dictionary<string, List<ItemType>>();
-
-				try { itemsButTheyreStrings.Remove("]"); }
-				catch (Exception e) { plugin.Error($"[MESSAGE]: {e.Message}{Environment.NewLine}[STACKTRACE]: {e.StackTrace} "); }
-				foreach (string item in itemsButTheyreStrings)
+				aliases.AssignAliases();
+				var yeet = ConfigFile.GetDict("k_roleclass"); // format= string: list,of,strings
+				foreach (KeyValuePair<string, string> roleClassPair in yeet)
 				{
-					int typeOfItem = TypeOfItem(item);
-					ItemType myItem = ItemType.NULL;
-					switch (typeOfItem)
+					string rank = roleClassPair.Key;
+					string klasy = roleClassPair.Value.Split('[')[0];
+					string[] itemsArray = roleClassPair.Value.Split('[');
+					List<string> itemsButTheyreStrings = new List<string>(itemsArray).Skip(1).ToList();
+					List<ItemType> items = new List<ItemType>();
+					Dictionary<string, List<ItemType>> classItems = new Dictionary<string, List<ItemType>>();
+
+					itemsButTheyreStrings.Remove("]");
+					foreach (string item in itemsButTheyreStrings)
 					{
-						case 0:
-							myItem = aliases.Keycards[item];
-							break;
-						case 1:
-							myItem = aliases.Weapons[item];
-							break;
-						case 2:
-							myItem = aliases.Accessories[item];
-							break;
-						case 3:
-							myItem = aliases.Ammo[item];
-							break;
-						case -1:
-							plugin.Warn($"Item {item} not found!");
-							break;
-						default:
-							plugin.Warn($"Item {item} unavailable!");
-							break;
+						int typeOfItem = TypeOfItem(item);
+						ItemType myItem = ItemType.NULL;
+						myItem  = (ItemType)TypeOfItem(item);
+						items.Add(myItem);
 					}
-					items.Add(myItem);
+
+					classItems.Add(klasy, items);
+					endyeet.Add(rank, classItems);
 				}
-
-				classItems.Add(klasy, items);
-				endyeet.Add(rank, classItems);
+				return endyeet;
 			}
-
-			return endyeet;
+			catch (Exception e)
+			{
+				return endyeet;
+			}
 		}
 
 		public static int TypeOfItem(string item)
@@ -78,13 +62,7 @@ namespace RoleClass
 							  : -1;
 		}
 
-		public static int PlayerItemCount(Player pl)
-		{
-			int itemInt = 0;
-			var inv = pl.GetInventory().Where(item => item.ItemType != ItemType.NULL);
-			itemInt = inv.Count();
-			return itemInt;
-		}
+		public static int PlayerItemCount(Player pl) => pl.GetInventory().Count(item => item.ItemType != ItemType.NULL);
 
 		public static int TypeOfPlayerClass(string player)
 		{
