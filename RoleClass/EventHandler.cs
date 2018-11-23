@@ -119,6 +119,20 @@ namespace RoleClass
 				var configData = new Dictionary<string, List<string>>();
 
 				var yeet = GLaDOS.GetRoleClassConfig();
+				#region debug stuff
+				plugin.Debug(ev.Player.TeamRole.Role.ToString());
+				plugin.Debug("YEET COUNT: " + yeet.Count.ToString());
+				foreach (var y in yeet.Keys)
+					plugin.Debug("YEET KEY: " + y);
+				foreach (var x in yeet.Values)
+				{
+					foreach (var y in x.Keys)
+						plugin.Debug("YEET VALUE KEY: " + y);
+					foreach (var y in x.Values)
+						foreach (var z in y)
+							plugin.Debug("YEET VALUE VALUES: " + z.ToString());
+				}
+				#endregion
 				#region Read config entry
 				//configData.Add(key: yeet[0], value: yeet.Skip(1).ToList<string>());
 				foreach (var savedPair in yeet)
