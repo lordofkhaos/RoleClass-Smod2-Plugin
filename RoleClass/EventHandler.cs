@@ -84,7 +84,7 @@ namespace RoleClass
 				var deseralizedData = new Dictionary<string, List<string>>();
 				var configData = new Dictionary<string, List<string>>();
 
-				var yeet = GLaDOS.GetRoleClassConfig();
+				var yeet = Ancillary.ReturnSpecialConfig("k_roleclass");
 				#region debug stuff
 				plugin.Debug(ev.Player.TeamRole.Role.ToString());
 				plugin.Debug("YEET COUNT: " + yeet.Count.ToString());
@@ -108,8 +108,6 @@ namespace RoleClass
 					assignedClass.Trim('-', '_');
 					assignedClass.Replace("scp", "");
 
-					Aliases aliases = new Aliases();
-					aliases.AssignAliases();
 
 					Role myHuman = Role.UNASSIGNED;
 					Role mySCP = Role.UNASSIGNED;
@@ -119,17 +117,17 @@ namespace RoleClass
 					//ItemType myWeapon = ItemType.NULL;
 					//ItemType myAccessory = ItemType.NULL;
 
-					int typeOfClass = GLaDOS.TypeOfPlayerClass(assignedClass);
+					int typeOfClass = Ancillary.TypeOfPlayerClass(assignedClass);
 					switch (typeOfClass)
 					{
 						case 0:
-							myHuman = aliases.Humans[assignedClass];
+							myHuman = Aliases.Humans[assignedClass];
 							break;
 						case 1:
-							mySCP = aliases.SCPs[assignedClass];
+							mySCP = Aliases.SCPs[assignedClass];
 							break;
 						case 2:
-							myRole = aliases.Other[assignedClass];
+							myRole = Aliases.Other[assignedClass];
 							break;
 						default:
 							plugin.Warn("Invalid class name!");
@@ -140,8 +138,8 @@ namespace RoleClass
 					{
 						foreach (string item in items)
 						{
-							int typeOfItem = GLaDOS.TypeOfItem(item);
-							bool isEightItems = GLaDOS.PlayerItemCount(ev.Player) == 8;
+							int typeOfItem = Ancillary.TypeOfItem(item);
+							bool isEightItems = Ancillary.PlayerItemCount(ev.Player) == 8;
 
 							bool isMyRank = ev.Player.GetUserGroup().Name == myRank || ev.Player.GetRankName() == myRank;
 							if (isEightItems == false && isMyRank == true && ev.Player.TeamRole.Role == myHuman)
@@ -149,7 +147,7 @@ namespace RoleClass
 								switch (typeOfItem)
 								{
 									case 0:
-										myItem = aliases.Keycards[item];
+										myItem = Aliases.Keycards[item];
 										plugin.Debug(myItem.ToString());
 										foreach (Smod2.API.Item playerItem in ev.Player.GetInventory())
 										{
@@ -164,7 +162,7 @@ namespace RoleClass
 										//ev.Player.GiveItem(myItem);
 										break;
 									case 1:
-										myItem = aliases.Weapons[item];
+										myItem = Aliases.Weapons[item];
 										plugin.Debug(myItem.ToString());
 										try { ev.Items.Add(myItem); }
 										catch (Exception e)
@@ -174,7 +172,7 @@ namespace RoleClass
 										//ev.Player.GiveItem(myItem);
 										break;
 									case 2:
-										myItem = aliases.Accessories[item];
+										myItem = Aliases.Accessories[item];
 										plugin.Debug(myItem.ToString());
 										try { ev.Items.Add(myItem); }
 										catch (Exception e)
@@ -184,7 +182,7 @@ namespace RoleClass
 										//ev.Player.GiveItem(myItem);
 										break;
 									case 3:
-										myItem = aliases.Ammo[item];
+										myItem = Aliases.Ammo[item];
 										plugin.Debug(myItem.ToString());
 										Vector myPos = ev.Player.GetPosition();
 										Vector myRot = ev.Player.GetRotation();
@@ -203,16 +201,16 @@ namespace RoleClass
 								switch (typeOfItem)
 								{
 									case 0:
-										myItem = aliases.Keycards[item];
+										myItem = Aliases.Keycards[item];
 										break;
 									case 1:
-										myItem = aliases.Weapons[item];
+										myItem = Aliases.Weapons[item];
 										break;
 									case 2:
-										myItem = aliases.Accessories[item];
+										myItem = Aliases.Accessories[item];
 										break;
 									case 3:
-										myItem = aliases.Ammo[item];
+										myItem = Aliases.Ammo[item];
 										break;
 									case -1:
 										plugin.Warn("Item not found!");
@@ -230,16 +228,16 @@ namespace RoleClass
 								switch (typeOfItem)
 								{
 									case 0:
-										myItem = aliases.Keycards[item];
+										myItem = Aliases.Keycards[item];
 										break;
 									case 1:
-										myItem = aliases.Weapons[item];
+										myItem = Aliases.Weapons[item];
 										break;
 									case 2:
-										myItem = aliases.Accessories[item];
+										myItem = Aliases.Accessories[item];
 										break;
 									case 3:
-										myItem = aliases.Ammo[item];
+										myItem = Aliases.Ammo[item];
 										break;
 									case -1:
 										plugin.Warn("Item not found!");
@@ -284,9 +282,6 @@ namespace RoleClass
 						assignedClass.Replace("scp", "");
 						items = classItems.Skip(1).ToList<string>();
 
-						Aliases aliases = new Aliases();
-						aliases.AssignAliases();
-
 						Role myHuman = Role.UNASSIGNED;
 						Role mySCP = Role.UNASSIGNED;
 						Role myRole = Role.UNASSIGNED;
@@ -295,17 +290,17 @@ namespace RoleClass
 						//ItemType myWeapon = ItemType.NULL;
 						//ItemType myAccessory = ItemType.NULL;
 
-						if (aliases.Humans.ContainsKey(assignedClass))
+						if (Aliases.Humans.ContainsKey(assignedClass))
 						{
-							myHuman = aliases.Humans[assignedClass];
+							myHuman = Aliases.Humans[assignedClass];
 						}
-						else if (aliases.SCPs.ContainsKey(assignedClass))
+						else if (Aliases.SCPs.ContainsKey(assignedClass))
 						{
-							mySCP = aliases.SCPs[assignedClass];
+							mySCP = Aliases.SCPs[assignedClass];
 						}
-						else if (aliases.Other.ContainsKey(assignedClass))
+						else if (Aliases.Other.ContainsKey(assignedClass))
 						{
-							myRole = aliases.Other[assignedClass];
+							myRole = Aliases.Other[assignedClass];
 						}
 						else
 							plugin.Warn("Invalid class name!");
@@ -314,9 +309,9 @@ namespace RoleClass
 						{
 							foreach (string item in items)
 							{
-								int typeOfItem = GLaDOS.TypeOfItem(item);
+								int typeOfItem = Ancillary.TypeOfItem(item);
 								bool isEightItems = true;
-								switch (GLaDOS.PlayerItemCount(ev.Player))
+								switch (Ancillary.PlayerItemCount(ev.Player))
 								{
 									case 8:
 										isEightItems = true;
@@ -332,7 +327,7 @@ namespace RoleClass
 									switch (typeOfItem)
 									{
 										case 0:
-											myItem = aliases.Keycards[item];
+											myItem = Aliases.Keycards[item];
 											plugin.Debug(myItem.ToString());
 											foreach (Smod2.API.Item playerItem in ev.Player.GetInventory())
 											{
@@ -347,7 +342,7 @@ namespace RoleClass
 											//ev.Player.GiveItem(myItem);
 											break;
 										case 1:
-											myItem = aliases.Weapons[item];
+											myItem = Aliases.Weapons[item];
 											plugin.Debug(myItem.ToString());
 											try { ev.Items.Add(myItem); }
 											catch (Exception e)
@@ -357,7 +352,7 @@ namespace RoleClass
 											//ev.Player.GiveItem(myItem);
 											break;
 										case 2:
-											myItem = aliases.Accessories[item];
+											myItem = Aliases.Accessories[item];
 											plugin.Debug(myItem.ToString());
 											try { ev.Items.Add(myItem); }
 											catch (Exception e)
@@ -367,7 +362,7 @@ namespace RoleClass
 											//ev.Player.GiveItem(myItem);
 											break;
 										case 3:
-											myItem = aliases.Ammo[item];
+											myItem = Aliases.Ammo[item];
 											plugin.Debug(myItem.ToString());
 											Vector myPos = ev.Player.GetPosition();
 											Vector myRot = ev.Player.GetRotation();
@@ -386,16 +381,16 @@ namespace RoleClass
 									switch (typeOfItem)
 									{
 										case 0:
-											myItem = aliases.Keycards[item];
+											myItem = Aliases.Keycards[item];
 											break;
 										case 1:
-											myItem = aliases.Weapons[item];
+											myItem = Aliases.Weapons[item];
 											break;
 										case 2:
-											myItem = aliases.Accessories[item];
+											myItem = Aliases.Accessories[item];
 											break;
 										case 3:
-											myItem = aliases.Ammo[item];
+											myItem = Aliases.Ammo[item];
 											break;
 										case -1:
 											plugin.Warn("Item not found!");
@@ -413,16 +408,16 @@ namespace RoleClass
 									switch (typeOfItem)
 									{
 										case 0:
-											myItem = aliases.Keycards[item];
+											myItem = Aliases.Keycards[item];
 											break;
 										case 1:
-											myItem = aliases.Weapons[item];
+											myItem = Aliases.Weapons[item];
 											break;
 										case 2:
-											myItem = aliases.Accessories[item];
+											myItem = Aliases.Accessories[item];
 											break;
 										case 3:
-											myItem = aliases.Ammo[item];
+											myItem = Aliases.Ammo[item];
 											break;
 										case -1:
 											plugin.Warn("Item not found!");
