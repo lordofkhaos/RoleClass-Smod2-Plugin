@@ -250,22 +250,46 @@ namespace RoleClass
 		/// <summary>
 		/// An enum used in the RoleClass ancillary method GetTypeOfItem
 		/// </summary>
+		public enum KItemType
+		{
+			/// <summary>
+			/// If the item is a Keycard
+			/// </summary>
+			Keycard,
+			/// <summary>
+			/// If the item is a Weapon
+			/// </summary>
+			Weapon,
+			/// <summary>
+			/// If the item is not a <see cref="Keycard"/>, <see cref="Weapon"/>, or <see cref="Ammo"/>
+			/// </summary>
+			Accessory,
+			/// <summary>
+			/// If the provided item is a type of Ammo
+			/// </summary>
+			Ammo,
+			/// <summary>
+			/// If the item is not a <see cref="Keycard"/>, <see cref="Weapon"/>, <see cref="Accessory"/>, or <see cref="Ammo"/>
+			/// </summary>
+			NOT
+		}
+
 		/// <summary>
 		/// Extension method on string to return which type of item is the provided string
 		/// </summary>
 		/// <param name="item"></param>
-		public static int TypeOfItem(string item)
 		/// <returns></returns>
+		public static KItemType GetTypeOfItem(this string item)
 		{
 			return Aliases.Keycards.ContainsKey(item)
-							? 0
+							? KItemType.Keycard
 								: Aliases.Weapons.ContainsKey(item)
-							? 1
+							? KItemType.Weapon
 								: Aliases.Accessories.ContainsKey(item)
-							? 2
+							? KItemType.Accessory
 								: Aliases.Ammo.ContainsKey(item)
-							? 3
-								: -1;
+							? KItemType.Ammo
+								: KItemType.NOT;
 		}
 
 		/// <summary>
@@ -276,23 +300,43 @@ namespace RoleClass
 		public static int PlayerItemCount(Player pl) => pl.GetInventory().Count(item => item.ItemType != ItemType.NULL);
 
 		/// <summary>
-		/// Determine which group the inputted player belongs to.
 		/// An enum used in the RoleClass ancillary method GetTypeOfPlayer
 		/// </summary>
+		public enum KPlayerClass
+		{
+			/// <summary>
+			/// If the provided player is a Human
+			/// </summary>
+			Human,
+			/// <summary>
+			/// If the provided player is an SCP
+			/// </summary>
+			SCP,
+			/// <summary>
+			/// If the provided player is neither a Human nor an SCP
+			/// </summary>
+			Other,
+			/// <summary>
+			/// If the provided player does not belong to any other group
+			/// </summary>
+			NOT
+
+		}
+
 		/// <summary>
 		/// Extension method on string to return which type of class the player is from the provided string
 		/// </summary>
 		/// <param name="player"></param>
 		/// <returns></returns>
-		public static int TypeOfPlayerClass(string player)
+		public static KPlayerClass GetPlayerClass(this string player)
 		{
 			return Aliases.Humans.ContainsKey(player)
-							? 0
+							? KPlayerClass.Human
 								: Aliases.SCPs.ContainsKey(player)
-							? 1
+							? KPlayerClass.SCP
 								: Aliases.Other.ContainsKey(player)
-							? 2
-								: -1;
+							? KPlayerClass.Other
+								: KPlayerClass.NOT;
 		}
 	}
 }
