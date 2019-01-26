@@ -1,408 +1,301 @@
 ﻿using Smod2.API;
 using System.Collections.Generic;
+
 namespace RoleClass
 {
-	public struct Aliases
+	public static class Aliases
 	{
-		public Dictionary<string, Role> SCPs
+		#region Roles
+
+		public static Dictionary<string, Role> SCPs = new Dictionary<string, Role>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, Role> Humans
+			{ Role.SCP_049.ToString().ToLower(), Role.SCP_049 },
+			{ "plaguedaddy", Role.SCP_049 },
+			{ "doctor", Role.SCP_049 },
+			{ "049", Role.SCP_049 },
+			{ "5", Role.SCP_049 },
+			{ Role.SCP_049_2.ToString().ToLower(), Role.SCP_049_2 },
+			{ "zombie", Role.SCP_049_2 },
+			{ "0492", Role.SCP_049_2 },
+			{ "helicopter", Role.SCP_049_2 },
+			{ "plane", Role.SCP_049_2 },
+			{ "10", Role.SCP_049_2 },
+			{ Role.SCP_106.ToString().ToString(), Role.SCP_106 },
+			{ "larry", Role.SCP_106 },
+			{ "106", Role.SCP_106 },
+			{ "3", Role.SCP_106 },
+			{ Role.SCP_096.ToString().ToLower(), Role.SCP_096 },
+			{ "shyguy", Role.SCP_096 },
+			{ "096", Role.SCP_096 },
+			{ "9", Role.SCP_096 },
+			{ Role.SCP_079.ToString().ToLower(), Role.SCP_079 },
+			{ "079", Role.SCP_079 },
+			{ "comp", Role.SCP_079 },
+			{ "computer", Role.SCP_079 },
+			{ "7", Role.SCP_079 },
+			{ Role.SCP_173.ToString().ToLower(), Role.SCP_173 },
+			{ "peanut", Role.SCP_173 },
+			{ "173", Role.SCP_173 },
+			{ "0", Role.SCP_173 },
+			{ Role.SCP_939_53.ToString().ToLower(), Role.SCP_939_53 },
+			{ "doggo1", Role.SCP_939_53 },
+			{ "93953", Role.SCP_939_53 },
+			{ "16", Role.SCP_939_53 },
+			{ Role.SCP_939_89.ToString().ToLower(), Role.SCP_939_89 },
+			{ "doggo2", Role.SCP_939_89 },
+			{ "17", Role.SCP_939_89 }
+		};
+
+		public static Dictionary<string, Role> Humans = new Dictionary<string, Role>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, Role> Other
+			{ Role.NTF_COMMANDER.ToString().ToLower(), Role.NTF_COMMANDER },
+			{ "mtfc", Role.NTF_COMMANDER },
+			{ "ntfc", Role.NTF_COMMANDER },
+			{ "commander", Role.NTF_COMMANDER },
+			{ "12", Role.NTF_COMMANDER },
+			{ Role.NTF_LIEUTENANT.ToString().ToLower(), Role.NTF_LIEUTENANT },
+			{ "mtfl", Role.NTF_LIEUTENANT },
+			{ "ntfl", Role.NTF_LIEUTENANT },
+			{ "lieutenant", Role.NTF_LIEUTENANT },
+			{ "11", Role.NTF_LIEUTENANT },
+			{ Role.NTF_CADET.ToString().ToLower(), Role.NTF_CADET },
+			{ "cadet", Role.NTF_CADET },
+			{ "mtf", Role.NTF_CADET },
+			{ "ntf", Role.NTF_CADET },
+			{ "13", Role.NTF_CADET },
+			{ Role.NTF_SCIENTIST.ToString().ToLower(), Role.NTF_SCIENTIST },
+			{ "mtfs", Role.NTF_SCIENTIST },
+			{ "mtfsci", Role.NTF_SCIENTIST },
+			{ "mtfscientist", Role.NTF_SCIENTIST },
+			{ "ntfs", Role.NTF_SCIENTIST },
+			{ "ntfsci", Role.NTF_SCIENTIST },
+			{ "ntfscientist", Role.NTF_SCIENTIST },
+			{ "4", Role.NTF_SCIENTIST },
+			{ Role.CHAOS_INSUGENCY.ToString().ToLower(), Role.CHAOS_INSUGENCY },
+			{ "ci", Role.CHAOS_INSUGENCY },
+			{ "chaos", Role.CHAOS_INSUGENCY },
+			{ "insurgent", Role.CHAOS_INSUGENCY },
+			{ "insurgency", Role.CHAOS_INSUGENCY },
+			{ "chaosagent", Role.CHAOS_INSUGENCY },
+			{ "chaosinsurgent", Role.CHAOS_INSUGENCY },
+			{ "chaosinsurgency", Role.CHAOS_INSUGENCY },
+			{ "8", Role.CHAOS_INSUGENCY },
+			{ Role.CLASSD.ToString().ToLower(), Role.CLASSD },
+			{ "cd", Role.CLASSD },
+			{ "dc", Role.CLASSD },
+			{ "dboi", Role.CLASSD },
+			{ "dbois", Role.CLASSD },
+			{ "classd", Role.CLASSD },
+			{ "dclass", Role.CLASSD },
+			{ "1", Role.CLASSD },
+			{ Role.FACILITY_GUARD.ToString().ToLower(), Role.FACILITY_GUARD },
+			{ "fg", Role.FACILITY_GUARD },
+			{ "guard", Role.FACILITY_GUARD },
+			{ "facilityguard", Role.FACILITY_GUARD },
+			{ "15", Role.FACILITY_GUARD },
+			{ Role.SCIENTIST.ToString().ToLower(), Role.SCIENTIST },
+			{ "sci", Role.SCIENTIST },
+			{ "nerd", Role.SCIENTIST },
+			{ "scientist", Role.SCIENTIST },
+			{ "scienceboi", Role.SCIENTIST },
+			{ "6", Role.SCIENTIST },
+			{ Role.TUTORIAL.ToString().ToLower(), Role.TUTORIAL },
+			{ "tut", Role.TUTORIAL },
+			{ "tutor", Role.TUTORIAL },
+			{ "tutorial", Role.TUTORIAL },
+			{ "14", Role.TUTORIAL }
+		};
+
+		public static Dictionary<string, Role> Other = new Dictionary<string, Role>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, ItemType> Keycards
+			{ Role.SPECTATOR.ToString().ToLower(), Role.SPECTATOR },
+			{ "spec", Role.SPECTATOR },
+			{ "specboi", Role.SPECTATOR },
+			{ "ghost" ,Role.SPECTATOR },
+			{ "2", Role.SPECTATOR }
+		};
+
+		#endregion
+
+		#region Items
+
+		public static Dictionary<string, ItemType> Keycards = new Dictionary<string, ItemType>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, ItemType> Weapons
+			{ ItemType.CHAOS_INSURGENCY_DEVICE.ToString().ToLower(), ItemType.CHAOS_INSURGENCY_DEVICE },
+			{ "cidevice", ItemType.CHAOS_INSURGENCY_DEVICE },
+			{ "kcci", ItemType.CHAOS_INSURGENCY_DEVICE },
+			{ "ci", ItemType.CHAOS_INSURGENCY_DEVICE },
+			{ ItemType.CONTAINMENT_ENGINEER_KEYCARD.ToString().ToLower(), ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "ce", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "containmentengineer", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "pinkcard", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "pink", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "kcce", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ "6", ItemType.CONTAINMENT_ENGINEER_KEYCARD },
+			{ ItemType.FACILITY_MANAGER_KEYCARD.ToString().ToLower(), ItemType.FACILITY_MANAGER_KEYCARD },
+			{ "red", ItemType.FACILITY_MANAGER_KEYCARD },
+			{ "9", ItemType.FACILITY_MANAGER_KEYCARD },
+			{ "kcfm", ItemType.FACILITY_MANAGER_KEYCARD },
+			{ "redcard", ItemType.FACILITY_MANAGER_KEYCARD },
+			{ ItemType.GUARD_KEYCARD.ToString().ToLower(), ItemType.GUARD_KEYCARD },
+			{ "kcguard", ItemType.GUARD_KEYCARD },
+			{ "guardkey", ItemType.GUARD_KEYCARD },
+			{ "4", ItemType.GUARD_KEYCARD },
+			{ ItemType.JANITOR_KEYCARD.ToString().ToLower(), ItemType.JANITOR_KEYCARD },
+			{ "kcjan", ItemType.JANITOR_KEYCARD },
+			{ "janitor", ItemType.JANITOR_KEYCARD},
+			{ "0", ItemType.JANITOR_KEYCARD },
+			{ ItemType.MTF_COMMANDER_KEYCARD.ToString().ToLower(), ItemType.MTF_COMMANDER_KEYCARD },
+			{ "kcmtfc", ItemType.MTF_COMMANDER_KEYCARD },
+			{ "kcntfc", ItemType.MTF_COMMANDER_KEYCARD },
+			{ "commanderkey", ItemType.MTF_COMMANDER_KEYCARD },
+			{ "8", ItemType.MTF_COMMANDER_KEYCARD },
+			{ "kcmtfl", ItemType.MTF_LIEUTENANT_KEYCARD },
+			{ "kcntfl", ItemType.MTF_LIEUTENANT_KEYCARD },
+			{ "lieutenantkey", ItemType.MTF_LIEUTENANT_KEYCARD },
+			{ "7", ItemType.MTF_LIEUTENANT_KEYCARD },
+			{ ItemType.MTF_LIEUTENANT_KEYCARD.ToString().ToLower(), ItemType.MTF_LIEUTENANT_KEYCARD },
+			{ "o5", ItemType.O5_LEVEL_KEYCARD },
+			{ "kco5", ItemType.O5_LEVEL_KEYCARD },
+			{ "black", ItemType.O5_LEVEL_KEYCARD },
+			{ "blackcard", ItemType.O5_LEVEL_KEYCARD },
+			{ "11", ItemType.O5_LEVEL_KEYCARD },
+			{ ItemType.O5_LEVEL_KEYCARD.ToString().ToLower(), ItemType.O5_LEVEL_KEYCARD },
+			{ "sci", ItemType.SCIENTIST_KEYCARD },
+			{ "kcsci", ItemType.SCIENTIST_KEYCARD },
+			{ "1", ItemType.SCIENTIST_KEYCARD },
+			{ ItemType.SCIENTIST_KEYCARD.ToString().ToLower().ToLower(), ItemType.SCIENTIST_KEYCARD },
+			{ "kcmg", ItemType.SENIOR_GUARD_KEYCARD },
+			{ "senior", ItemType.SENIOR_GUARD_KEYCARD },
+			{ "seniorguard", ItemType.SENIOR_GUARD_KEYCARD },
+			{ "sgk", ItemType.SENIOR_GUARD_KEYCARD },
+			{ "5", ItemType.SENIOR_GUARD_KEYCARD },
+			{ ItemType.SENIOR_GUARD_KEYCARD.ToString().ToLower(), ItemType.SENIOR_GUARD_KEYCARD },
+			{ "wmt", ItemType.WEAPON_MANAGER_TABLET },
+			{ "tablet", ItemType.WEAPON_MANAGER_TABLET },
+			{ "19", ItemType.WEAPON_MANAGER_TABLET },
+			{ ItemType.WEAPON_MANAGER_TABLET.ToString().ToLower(), ItemType.WEAPON_MANAGER_TABLET },
+			{ "blue", ItemType.ZONE_MANAGER_KEYCARD },
+			{ "zone", ItemType.ZONE_MANAGER_KEYCARD },
+			{ "kczm", ItemType.ZONE_MANAGER_KEYCARD },
+			{ "3", ItemType.ZONE_MANAGER_KEYCARD },
+			{ ItemType.ZONE_MANAGER_KEYCARD.ToString().ToLower(), ItemType.ZONE_MANAGER_KEYCARD },
+			{ ItemType.MAJOR_SCIENTIST_KEYCARD.ToString().ToLower(), ItemType.MAJOR_SCIENTIST_KEYCARD },
+			{ "majscikey", ItemType.MAJOR_SCIENTIST_KEYCARD },
+			{ "majorsci", ItemType.MAJOR_SCIENTIST_KEYCARD },
+			{ "majorscientistkeycard", ItemType.MAJOR_SCIENTIST_KEYCARD },
+			{ "2", ItemType.MAJOR_SCIENTIST_KEYCARD },
+		};
+
+		public static Dictionary<string, ItemType> Weapons = new Dictionary<string, ItemType>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, ItemType> Ammo
+			{ "pistol", ItemType.COM15 },
+			{ "com15", ItemType.COM15 },
+			{ "handgun", ItemType.COM15 },
+			{ "13", ItemType.COM15 },
+			{ ItemType.COM15.ToString().ToLower(), ItemType.COM15 },
+			{ "mtfgun", ItemType.E11_STANDARD_RIFLE },
+			{ "ntfgun", ItemType.E11_STANDARD_RIFLE },
+			{ "epsilon", ItemType.E11_STANDARD_RIFLE },
+			{ "epsilonstandardrifle", ItemType.E11_STANDARD_RIFLE },
+			{ "epsilon11", ItemType.E11_STANDARD_RIFLE },
+			{ "epsilon11standardrifle", ItemType.E11_STANDARD_RIFLE },
+			{ "e11", ItemType.E11_STANDARD_RIFLE },
+			{ "esr", ItemType.E11_STANDARD_RIFLE },
+			{ "20", ItemType.E11_STANDARD_RIFLE },
+			{ ItemType.E11_STANDARD_RIFLE.ToString().ToLower(), ItemType.E11_STANDARD_RIFLE },
+			{ "fb", ItemType.FLASHBANG },
+			{ "stun", ItemType.FLASHBANG },
+			{ "flashbang", ItemType.FLASHBANG },
+			{ "stungrenade", ItemType.FLASHBANG },
+			{ "26", ItemType.FLASHBANG },
+			{ ItemType.FLASHBANG.ToString().ToLower(), ItemType.FLASHBANG },
+			{ "frag", ItemType.FRAG_GRENADE },
+			{ "grenade", ItemType.FRAG_GRENADE },
+			{ "boom", ItemType.FRAG_GRENADE },
+			{ "25", ItemType.FRAG_GRENADE },
+			{ ItemType.FRAG_GRENADE.ToString().ToLower(), ItemType.FRAG_GRENADE },
+			{ "chaosgun", ItemType.LOGICER },
+			{ "logicer", ItemType.LOGICER },
+			{ "cigun", ItemType.LOGICER },
+			{ "lmg", ItemType.LOGICER },
+			{ "24", ItemType.LOGICER },
+			{ ItemType.LOGICER.ToString().ToLower(), ItemType.LOGICER },
+			{ "micro", ItemType.MICROHID },
+			{ "microwave", ItemType.MICROHID },
+			{ "supersoaker", ItemType.MICROHID },
+			{ "microhid", ItemType.MICROHID },
+			{ "16", ItemType.MICROHID },
+			{ ItemType.MICROHID.ToString().ToLower(), ItemType.MICROHID },
+			{ "mp7", ItemType.MP4 },
+			{ "mp4", ItemType.MP4 },
+			{ "smg", ItemType.MP4 },
+			{ "scorpion", ItemType.MP4 },
+			{ "23", ItemType.MP4 },
+			{ ItemType.MP4.ToString().ToLower(), ItemType.MP4 },
+			{ "p90", ItemType.P90 },
+			{ "russia", ItemType.P90 },
+			{ "russian", ItemType.P90 },
+			{ "21", ItemType.P90 },
+			{ ItemType.P90.ToString().ToLower(), ItemType.P90 },
+		};
+
+		public static Dictionary<string, ItemType> Ammo = new Dictionary<string, ItemType>()
 		{
-			get;
-			set;
-		}
-		public Dictionary<string, ItemType> Accessories
+			{ "fusion", ItemType.DROPPED_5 },
+			{ "mtfammo", ItemType.DROPPED_5 },
+			{ "ntfammo", ItemType.DROPPED_5 },
+			{ "e11ammo", ItemType.DROPPED_5 },
+			{ "ammo5", ItemType.DROPPED_5 },
+			{ "556mm", ItemType.DROPPED_5 },
+			{ "22", ItemType.DROPPED_5 },
+			{ ItemType.DROPPED_5.ToString().ToLower(), ItemType.DROPPED_5 },
+			{ "9mm", ItemType.DROPPED_7 },
+			{ "pat", ItemType.DROPPED_7 },
+			{ "ammo7", ItemType.DROPPED_7 },
+			{ "29", ItemType.DROPPED_7 },
+			{ ItemType.DROPPED_7.ToString().ToLower(), ItemType.DROPPED_7 },
+			{ "762mm", ItemType.DROPPED_9 },
+			{ "rat", ItemType.DROPPED_9 },
+			{ "ammo9", ItemType.DROPPED_9 },
+			{ "28", ItemType.DROPPED_9 },
+			{ ItemType.DROPPED_9.ToString().ToLower(), ItemType.DROPPED_9 },
+		};
+
+		public static Dictionary<string, ItemType> Accessories = new Dictionary<string, ItemType>()
 		{
-			get;
-			set;
-		}
+			{ "coin", ItemType.COIN },
+			{ "quarter", ItemType.COIN },
+			{ "25c", ItemType.COIN },
+			{ "50c", ItemType.COIN },
+			{ "17", ItemType.COIN },
+			{ ItemType.COIN.ToString().ToLower(), ItemType.COIN },
+			{ "cup", ItemType.CUP },
+			{ "18", ItemType.CUP },
+			{ ItemType.CUP.ToString().ToLower(), ItemType.CUP },
+			{ "disarm", ItemType.DISARMER },
+			{ "disarmer", ItemType.DISARMER },
+			{ "detain", ItemType.DISARMER },
+			{ "detainer", ItemType.DISARMER },
+			{ "handcuffs", ItemType.DISARMER },
+			{ ItemType.DISARMER.ToString().ToLower(), ItemType.DISARMER },
+			{ "flashlight", ItemType.FLASHLIGHT },
+			{ "fl", ItemType.FLASHLIGHT },
+			{ "torch", ItemType.FLASHLIGHT },
+			{ "lamp", ItemType.FLASHLIGHT },
+			{ "15", ItemType.FLASHLIGHT },
+			{ ItemType.FLASHLIGHT.ToString().ToLower(), ItemType.FLASHLIGHT },
+			{ "medkit", ItemType.MEDKIT },
+			{ "med", ItemType.MEDKIT },
+			{ "14", ItemType.MEDKIT },
+			{ ItemType.MEDKIT.ToString().ToLower(), ItemType.MEDKIT },
+			{ "rad", ItemType.RADIO },
+			{ "radio", ItemType.RADIO },
+			{ "walkietalkie", ItemType.RADIO },
+			{ "12", ItemType.RADIO },
+			{ ItemType.RADIO.ToString().ToLower(), ItemType.RADIO },
+		};
 
-		public void AssignAliases()
-		{
-			#region dare ordini agnomes
-			// prae perficio
-			SCPs = new Dictionary<string, Role>();
-			Humans = new Dictionary<string, Role>();
-			Other = new Dictionary<string, Role>();
-			// perficio
-
-			// cmdr
-			var ntfc = Role.NTF_COMMANDER.ToString().ToLower();
-			Humans["mtfc"] = Role.NTF_COMMANDER;
-			Humans["ntfc"] = Role.NTF_COMMANDER;
-			Humans["commander"] = Role.NTF_COMMANDER;
-			Humans["12"] = Role.NTF_COMMANDER;
-			Humans[ntfc] = Role.NTF_COMMANDER;
-
-			// lt
-			var ntfl = Role.NTF_LIEUTENANT.ToString().ToLower();
-			Humans["mtfl"] = Role.NTF_LIEUTENANT;
-			Humans["ntfl"] = Role.NTF_LIEUTENANT;
-			Humans["lieutenant"] = Role.NTF_LIEUTENANT;
-			Humans["11"] = Role.NTF_LIEUTENANT;
-			Humans[ntfl] = Role.NTF_LIEUTENANT;
-
-			// cadet
-			var ntf = Role.NTF_CADET.ToString().ToLower();
-			Humans["cadet"] = Role.NTF_CADET;
-			Humans["mtf"] = Role.NTF_CADET;
-			Humans["ntf"] = Role.NTF_CADET;
-			Humans["13"] = Role.NTF_CADET;
-			Humans[ntf] = Role.NTF_CADET;
-
-			// msci
-			var ntfs = Role.NTF_SCIENTIST.ToString().ToLower();
-			Humans["mtfs"] = Role.NTF_SCIENTIST;
-			Humans["ntfs"] = Role.NTF_SCIENTIST;
-			Humans["mtfsci"] = Role.NTF_SCIENTIST;
-			Humans["ntfsci"] = Role.NTF_SCIENTIST;
-			Humans["4"] = Role.NTF_SCIENTIST;
-			Humans[ntfs] = Role.NTF_SCIENTIST;
-
-			var ci = Role.CHAOS_INSUGENCY.ToString().ToLower();
-			Humans["ci"] = Role.CHAOS_INSUGENCY;
-			Humans["chaos"] = Role.CHAOS_INSUGENCY;
-			Humans["insurgency"] = Role.CHAOS_INSUGENCY;
-			Humans["insurgent"] = Role.CHAOS_INSUGENCY;
-			Humans["8"] = Role.CHAOS_INSUGENCY;
-			Humans[ci] = Role.CHAOS_INSUGENCY;
-
-			var cd = Role.CLASSD.ToString().ToLower();
-			Humans["classd"] = Role.CLASSD;
-			Humans["dclass"] = Role.CLASSD;
-			Humans["cd"] = Role.CLASSD;
-			Humans["dc"] = Role.CLASSD;
-			Humans["1"] = Role.CLASSD;
-			Humans[cd] = Role.CLASSD;
-
-			var fg = Role.FACILITY_GUARD.ToString().ToLower();
-			Humans["guard"] = Role.FACILITY_GUARD;
-			Humans["fg"] = Role.FACILITY_GUARD;
-			Humans["15"] = Role.FACILITY_GUARD;
-			Humans[fg] = Role.FACILITY_GUARD;
-
-			var sci = Role.SCIENTIST.ToString().ToLower();
-			Humans["sci"] = Role.SCIENTIST;
-			Humans["nerd"] = Role.SCIENTIST;
-			Humans["scientist"] = Role.SCIENTIST;
-			Humans["science"] = Role.SCIENTIST;
-			Humans["6"] = Role.SCIENTIST;
-			Humans[sci] = Role.SCIENTIST;
-
-			var plaguedaddy = Role.SCP_049.ToString().ToLower();
-			SCPs["plaguedaddy"] = Role.SCP_049;
-			SCPs["doctor"] = Role.SCP_049;
-			SCPs["049"] = Role.SCP_049;
-			SCPs["5"] = Role.SCP_049;
-			SCPs[plaguedaddy] = Role.SCP_049;
-
-			var zombie = Role.SCP_049_2.ToString().ToLower();
-			SCPs["zombie"] = Role.SCP_049_2;
-			SCPs["0492"] = Role.SCP_049_2;
-			SCPs["helicopter"] = Role.SCP_049_2;
-			SCPs["plane"] = Role.SCP_049_2;
-			SCPs["10"] = Role.SCP_049_2;
-			SCPs[zombie] = Role.SCP_049_2;
-
-			var larry = Role.SCP_106.ToString().ToLower();
-			SCPs["larry"] = Role.SCP_106;
-			SCPs["106"] = Role.SCP_106;
-			SCPs["3"] = Role.SCP_106;
-			SCPs[larry] = Role.SCP_106;
-
-			var shyguy = Role.SCP_096.ToString().ToLower();
-			SCPs["shyguy"] = Role.SCP_096;
-			SCPs["096"] = Role.SCP_096;
-			SCPs["9"] = Role.SCP_096;
-			SCPs[shyguy] = Role.SCP_096;
-
-			var comp = Role.SCP_079.ToString().ToLower();
-			SCPs["079"] = Role.SCP_079;
-			SCPs["comp"] = Role.SCP_079;
-			SCPs["computer"] = Role.SCP_079;
-			SCPs["7"] = Role.SCP_079;
-			SCPs[comp] = Role.SCP_079;
-
-			var peanut = Role.SCP_173.ToString().ToLower();
-			SCPs["peanut"] = Role.SCP_173;
-			SCPs["173"] = Role.SCP_173;
-			SCPs["0"] = Role.SCP_173;
-			SCPs[peanut] = Role.SCP_173;
-
-			var doggo1 = Role.SCP_939_53.ToString().ToLower();
-			var doggo2 = Role.SCP_939_89.ToString().ToLower();
-			SCPs["93953"] = Role.SCP_939_53;
-			SCPs["93989"] = Role.SCP_939_89;
-			SCPs["16"] = Role.SCP_939_53;
-			SCPs["17"] = Role.SCP_939_89;
-			SCPs[doggo1] = Role.SCP_939_53;
-			SCPs[doggo2] = Role.SCP_939_89;
-
-			var tut = Role.TUTORIAL.ToString().ToLower();
-			Humans["tut"] = Role.TUTORIAL;
-			Humans["tutor"] = Role.TUTORIAL;
-			Humans["tutorial"] = Role.TUTORIAL;
-			Humans["14"] = Role.TUTORIAL;
-			Humans[tut] = Role.TUTORIAL;
-
-			var spec = Role.SPECTATOR.ToString().ToLower();
-			Other["spec"] = Role.SPECTATOR;
-			Other["specboi"] = Role.SPECTATOR;
-			Other["ghost"] = Role.SPECTATOR;
-			Other["2"] = Role.SPECTATOR;
-			Other[spec] = Role.SPECTATOR;
-			#endregion
-			#region dare rei agnomes
-			// prae perficio
-			Keycards = new Dictionary<string, ItemType>();
-			Weapons = new Dictionary<string, ItemType>();
-			Ammo = new Dictionary<string, ItemType>();
-			Accessories = new Dictionary<string, ItemType>();
-			// perficio
-			var kc_ci = ItemType.CHAOS_INSURGENCY_DEVICE.ToString().ToLower();
-			Keycards["cidevice"] = ItemType.CHAOS_INSURGENCY_DEVICE;
-			Keycards["kcci"] = ItemType.CHAOS_INSURGENCY_DEVICE;
-			Keycards["ci"] = ItemType.CHAOS_INSURGENCY_DEVICE;
-			Keycards[kc_ci] = ItemType.CHAOS_INSURGENCY_DEVICE;
-
-			var coin = ItemType.COIN.ToString().ToLower();
-			Accessories["coin"] = ItemType.COIN;
-			Accessories["quarter"] = ItemType.COIN;
-			Accessories["25c"] = ItemType.COIN;
-			Accessories["50c"] = ItemType.COIN;
-			Accessories["17"] = ItemType.COIN;
-			Accessories[coin] = ItemType.COIN;
-
-			var pew = ItemType.COM15.ToString().ToLower();
-			Weapons["pistol"] = ItemType.COM15;
-			Weapons["com15"] = ItemType.COM15;
-			Weapons["handgun"] = ItemType.COM15;
-			Weapons["13"] = ItemType.COM15;
-			Weapons[pew] = ItemType.COM15;
-
-			var kc_ce = ItemType.CONTAINMENT_ENGINEER_KEYCARD.ToString().ToLower();
-			Keycards["ce"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards["containmentengineer"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards["pinkcard"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards["pink"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards["kcce"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards["6"] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-			Keycards[kc_ce] = ItemType.CONTAINMENT_ENGINEER_KEYCARD;
-
-			var cup = ItemType.CUP.ToString().ToLower();
-			Accessories["cup"] = ItemType.CUP;
-			Accessories["18"] = ItemType.CUP;
-			Accessories[cup] = ItemType.CUP;
-
-			var disarm = ItemType.DISARMER.ToString().ToLower();
-			Accessories["disarm"] = ItemType.DISARMER;
-			Accessories["disarmer"] = ItemType.DISARMER;
-			Accessories["detain"] = ItemType.DISARMER;
-			Accessories["detainer"] = ItemType.DISARMER;
-			Accessories["handcuffs"] = ItemType.DISARMER;
-			Accessories[disarm] = ItemType.DISARMER;
-
-			var fusion = ItemType.DROPPED_5.ToString().ToLower();
-			Ammo["fusion"] = ItemType.DROPPED_5;
-			Ammo["mtfammo"] = ItemType.DROPPED_5;
-			Ammo["ntfammo"] = ItemType.DROPPED_5;
-			Ammo["e11ammo"] = ItemType.DROPPED_5;
-			Ammo["ammo5"] = ItemType.DROPPED_5;
-			Ammo["556mm"] = ItemType.DROPPED_5;
-			Ammo["22"] = ItemType.DROPPED_5;
-			Ammo[fusion] = ItemType.DROPPED_5;
-
-			var pat = ItemType.DROPPED_7.ToString().ToLower();
-			Ammo["9mm"] = ItemType.DROPPED_7;
-			Ammo["pat"] = ItemType.DROPPED_7;
-			Ammo["ammo7"] = ItemType.DROPPED_7;
-			Ammo["29"] = ItemType.DROPPED_7;
-			Ammo[pat] = ItemType.DROPPED_7;
-
-			var rat = ItemType.DROPPED_9.ToString().ToLower();
-			Ammo["762mm"] = ItemType.DROPPED_9;
-			Ammo["rat"] = ItemType.DROPPED_9;
-			Ammo["ammo9"] = ItemType.DROPPED_9;
-			Ammo["28"] = ItemType.DROPPED_9;
-			Ammo[rat] = ItemType.DROPPED_9;
-
-			var e11 = ItemType.E11_STANDARD_RIFLE.ToString().ToLower();
-			Weapons["mtfgun"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["ntfgun"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["epsilon"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["epsilonstandardrifle"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["epsilon11"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["epsilon11standardrifle"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["e11"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["esr"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons["20"] = ItemType.E11_STANDARD_RIFLE;
-			Weapons[e11] = ItemType.E11_STANDARD_RIFLE;
-
-			var kc_fm = ItemType.FACILITY_MANAGER_KEYCARD.ToString().ToLower();
-			Keycards["red"] = ItemType.FACILITY_MANAGER_KEYCARD;
-			Keycards["9"] = ItemType.FACILITY_MANAGER_KEYCARD;
-			Keycards["kcfm"] = ItemType.FACILITY_MANAGER_KEYCARD;
-			Keycards["redcard"] = ItemType.FACILITY_MANAGER_KEYCARD;
-			Keycards[kc_fm] = ItemType.FACILITY_MANAGER_KEYCARD;
-
-			var fb = ItemType.FLASHBANG.ToString().ToLower();
-			Weapons["fb"] = ItemType.FLASHBANG;
-			Weapons["stun"] = ItemType.FLASHBANG;
-			Weapons["flashbang"] = ItemType.FLASHBANG;
-			Weapons["stungrenade"] = ItemType.FLASHBANG;
-			Weapons["26"] = ItemType.FLASHBANG;
-			Weapons[fb] = ItemType.FLASHBANG;
-
-			var fl = ItemType.FLASHLIGHT.ToString().ToLower();
-			Accessories["flashlight"] = ItemType.FLASHLIGHT;
-			Accessories["fl"] = ItemType.FLASHLIGHT;
-			Accessories["torch"] = ItemType.FLASHLIGHT;
-			Accessories["lamp"] = ItemType.FLASHLIGHT;
-			Accessories["15"] = ItemType.FLASHLIGHT;
-			Accessories[fl] = ItemType.FLASHLIGHT;
-
-			var frag = ItemType.FRAG_GRENADE.ToString().ToLower();
-			Weapons["frag"] = ItemType.FRAG_GRENADE;
-			Weapons["grenade"] = ItemType.FRAG_GRENADE;
-			Weapons["boom"] = ItemType.FRAG_GRENADE;
-			Weapons["25"] = ItemType.FRAG_GRENADE;
-			Weapons[frag] = ItemType.FRAG_GRENADE;
-
-			var kc_gu = ItemType.GUARD_KEYCARD.ToString().ToLower();
-			Keycards["kcguard"] = ItemType.GUARD_KEYCARD;
-			Keycards["guardkey"] = ItemType.GUARD_KEYCARD;
-			Keycards["4"] = ItemType.GUARD_KEYCARD;
-			Keycards[kc_gu] = ItemType.GUARD_KEYCARD;
-
-			var kc_jan = ItemType.JANITOR_KEYCARD.ToString().ToLower();
-			Keycards["kcjan"] = ItemType.JANITOR_KEYCARD;
-			Keycards["janitor"] = ItemType.JANITOR_KEYCARD;
-			Keycards["0"] = ItemType.JANITOR_KEYCARD;
-			Keycards[kc_jan] = ItemType.JANITOR_KEYCARD;
-
-			var cigun = ItemType.LOGICER.ToString().ToLower();
-			Weapons["chaosgun"] = ItemType.LOGICER;
-			Weapons["logicer"] = ItemType.LOGICER;
-			Weapons["cigun"] = ItemType.LOGICER;
-			Weapons["lmg"] = ItemType.LOGICER;
-			Weapons["24"] = ItemType.LOGICER;
-			Weapons[cigun] = ItemType.LOGICER;
-
-			var kc_msci = ItemType.MAJOR_SCIENTIST_KEYCARD.ToString().ToLower();
-			Keycards["majscikey"] = ItemType.MAJOR_SCIENTIST_KEYCARD;
-			Keycards["majorsci"] = ItemType.MAJOR_SCIENTIST_KEYCARD;
-			Keycards["majorscientistkeycard"] = ItemType.MAJOR_SCIENTIST_KEYCARD;
-			Keycards["2"] = ItemType.MAJOR_SCIENTIST_KEYCARD;
-			Keycards[kc_msci] = ItemType.MAJOR_SCIENTIST_KEYCARD;
-
-			var med = ItemType.MEDKIT.ToString().ToLower();
-			Accessories["medkit"] = ItemType.MEDKIT;
-			Accessories["med"] = ItemType.MEDKIT;
-			Accessories["14"] = ItemType.MEDKIT;
-			Accessories[med] = ItemType.MEDKIT;
-
-			var micro = ItemType.MICROHID.ToString().ToLower();
-			Weapons["micro"] = ItemType.MICROHID;
-			Weapons["microwave"] = ItemType.MICROHID;
-			Weapons["supersoaker"] = ItemType.MICROHID;
-			Weapons["microhid"] = ItemType.MICROHID;
-			Weapons["16"] = ItemType.MICROHID;
-			Weapons[micro] = ItemType.MICROHID;
-
-			var mp7 = ItemType.MP4.ToString().ToLower();
-			Weapons["mp7"] = ItemType.MP4;
-			Weapons["mp4"] = ItemType.MP4;
-			Weapons["smg"] = ItemType.MP4;
-			Weapons["scorpion"] = ItemType.MP4;
-			Weapons["23"] = ItemType.MP4;
-			Weapons[mp7] = ItemType.MP4;
-
-			var kc_ntfc = ItemType.MTF_COMMANDER_KEYCARD.ToString().ToLower();
-			Keycards["kcmtfc"] = ItemType.MTF_COMMANDER_KEYCARD;
-			Keycards["kcntfc"] = ItemType.MTF_COMMANDER_KEYCARD;
-			Keycards["commanderkey"] = ItemType.MTF_COMMANDER_KEYCARD;
-			Keycards["8"] = ItemType.MTF_COMMANDER_KEYCARD;
-			Keycards[kc_ntfc] = ItemType.MTF_COMMANDER_KEYCARD;
-
-			var kc_ntfl = ItemType.MTF_LIEUTENANT_KEYCARD.ToString().ToLower();
-			Keycards["kcmtfl"] = ItemType.MTF_LIEUTENANT_KEYCARD;
-			Keycards["kcntfl"] = ItemType.MTF_LIEUTENANT_KEYCARD;
-			Keycards["lieutenantkey"] = ItemType.MTF_LIEUTENANT_KEYCARD;
-			Keycards["7"] = ItemType.MTF_LIEUTENANT_KEYCARD;
-			Keycards[kc_ntfl] = ItemType.MTF_LIEUTENANT_KEYCARD;
-
-			var kc_o5 = ItemType.O5_LEVEL_KEYCARD.ToString().ToLower();
-			Keycards["o5"] = ItemType.O5_LEVEL_KEYCARD;
-			Keycards["kco5"] = ItemType.O5_LEVEL_KEYCARD;
-			Keycards["black"] = ItemType.O5_LEVEL_KEYCARD;
-			Keycards["blackcard"] = ItemType.O5_LEVEL_KEYCARD;
-			Keycards["11"] = ItemType.O5_LEVEL_KEYCARD;
-			Keycards[kc_o5] = ItemType.O5_LEVEL_KEYCARD;
-
-			var p90 = ItemType.P90.ToString().ToLower();
-			Weapons["p90"] = ItemType.P90;
-			Weapons["russia"] = ItemType.P90;
-			Weapons["russian"] = ItemType.P90;
-			Weapons["21"] = ItemType.P90;
-			Weapons[p90] = ItemType.P90;
-
-			var kc_sci = ItemType.SCIENTIST_KEYCARD.ToString().ToLower().ToLower();
-			Keycards["sci"] = ItemType.SCIENTIST_KEYCARD;
-			Keycards["kcsci"] = ItemType.SCIENTIST_KEYCARD;
-			Keycards["1"] = ItemType.SCIENTIST_KEYCARD;
-			Keycards[kc_sci] = ItemType.SCIENTIST_KEYCARD;
-
-			var kc_mg = ItemType.SENIOR_GUARD_KEYCARD.ToString().ToLower();
-			Keycards["kcmg"] = ItemType.SENIOR_GUARD_KEYCARD;
-			Keycards["senior"] = ItemType.SENIOR_GUARD_KEYCARD;
-			Keycards["seniorguard"] = ItemType.SENIOR_GUARD_KEYCARD;
-			Keycards["sgk"] = ItemType.SENIOR_GUARD_KEYCARD;
-			Keycards["5"] = ItemType.SENIOR_GUARD_KEYCARD;
-			Keycards[kc_mg] = ItemType.SENIOR_GUARD_KEYCARD;
-
-			var wmt = ItemType.WEAPON_MANAGER_TABLET.ToString().ToLower();
-			Keycards["wmt"] = ItemType.WEAPON_MANAGER_TABLET;
-			Keycards["tablet"] = ItemType.WEAPON_MANAGER_TABLET;
-			Keycards["19"] = ItemType.WEAPON_MANAGER_TABLET;
-			Keycards[wmt] = ItemType.WEAPON_MANAGER_TABLET;
-
-			var kc_zm = ItemType.ZONE_MANAGER_KEYCARD.ToString().ToLower();
-			Keycards["blue"] = ItemType.ZONE_MANAGER_KEYCARD;
-			Keycards["zone"] = ItemType.ZONE_MANAGER_KEYCARD;
-			Keycards["kczm"] = ItemType.ZONE_MANAGER_KEYCARD;
-			Keycards["3"] = ItemType.ZONE_MANAGER_KEYCARD;
-			Keycards[kc_zm] = ItemType.ZONE_MANAGER_KEYCARD;
-
-			var rad = ItemType.RADIO.ToString().ToLower();
-			Accessories["rad"] = ItemType.RADIO;
-			Accessories["radio"] = ItemType.RADIO;
-			Accessories["walkietalkie"] = ItemType.RADIO;
-			Accessories["12"] = ItemType.RADIO;
-			Accessories[rad] = ItemType.RADIO;
-			#endregion
-		}
+		#endregion
 	}
 }
