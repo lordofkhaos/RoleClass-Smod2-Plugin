@@ -81,9 +81,8 @@ namespace RoleClass.Commands
 					string confItems = string.Empty;
 					foreach (string configuration in configurations)
 					{
-						Aliases aliases = new Aliases();
 						int i = configuration.Length;
-						while (!aliases.Humans.ContainsKey(configuration) && !aliases.SCPs.ContainsKey(configuration) && aliases.Other.ContainsKey(configuration))
+						while (!Aliases.Humans.ContainsKey(configuration) && !Aliases.SCPs.ContainsKey(configuration) && Aliases.Other.ContainsKey(configuration))
 						{
 							configuration.Remove(i);
 							i--;
