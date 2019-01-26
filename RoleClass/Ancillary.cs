@@ -56,6 +56,7 @@ namespace RoleClass
 				return result;
 			}
 		}
+
 		/// <summary>
 		/// Find out which item group the input belongs to.
 		/// </summary>
