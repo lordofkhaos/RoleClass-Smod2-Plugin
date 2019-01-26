@@ -8,8 +8,7 @@ using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using RoleClass;
-//using System.Xml;
-//using System.Xml.Serialization;
+
 
 namespace RoleClass
 {
@@ -38,27 +37,6 @@ namespace RoleClass
 				else
 					plugin.Error(intifiedValue + " is not a number!");
 			}
-
-			//myRoleClass = plugin.GetConfigString("k_roleclass");
-			//string[] rcArr = myRoleClass.Split(':'); // foreach entry
-			//for (int i = 0; i < rcArr.Length; i++)
-			//{
-			//	string[] entry = rcArr[i].Split(','); // split into role,class,[items]
-			//	IEnumerable<string> items = new List<string>();
-			//	string role = entry.First();
-			//	fullRoleClass.Add(role); // role is first
-			//	entry = entry.Where(r => r != entry[0]).ToArray();
-			//	string klasy = entry.First();
-			//	fullRoleClass.Add(klasy); // class is next
-			//	entry = entry.Where(r => r != entry[0]).ToArray();
-			//	string entryItems = entry.First(); // items yay
-			//	entryItems = string.Concat(entryItems.Split('['));
-			//	entryItems = entryItems.Trim('[').Trim(']');
-			//	string[] itemArr = entryItems.Split('.');
-			//	items = itemArr.Where(r => r != entry[0]);
-
-			//	items.ToList().ForEach(x => fullRoleClass.Add(x));
-			//}
 		}
 
 		public void OnPlayerJoin(PlayerJoinEvent ev)
@@ -73,7 +51,6 @@ namespace RoleClass
 						plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
 					break;
 				default:
-					plugin.Debug("Super secret message 0.o");
 					break;
 			}
 		}
