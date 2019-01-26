@@ -52,8 +52,8 @@ namespace RoleClass.Commands
 			{
 				string trueRankName = args[0].ToLower();
 				// cleanup old files
-				string path = @"rc-config.dat";
-				string path2 = @"dictionary.bin";
+				string path = "rc-config.dat";
+				string path2 = "dictionary.bin";
 				if (File.Exists(path))
 					File.Delete(path);
 				if (File.Exists(path2))
