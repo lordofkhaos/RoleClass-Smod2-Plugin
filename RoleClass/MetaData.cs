@@ -4,7 +4,7 @@
 	{
 		internal const string Name = "RoleClass";
 		internal const string Author = "lordofkhaos";
-		internal const string Description = "Give items to people who have the role and class";
+		internal const string Description = "Do things specific to roles and classes";
 		internal const string ID = "com.lordofkhaos.roleclass";
 		internal const string MajorVersion = "2";
 		internal const string MinorVersion = "0";
