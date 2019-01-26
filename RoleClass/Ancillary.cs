@@ -18,11 +18,14 @@ namespace RoleClass
 		/// </summary>
 		public static Dictionary<string, Dictionary<string, List<ItemType>>> ReturnSpecialConfig(string key)
 		{
-			var endyeet = new Dictionary<string, Dictionary<string, List<ItemType>>>();
+			// Setup the end variable
+			var result = new Dictionary<string, Dictionary<string, List<ItemType>>>();
 			try
 			{
-				var yeet = ConfigFile.ServerConfig.GetStringDictionary(key);
-				foreach (KeyValuePair<string, string> roleClassPair in yeet)
+				// Retrieve the raw input from the config
+				var rawInput = ConfigFile.ServerConfig.GetStringDictionary(key);
+				// Loop over the raw input and a
+				foreach (KeyValuePair<string, string> roleClassPair in rawInput)
 				{
 					string rank = roleClassPair.Key;
 					rank = rank.Replace(" ", string.Empty);
@@ -36,6 +39,7 @@ namespace RoleClass
 					itemsButTheyreStrings.Remove("]");
 					foreach (string item in itemsButTheyreStrings)
 					{
+						// Find the type of item, 
 						int typeOfItem = TypeOfItem(item.Replace(" ", string.Empty).Replace("ITEM#", string.Empty).TrimStart('0'));
 						ItemType myItem = ItemType.NULL;
 						myItem = (ItemType)typeOfItem;
@@ -43,16 +47,19 @@ namespace RoleClass
 					}
 
 					classItems.Add(klasa, items);
-					endyeet.Add(rank, classItems);
+					result.Add(rank, classItems);
 				}
-				return endyeet;
+				return result;
 			}
 			catch (Exception)
 			{
-				return endyeet;
+				return result;
 			}
 		}
-
+		/// <summary>
+		/// Find out which item group the input belongs to.
+		/// </summary>
+		/// <param name="item"></param>
 		public static int TypeOfItem(string item)
 		{
 			return Aliases.Keycards.ContainsKey(item)
@@ -66,10 +73,18 @@ namespace RoleClass
 								: -1;
 		}
 
-		// get the items in a player's inventory
+		/// <summary>
+		/// Return the number of items in a player's inventory
+		/// </summary>
+		/// <param name="pl"></param>
+		/// <returns></returns>
 		public static int PlayerItemCount(Player pl) => pl.GetInventory().Count(item => item.ItemType != ItemType.NULL);
 
-		// find if the player is human, scp, or other
+		/// <summary>
+		/// Determine which group the inputted player belongs to.
+		/// </summary>
+		/// <param name="player"></param>
+		/// <returns></returns>
 		public static int TypeOfPlayerClass(string player)
 		{
 			return Aliases.Humans.ContainsKey(player)
