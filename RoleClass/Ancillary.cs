@@ -99,6 +99,8 @@ namespace RoleClass
 		/// <summary>
 		/// Read the special JSON formated config - same format as the special config
 		/// </summary>
+		public static Dictionary<string, Dictionary<string, List<ItemType>>> ReadSpecialJsonConfig() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<ItemType>>>>(File.ReadAllText($"{GetKhaosFolder()}RoleClass{Path.DirectorySeparatorChar}config.json"));
+
 		/// <summary>
 		/// Call this to transfer everything from the old binary file to a json file
 		/// </summary>
