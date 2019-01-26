@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 namespace RoleClass
 {
+	/// <summary>
+	/// A collection of <see cref="Aliases"/> designed to account for any user input
+	/// </summary>
 	public static class Aliases
 	{
 		#region Roles
-
+		/// <summary>
+		/// The static dictionary of SCP aliases
+		/// </summary>
 		public static Dictionary<string, Role> SCPs = new Dictionary<string, Role>()
 		{
 			{ Role.SCP_049.ToString().ToLower(), Role.SCP_049 },
@@ -43,9 +48,13 @@ namespace RoleClass
 			{ "16", Role.SCP_939_53 },
 			{ Role.SCP_939_89.ToString().ToLower(), Role.SCP_939_89 },
 			{ "doggo2", Role.SCP_939_89 },
+			{ "93989", Role.SCP_939_89 },
 			{ "17", Role.SCP_939_89 }
 		};
 
+		/// <summary>
+		/// The static dictionary of Human aliases
+		/// </summary>
 		public static Dictionary<string, Role> Humans = new Dictionary<string, Role>()
 		{
 			{ Role.NTF_COMMANDER.ToString().ToLower(), Role.NTF_COMMANDER },
@@ -106,6 +115,9 @@ namespace RoleClass
 			{ "14", Role.TUTORIAL }
 		};
 
+		/// <summary>
+		/// The static dictionary of playable classes that are neither Human nor SCP
+		/// </summary>
 		public static Dictionary<string, Role> Other = new Dictionary<string, Role>()
 		{
 			{ Role.SPECTATOR.ToString().ToLower(), Role.SPECTATOR },
@@ -119,6 +131,9 @@ namespace RoleClass
 
 		#region Items
 
+		/// <summary>
+		/// The static dictionary of aliases for Keycards
+		/// </summary>
 		public static Dictionary<string, ItemType> Keycards = new Dictionary<string, ItemType>()
 		{
 			{ ItemType.CHAOS_INSURGENCY_DEVICE.ToString().ToLower(), ItemType.CHAOS_INSURGENCY_DEVICE },
@@ -187,6 +202,9 @@ namespace RoleClass
 			{ "2", ItemType.MAJOR_SCIENTIST_KEYCARD },
 		};
 
+		/// <summary>
+		/// The static dictionary of aliases for Weapons
+		/// </summary>
 		public static Dictionary<string, ItemType> Weapons = new Dictionary<string, ItemType>()
 		{
 			{ "pistol", ItemType.COM15 },
@@ -240,6 +258,9 @@ namespace RoleClass
 			{ ItemType.P90.ToString().ToLower(), ItemType.P90 },
 		};
 
+		/// <summary>
+		/// The static dictionary of aliases for Ammo
+		/// </summary>
 		public static Dictionary<string, ItemType> Ammo = new Dictionary<string, ItemType>()
 		{
 			{ "fusion", ItemType.DROPPED_5 },
@@ -262,6 +283,9 @@ namespace RoleClass
 			{ ItemType.DROPPED_9.ToString().ToLower(), ItemType.DROPPED_9 },
 		};
 
+		/// <summary>
+		/// The static dictionary of aliases for items that do not belong to the <see cref="Keycards"/> group, the <see cref="Weapons"/> group, or the <see cref="Ammo"/> group
+		/// </summary>
 		public static Dictionary<string, ItemType> Accessories = new Dictionary<string, ItemType>()
 		{
 			{ "coin", ItemType.COIN },

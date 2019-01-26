@@ -6,6 +6,9 @@ using Smod2.API;
 
 namespace RoleClass
 {
+	/// <summary>
+	/// The helper class used primarily in the RoleClass plugin by lordofkhaos
+	/// </summary>
 	public static class Ancillary
 	{
 		// example:
