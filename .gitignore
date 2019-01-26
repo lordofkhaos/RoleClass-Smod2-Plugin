@@ -334,3 +334,4 @@ ASALocalRun/
 Output/
 RoleClass/obj/
 *.cache
+packages/*
