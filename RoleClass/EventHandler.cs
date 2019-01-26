@@ -13,17 +13,6 @@ using RoleClass;
 
 namespace RoleClass
 {
-	public class Info
-	{
-		public Dictionary<string, Role> SCPs { get; set; }
-		public Dictionary<string, Role> Humans { get; set; }
-		public Dictionary<string, Role> Other { get; set; }
-		public Dictionary<string, ItemType> Keycards { get; set; }
-		public Dictionary<string, ItemType> Weapons { get; set; }
-		public Dictionary<string, ItemType> Ammo { get; set; }
-		public Dictionary<string, ItemType> Accessories { get; set; }
-	}
-
 	class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole
 	{
 		readonly Plugin plugin;
