@@ -11,10 +11,13 @@ namespace RoleClass
 	/// </summary>
 	public static class Ancillary
 	{
-		// example:
-		// k_roleclass:
+		// # example:
+		// krc_items:
 		//  - role:class[item.item.item]
-		// 
+		//  - owner:classd[1]
+		// # if more than one in this list it's randomized
+		// krc_health:
+		//  - role:class[hp]
 		// 
 		/// <summary>
 		/// For returning a Dictionary of string keys with values of dictionaries with keys of strings and values of item lists.
@@ -61,10 +64,25 @@ namespace RoleClass
 		}
 
 		/// <summary>
-		/// Find out which item group the input belongs to.
+		/// Read the special JSON formated config - same format as the special config
+		/// </summary>
+		/// <summary>
+		/// Call this to transfer everything from the old binary file to a json file
+		/// </summary>
+		// Internal method to read the special binary file - no need to make this public
+		/// <summary>
+		/// Return the specific folder used in lordofkhaos's plugins
+		/// </summary>
+		/// <returns></returns>
+		/// <summary>
+		/// An enum used in the RoleClass ancillary method GetTypeOfItem
+		/// </summary>
+		/// <summary>
+		/// Extension method on string to return which type of item is the provided string
 		/// </summary>
 		/// <param name="item"></param>
 		public static int TypeOfItem(string item)
+		/// <returns></returns>
 		{
 			return Aliases.Keycards.ContainsKey(item)
 							? 0
@@ -86,6 +104,10 @@ namespace RoleClass
 
 		/// <summary>
 		/// Determine which group the inputted player belongs to.
+		/// An enum used in the RoleClass ancillary method GetTypeOfPlayer
+		/// </summary>
+		/// <summary>
+		/// Extension method on string to return which type of class the player is from the provided string
 		/// </summary>
 		/// <param name="player"></param>
 		/// <returns></returns>
