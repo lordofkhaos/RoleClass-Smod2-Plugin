@@ -14,6 +14,8 @@ namespace RoleClass
 	/// </summary>
 	public static class Ancillary
 	{
+		private static RoleClass plugin;
+
 		// # example:
 		// krc_items:
 		//  - role:class[item.item.item]
@@ -204,6 +206,8 @@ namespace RoleClass
 			{
 				sw.Write(result);
 			}
+			// If legacy mode is enabled, don't delete
+			if (plugin.GetConfigBool("krc_legacy_enable")) return;
 			// Delete the file(s)
 			if (path1Exists) File.Delete(path1);
 			if (path2Exists) File.Delete(path2);
