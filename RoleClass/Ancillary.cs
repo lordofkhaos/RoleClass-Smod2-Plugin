@@ -299,11 +299,11 @@ namespace RoleClass
 		}
 
 		/// <summary>
-		/// Return the number of items in a player's inventory
+		/// Extension method to return the number of items in a player's inventory
 		/// </summary>
 		/// <param name="pl"></param>
 		/// <returns></returns>
-		public static int PlayerItemCount(Player pl) => pl.GetInventory().Count(item => item.ItemType != ItemType.NULL);
+		public static int PlayerItemCount(this Player pl) => pl.GetInventory().Count(item => item.ItemType != ItemType.NULL);
 
 		/// <summary>
 		/// An enum used in the RoleClass ancillary method GetTypeOfPlayer
