@@ -35,18 +35,7 @@ namespace RoleClass.Commands
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
-			//if (sender is Player pl)
-			//{
-			//    //Player a = (Player)sender;
-			//    var s64 = pl.SteamId;
-			//    string inf = "Player: " + pl;
-			//    string inf2 = "Steamid: " + s64;
-			//    if (!string.IsNullOrEmpty(pl.SteamId))
-			//    {
-			//        return new string[] { inf + inf2 };
-			//        //plugin.Debug(inf2);
-			//    }
-			//}
+			if (!plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
 			Dictionary<string, string> myDeserializedData = new Dictionary<string, string>();
 			if (args != null && args.Length > 0)
 			{
