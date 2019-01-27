@@ -35,6 +35,7 @@ namespace RoleClass.Commands
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
+			if (!plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
 			//if (sender is Player pl)
 			//{
 			//    //Player a = (Player)sender;
