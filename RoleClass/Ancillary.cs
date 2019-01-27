@@ -350,23 +350,24 @@ namespace RoleClass
 		/// </summary>
 		/// <param name="ev"></param>
 		/// <param name="config"></param>
-		/// <param name="localItems1"></param>
-		/// <param name="localItems2"></param>
-		public static void GivePlayerItems(this Smod2.Events.PlayerSetRoleEvent ev, Dictionary<string, Dictionary<string, List<ItemType>>> config, out List<ItemType> localItems1, out List<ItemType> localItems2)
+		public static void GivePlayerItems(this Smod2.Events.PlayerSetRoleEvent ev, Dictionary<string, Dictionary<string, List<ItemType>>> config)
 		{
 			List<ItemType> configItems = new List<ItemType>();
-			localItems1 = new List<ItemType>();
-			localItems2 = new List<ItemType>();
+			List<ItemType> localItems1 = new List<ItemType>();
+			List<ItemType> localItems2 = new List<ItemType>();
+			List<ItemType> localItems3 = new List<ItemType>();
 			// Setup the dictionaries needed
-			Dictionary<string, List<ItemType>> localDict1 = new Dictionary<string, List<ItemType>>(), localDict2 = new Dictionary<string, List<ItemType>>();
+			Dictionary<string, List<ItemType>> localDict1 = new Dictionary<string, List<ItemType>>(), localDict2 = new Dictionary<string, List<ItemType>>(), localDict3 = new Dictionary<string, List<ItemType>>();
 			// If the player's rank is in the JSON config
-			if ((config.TryGetValue(ev.Player.GetUserGroup().Name, out localDict1) || config.TryGetValue(ev.Player.GetRankName(), out localDict2)))
+			if ((config.TryGetValue(ev.Player.GetUserGroup().Name, out localDict1) || config.TryGetValue(ev.Player.GetRankName(), out localDict2) || config.TryGetValue(ev.Player.SteamId, out localDict3)))
 			{
 				// Check if it's their rank name or display name that is the key
-				bool checkClassIn1 = localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
-						checkClassIn2 = localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2);
+				bool	checkClassIn1 = localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
+						checkClassIn2 = localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2),
+						checkSteamId = localDict3.TryGetValue(ev.Player.SteamId, out localItems3);
 				if (checkClassIn1) configItems.AddRange(localItems1);
 				if (checkClassIn2) configItems.AddRange(localItems2);
+				if (checkSteamId) configItems.AddRange(localItems3);
 				// Give the player the items - if they aren't the right class, it will add an empty List
 				foreach (ItemType it in configItems)
 				{

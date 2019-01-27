@@ -59,7 +59,7 @@ namespace RoleClass
 				// Read the JSON config
 				Dictionary<string, Dictionary<string, List<ItemType>>> jsonConfig = Ancillary.ReadSpecialJsonConfig();
 				// Give items
-				ev.GivePlayerItems(jsonConfig, out List<ItemType> jsonLocalItems1, out List<ItemType> jsonLocalItems2);
+				ev.GivePlayerItems(jsonConfig);
 
 				#endregion
 
@@ -68,7 +68,7 @@ namespace RoleClass
 				// Read the normal config
 				Dictionary<string, Dictionary<string, List<ItemType>>> krcConfig = Ancillary.ReturnSpecialConfig("krc_items");
 				// Give items
-				ev.GivePlayerItems(krcConfig, out List<ItemType> krcLocalItems1, out List<ItemType> krcLocalItems2);
+				ev.GivePlayerItems(krcConfig);
 				#endregion
 			}
 			catch (Exception e) { plugin.Error($"[MESSAGE]: {e.Message}{Environment.NewLine}[STACKTRACE]: {e.StackTrace} "); }
