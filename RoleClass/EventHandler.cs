@@ -8,6 +8,7 @@ using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using RoleClass;
+using RoleClass.Assists;
 
 
 namespace RoleClass

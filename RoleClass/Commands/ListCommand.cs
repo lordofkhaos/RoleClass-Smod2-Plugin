@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 //using System.Xml.Serialization;
 using System.Threading;
 using RoleClass;
+using RoleClass.Assists;
 using Smod2;
 using Smod2.API;
 using Smod2.Commands;
