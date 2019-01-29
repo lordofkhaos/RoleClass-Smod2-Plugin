@@ -30,7 +30,7 @@ namespace RoleClass
 		public static Dictionary<string, Dictionary<string, List<ItemType>>> ReturnSpecialConfig(string key)
 		{
 			// Setup the end variable
-			var result = new Dictionary<string, Dictionary<string, List<ItemType>>>();
+			Dictionary<string, Dictionary<string, List<ItemType>>> result = new Dictionary<string, Dictionary<string, List<ItemType>>>();
 			try
 			{
 				// Retrieve the raw input from the config
@@ -77,7 +77,8 @@ namespace RoleClass
 							case KItemType.Weapon:
 								Aliases.Accessories.TryGetValue(item, out thisItem);
 								break;
-							case KItemType.NOT:
+							case KItemType.Not:
+							default:
 								break;
 						}
 						// Add the found item to the list of items
@@ -277,7 +278,7 @@ namespace RoleClass
 			/// <summary>
 			/// If the item is not a <see cref="Keycard"/>, <see cref="Weapon"/>, <see cref="Accessory"/>, or <see cref="Ammo"/>
 			/// </summary>
-			NOT
+			Not
 		}
 
 		/// <summary>
@@ -295,7 +296,7 @@ namespace RoleClass
 							? KItemType.Accessory
 								: Aliases.Ammo.ContainsKey(item)
 							? KItemType.Ammo
-								: KItemType.NOT;
+								: KItemType.Not;
 		}
 
 		/// <summary>
@@ -325,7 +326,7 @@ namespace RoleClass
 			/// <summary>
 			/// If the provided player does not belong to any other group
 			/// </summary>
-			NOT
+			Not
 
 		}
 
@@ -342,7 +343,7 @@ namespace RoleClass
 							? KPlayerClass.SCP
 								: Aliases.Other.ContainsKey(player)
 							? KPlayerClass.Other
-								: KPlayerClass.NOT;
+								: KPlayerClass.Not;
 		}
 
 		/// <summary>
@@ -357,33 +358,35 @@ namespace RoleClass
 			List<ItemType> localItems2 = new List<ItemType>();
 			List<ItemType> localItems3 = new List<ItemType>();
 			// Setup the dictionaries needed
-			Dictionary<string, List<ItemType>> localDict1 = new Dictionary<string, List<ItemType>>(), localDict2 = new Dictionary<string, List<ItemType>>(), localDict3 = new Dictionary<string, List<ItemType>>();
-			// If the player's rank is in the JSON config
-			if ((config.TryGetValue(ev.Player.GetUserGroup().Name, out localDict1) || config.TryGetValue(ev.Player.GetRankName(), out localDict2) || config.TryGetValue(ev.Player.SteamId, out localDict3)))
+			Dictionary<string, List<ItemType>> localDict1 = new Dictionary<string, List<ItemType>>(),
+				localDict2 = new Dictionary<string, List<ItemType>>(),
+				localDict3 = new Dictionary<string, List<ItemType>>();
+			// If the player's rank is not, return in the config
+			if ((!config.TryGetValue(ev.Player.GetUserGroup().Name, out localDict1) &&
+			     !config.TryGetValue(ev.Player.GetRankName(), out localDict2) &&
+			     !config.TryGetValue(ev.Player.SteamId, out localDict3))) return;
+			// Check if it's their rank name or display name that is the key
+			bool	checkClassIn1 = localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
+					checkClassIn2 = localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2),
+					checkSteamId = localDict3.TryGetValue(ev.Player.SteamId, out localItems3);
+			if (checkClassIn1) configItems.AddRange(localItems1);
+			if (checkClassIn2) configItems.AddRange(localItems2);
+			if (checkSteamId) configItems.AddRange(localItems3);
+			// Give the player the items - if they aren't the right class, it will add an empty List
+			foreach (ItemType it in configItems)
 			{
-				// Check if it's their rank name or display name that is the key
-				bool	checkClassIn1 = localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
-						checkClassIn2 = localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2),
-						checkSteamId = localDict3.TryGetValue(ev.Player.SteamId, out localItems3);
-				if (checkClassIn1) configItems.AddRange(localItems1);
-				if (checkClassIn2) configItems.AddRange(localItems2);
-				if (checkSteamId) configItems.AddRange(localItems3);
-				// Give the player the items - if they aren't the right class, it will add an empty List
-				foreach (ItemType it in configItems)
+				// Ignore ammo - this is controlled by a different config
+				if (GetTypeOfItem(it.ToString()) == KItemType.Ammo) continue;
+				// Spawn the items at the player if their inventory exceeds the limit
+				if (ev.Player.PlayerItemCount() > 8)
 				{
-					// Ignore ammo - this is controlled by a different config
-					if (GetTypeOfItem(it.ToString()) == KItemType.Ammo) continue;
-					// Spawn the items at the player if their inventory exceeds the limit
-					if (ev.Player.PlayerItemCount() > 8)
-					{
-						Vector myPos = ev.Player.GetPosition();
-						Vector myRot = ev.Player.GetRotation();
-						PluginManager.Manager.Server.Map.SpawnItem(it, myPos, myRot);
-					}
-					else
-					{
-						ev.Items.Add(it);
-					}
+					Vector myPos = ev.Player.GetPosition();
+					Vector myRot = ev.Player.GetRotation();
+					PluginManager.Manager.Server.Map.SpawnItem(it, myPos, myRot);
+				}
+				else
+				{
+					ev.Items.Add(it);
 				}
 			}
 		}
