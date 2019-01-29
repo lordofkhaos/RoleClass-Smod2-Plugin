@@ -14,12 +14,12 @@ using Smod2.Commands;
 
 namespace RoleClass.Commands
 {
-	class DeleteCommand : ICommandHandler
+	internal class ListCommand : ICommandHandler
 	{
-		private RoleClass plugin;
-		public void DeleteCmd(RoleClass plugin)
+		private RoleClass _plugin;
+		public void ListCmd(RoleClass plugin)
 		{
-			this.plugin = plugin;
+			this._plugin = plugin;
 		}
 
 		public string GetCommandDescription()
@@ -35,19 +35,7 @@ namespace RoleClass.Commands
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
-			if (!plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
-			//if (sender is Player pl)
-			//{
-			//    //Player a = (Player)sender;
-			//    var s64 = pl.SteamId;
-			//    string inf = "Player: " + pl;
-			//    string inf2 = "Steamid: " + s64;
-			//    if (!string.IsNullOrEmpty(pl.SteamId))
-			//    {
-			//        return new string[] { inf + inf2 };
-			//        //plugin.Debug(inf2);
-			//    }
-			//}
+			if (!_plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
 			Dictionary<string, string> myDeserializedData = new Dictionary<string, string>();
 			if (args != null && args.Length > 0)
 			{
@@ -56,39 +44,53 @@ namespace RoleClass.Commands
 				string path = @"rc-config.dat";
 				string path2 = @"dictionary.bin";
 				if (File.Exists(path))
-				{
 					File.Delete(path);
-				}
-
 				if (File.Exists(path2))
-				{
 					File.Delete(path2);
-				}
 				//
-				if (args.Length > 1)
+				// parse class
+				string trueClassName = args[1].ToLower();
+				IFormatter formatter = new BinaryFormatter();
+				List<string> configurations = new List<string>();
+				if (File.Exists("roleclass.cfgbin"))
 				{
-					// parse class
-					string trueClassName = args[1].ToLower();
-					IFormatter formatter = new BinaryFormatter();
-					if (File.Exists("roleclass.cfgbin"))
+					using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
 					{
-						using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
-						{
-							myDeserializedData = (Dictionary<string, string>)formatter.Deserialize(fileStream);
-						}
+						myDeserializedData = (Dictionary<string, string>)formatter.Deserialize(fileStream);
 					}
 					foreach (KeyValuePair<string, string> pair in myDeserializedData)
 					{
 						string myClassName = pair.Value.Substring(trueClassName.Length);
 						if (pair.Key == trueRankName && pair.Value.StartsWith(myClassName, StringComparison.Ordinal))
 						{
-							pair.Equals(new Dictionary<string, string>() { });
+							configurations.Add(pair.Value);
 						}
-
-						return new string[] { "Removed configuration for " + trueRankName + ":" + trueClassName };
 					}
+					string confClassName = string.Empty;
+					string confItems = string.Empty;
+					foreach (string configuration in configurations)
+					{
+						int i = configuration.Length;
+						while (!Aliases.Humans.ContainsKey(configuration) && !Aliases.SCPs.ContainsKey(configuration) && Aliases.Other.ContainsKey(configuration))
+						{
+							configuration.Remove(i);
+							i--;
+							if (i == 0)
+								break;
+						}
+						confClassName = configuration;
+					}
+					foreach (string configuration in configurations)
+					{
+						if (configuration.StartsWith(confClassName, StringComparison.Ordinal) && !string.IsNullOrEmpty(confClassName))
+							confItems = configuration.Replace(confClassName, "");
+					}
+					return new string[] { };
 				}
-				return new string[] { GetUsage() };
+				else
+				{
+					return new string[] { "No configuration file found!" };
+				}
 			}
 			return new string[] { GetUsage() };
 

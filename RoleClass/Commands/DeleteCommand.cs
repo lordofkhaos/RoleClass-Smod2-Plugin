@@ -14,28 +14,28 @@ using Smod2.Commands;
 
 namespace RoleClass.Commands
 {
-	class SaveCommand : ICommandHandler
+	internal class DeleteCommand : ICommandHandler
 	{
-		private RoleClass plugin;
-		public void SaveCmd(RoleClass plugin)
+		private RoleClass _plugin;
+		public void DeleteCmd(RoleClass plugin)
 		{
-			this.plugin = plugin;
+			this._plugin = plugin;
 		}
 
 		public string GetCommandDescription()
 		{
 			// This prints when someone types HELP SAVE
-			return "Saves a set of items for the role/class.";
+			return "Deletes a set of items for the role/class.";
 		}
 
 		public string GetUsage()
 		{
-			return "SAVE" + " RANK " + "CLASS " + "ITEMS LIST";
+			return "DEL" + " RANK " + "CLASS";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
-			if (!plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
+			if (!_plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
 			//if (sender is Player pl)
 			//{
 			//    //Player a = (Player)sender;
@@ -48,72 +48,45 @@ namespace RoleClass.Commands
 			//        //plugin.Debug(inf2);
 			//    }
 			//}
-
+			Dictionary<string, string> myDeserializedData = new Dictionary<string, string>();
 			if (args != null && args.Length > 0)
 			{
 				string trueRankName = args[0].ToLower();
 				// cleanup old files
-				string path = "rc-config.dat";
-				string path2 = "dictionary.bin";
+				string path = @"rc-config.dat";
+				string path2 = @"dictionary.bin";
 				if (File.Exists(path))
+				{
 					File.Delete(path);
+				}
+
 				if (File.Exists(path2))
+				{
 					File.Delete(path2);
+				}
 				//
 				if (args.Length > 1)
 				{
 					// parse class
 					string trueClassName = args[1].ToLower();
-					if (args != null && args.Length > 2)
+					IFormatter formatter = new BinaryFormatter();
+					if (File.Exists("roleclass.cfgbin"))
 					{
-						int len = args.Length - 2;
-						// parse items
-						List<string> itemList = new List<string>();
-
-						int i = 2;
-						while (i < args.Length)
+						using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
 						{
-							itemList.Add(args[i]);
-							i++;
-						}
-
-						string[] itemArray = itemList.ToArray();
-
-						List<string> classItems = new List<string>();
-						if (trueClassName != null)
-						{
-							classItems.Add(trueClassName);
-						}
-
-						i = 0;
-						while (i < itemArray.Length)
-						{
-							int j = i + 1;
-							classItems.Add(itemArray[i]);
-							i++;
-						}
-
-						Dictionary<string, List<string>> serializingData = new Dictionary<string, List<string>>()
-						{
-							[trueRankName] = classItems
-						};
-
-						IFormatter formatter = new BinaryFormatter();
-						if (!File.Exists("roleclass.cfgbin"))
-						{
-							using (FileStream fileSteam = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
-							{
-								formatter.Serialize(fileSteam, serializingData);
-								return new string[] { "Saved configuration for " + trueRankName + ":" + trueClassName };
-							}
-						}
-						using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.Append))
-						{
-							formatter.Serialize(fileStream, serializingData);
-							return new string[] { "Saved configuration for " + trueRankName + ":" + trueClassName };
+							myDeserializedData = (Dictionary<string, string>)formatter.Deserialize(fileStream);
 						}
 					}
-					return new string[] { GetUsage() };
+					foreach (KeyValuePair<string, string> pair in myDeserializedData)
+					{
+						string myClassName = pair.Value.Substring(trueClassName.Length);
+						if (pair.Key == trueRankName && pair.Value.StartsWith(myClassName, StringComparison.Ordinal))
+						{
+							pair.Equals(new Dictionary<string, string>() { });
+						}
+
+						return new string[] { "Removed configuration for " + trueRankName + ":" + trueClassName };
+					}
 				}
 				return new string[] { GetUsage() };
 			}
