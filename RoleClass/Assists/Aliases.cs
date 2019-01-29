@@ -1,7 +1,7 @@
-﻿using Smod2.API;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Smod2.API;
 
-namespace RoleClass
+namespace RoleClass.Assists
 {
 	/// <summary>
 	/// A collection of <see cref="Aliases"/> designed to account for any user input

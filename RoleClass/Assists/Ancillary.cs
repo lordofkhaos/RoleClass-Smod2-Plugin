@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
 using Smod2;
 using Smod2.API;
-using Newtonsoft.Json;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
-namespace RoleClass
+namespace RoleClass.Assists
 {
 	/// <summary>
 	/// The helper class used primarily in the RoleClass plugin by lordofkhaos
 	/// </summary>
 	public static class Ancillary
 	{
-		private static RoleClass plugin;
+		private static RoleClass _plugin;
 
 		// # example:
 		// krc_items:
@@ -208,7 +208,7 @@ namespace RoleClass
 				sw.Write(result);
 			}
 			// If legacy mode is enabled, don't delete
-			if (plugin.GetConfigBool("krc_legacy_enable")) return;
+			if (_plugin.GetConfigBool("krc_legacy_enable")) return;
 			// Delete the file(s)
 			if (path1Exists) File.Delete(path1);
 			if (path2Exists) File.Delete(path2);
