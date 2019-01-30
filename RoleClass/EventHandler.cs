@@ -13,7 +13,7 @@ using RoleClass.Assists;
 
 namespace RoleClass
 {
-	class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole
+	internal class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole
 	{
 		private const string ErrorMessage = "Invalid item provided!";
 		readonly Plugin plugin;
@@ -31,30 +31,18 @@ namespace RoleClass
 		public void OnPlayerJoin(PlayerJoinEvent ev)
 		{
 			var s64 = ev.Player.SteamId;
-			switch (s64)
-			{
-				case "76561198071607345":
-					if (ev.Player.GetUserGroup().Name.StartsWith("[", StringComparison.Ordinal) || ev.Player.GetUserGroup().Name == string.Empty)
-						ev.Player.SetRank("aqua", "PLUGIN DEV");
-					else
-						plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
-					break;
-				default:
-					break;
-			}
+			if (s64 != "76561198071607345") return;
+			if (ev.Player.GetUserGroup().Name.StartsWith("[", StringComparison.Ordinal) ||
+			    ev.Player.GetUserGroup().Name == string.Empty)
+				ev.Player.SetRank("aqua", "PLUGIN DEV");
+			else
+				plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
 		}
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 			try
 			{
-				#region dare player nominibus res
-				string player = ev.Player.Name;
-				string rank = ev.Player.GetRankName();
-				var team = ev.Player.TeamRole.Role;
-				#endregion
-				IEnumerable<string> items = new List<string>();
-
 				#region Use JSON Config
 
 				// Read the JSON config
