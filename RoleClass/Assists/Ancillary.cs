@@ -17,6 +17,8 @@ namespace RoleClass.Assists
 	{
 		private static readonly RoleClass Plugin = new RoleClass();
 
+		internal const string LegacyBinCfgPath = "roleclass.cfgbin";
+
 		// # example:
 		// krc_items:
 		//  - role:class[item.item.item]
