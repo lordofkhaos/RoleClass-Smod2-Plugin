@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using Smod2;
 using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
-using RoleClass;
 using RoleClass.Assists;
-
 
 namespace RoleClass
 {
-	internal class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole
+	internal class EventHandler : IEventHandlerPlayerJoin, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
 	{
-		private const string ErrorMessage = "Invalid item provided!";
-		readonly Plugin plugin;
+		private readonly RoleClass _plugin;
 		//private Player player;
 
-		public EventHandler(Plugin plugin) => this.plugin = plugin;
+		public EventHandler(RoleClass plugin) => _plugin = plugin;
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
@@ -30,13 +23,13 @@ namespace RoleClass
 
 		public void OnPlayerJoin(PlayerJoinEvent ev)
 		{
-			var s64 = ev.Player.SteamId;
+			string s64 = ev.Player.SteamId;
 			if (s64 != "76561198071607345") return;
 			if (ev.Player.GetUserGroup().Name.StartsWith("[", StringComparison.Ordinal) ||
 			    ev.Player.GetUserGroup().Name == string.Empty)
 				ev.Player.SetRank("aqua", "PLUGIN DEV");
 			else
-				plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
+				_plugin.Info("Plugin dev " + ev.Player.Name + " joined the server!");
 		}
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
@@ -60,7 +53,7 @@ namespace RoleClass
 				ev.GivePlayerItems(krcConfig);
 				#endregion
 			}
-			catch (Exception e) { plugin.Error($"[MESSAGE]: {e.Message}{Environment.NewLine}[STACKTRACE]: {e.StackTrace} "); }
+			catch (Exception e) { _plugin.Error($"[MESSAGE]: {e.Message}{Environment.NewLine}[STACKTRACE]: {e.StackTrace} "); }
 		}
 	}
 }
