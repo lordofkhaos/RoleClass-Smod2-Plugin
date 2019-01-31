@@ -35,7 +35,7 @@ namespace RoleClass.Assists
 			try
 			{
 				// Retrieve the raw input from the config
-				var rawInput = ConfigFile.ServerConfig.GetStringDictionary(key);
+				Dictionary<string, string> rawInput = ConfigFile.ServerConfig.GetStringDictionary(key);
 				// Loop over the raw input pairs
 				foreach (KeyValuePair<string, string> configPair in rawInput)
 				{
@@ -78,6 +78,10 @@ namespace RoleClass.Assists
 							case KItemType.Weapon:
 								Aliases.Accessories.TryGetValue(item, out thisItem);
 								break;
+							case KItemType.Not:
+								break;
+							default:
+								throw new ArgumentOutOfRangeException();
 						}
 						// Add the found item to the list of items
 						items.Add(thisItem);
@@ -155,7 +159,7 @@ namespace RoleClass.Assists
 
 		private static void AddDeserializedData(string path1, BinaryFormatter bf, Dictionary<string, Dictionary<string, List<ItemType>>> prematureResult)
 		{
-// Use the method to retrieve the deserialized data
+			// Use the method to retrieve the deserialized data
 			Dictionary<string, Dictionary<string, List<string>>> deserializedData = DeserializedData(path1,
 				bf);
 			// Retrieve the list of items
@@ -372,5 +376,14 @@ namespace RoleClass.Assists
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Compare multiple strings to the given one
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="compareType"></param>
+		/// <param name="compareValues"></param>
+		/// <returns></returns>
+		public static bool Compare(this string data, StringComparison compareType, params string[] compareValues) => compareValues.Any(s => data.Equals(s, compareType));
 	}
 }
