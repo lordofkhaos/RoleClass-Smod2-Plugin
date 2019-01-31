@@ -17,9 +17,9 @@ namespace RoleClass.Commands
 	class SaveCommand : ICommandHandler
 	{
 		private RoleClass _plugin;
-		public void SaveCmd(RoleClass plugin)
+		public SaveCommand(RoleClass plugin)
 		{
-			this._plugin = plugin;
+			_plugin = plugin;
 		}
 
 		public string GetCommandDescription()

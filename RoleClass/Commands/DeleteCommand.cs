@@ -17,9 +17,9 @@ namespace RoleClass.Commands
 	internal class DeleteCommand : ICommandHandler
 	{
 		private RoleClass _plugin;
-		public void DeleteCmd(RoleClass plugin)
+		public DeleteCommand(RoleClass plugin)
 		{
-			this._plugin = plugin;
+			_plugin = plugin;
 		}
 
 		public string GetCommandDescription()
