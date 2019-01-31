@@ -18,7 +18,7 @@ namespace RoleClass.Commands
 {
 	class SaveCommand : ICommandHandler
 	{
-		private RoleClass _plugin;
+		private readonly RoleClass _plugin;
 		public SaveCommand(RoleClass plugin)
 		{
 			_plugin = plugin;
@@ -57,13 +57,13 @@ namespace RoleClass.Commands
 				using (FileStream fileSteam = File.Open(Ancillary.LegacyBinCfgPath, FileMode.OpenOrCreate))
 				{
 					formatter.Serialize(fileSteam, serializingData);
-					return new string[] { "Saved configuration for " + trueRankName + ":" + className };
+					return new[] { "Saved configuration for " + trueRankName + ":" + className };
 				}
 			}
 			using (FileStream fileStream = File.Open(Ancillary.LegacyBinCfgPath, FileMode.Append))
 			{
 				formatter.Serialize(fileStream, serializingData);
-				return new string[] { "Saved configuration for " + trueRankName + ":" + className };
+				return new[] { "Saved configuration for " + trueRankName + ":" + className };
 			}
 
 		}
