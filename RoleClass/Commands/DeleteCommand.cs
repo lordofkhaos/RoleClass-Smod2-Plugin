@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-//using System.Xml;
-//using System.Xml.Serialization;
 using System.Threading;
 using RoleClass;
 using Smod2;
@@ -94,30 +92,3 @@ namespace RoleClass.Commands
 
 		}
 	}
-}
-
-//***** Welcome to the bottom of the file *****
-//**** Here are several things I wrote out to help me code: ****
-//
-//** Example Commands: **
-//save something something 15,2,26,1
-//save owner something 1,2,3
-//save laneklfhak sakfneoiqoia 928,129u48,127487
-//
-//** Example Xml: **
-//* Note: XML is to-be-added *
-//<ranks>
-//  <owner class="scientist">
-//      <items>
-//          <item1>SomeItem</item1>
-//          <item2>SomeOtherItem</item2>
-//      </items>
-//  </owner>
-//  <admin class="class-d">
-//      <items>
-//          <item1>SomeItem</item1>
-//          <item2>CouldBeAnyItem</item2>
-//          <item3>CanHaveAsManyAsYouWant</item3>
-//      </items>
-//  </admin>
-//</ranks>
