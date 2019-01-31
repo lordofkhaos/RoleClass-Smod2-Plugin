@@ -3,6 +3,7 @@ using Smod2.Attributes;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using System.Collections.Generic;
+using RoleClass.Essential;
 
 namespace RoleClass
 {
@@ -10,11 +11,11 @@ namespace RoleClass
 		author = MetaData.Author,
 		name = MetaData.Name,
 		description = MetaData.Description,
-		id = MetaData.ID,
+		id = MetaData.Id,
 		version = MetaData.Version,
-		SmodMajor = 3,
-		SmodMinor = 1,
-		SmodRevision = 16
+		SmodMajor = MetaData.SmodMajor,
+		SmodMinor = MetaData.SmodMinor,
+		SmodRevision = MetaData.SmodBuild
 		)]
 	class RoleClass : Plugin
 	{
