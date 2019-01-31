@@ -17,33 +17,33 @@ namespace RoleClass
 		SmodMinor = MetaData.SmodMinor,
 		SmodRevision = MetaData.SmodBuild
 		)]
-	class RoleClass : Plugin
+	internal class RoleClass : Plugin
 	{
 		public override void OnDisable()
 		{
-			this.Info("RoleClass disabled!");
+			Info("RoleClass disabled!");
 		}
 
 		public override void OnEnable()
 		{
-			this.Info("RoleClass loaded successfully!");
+			Info("RoleClass loaded successfully!");
 		}
 
-		private EventHandler events;
+		private EventHandler _events;
 
 		public override void Register()
 		{
-			events = new EventHandler(this);
+			_events = new EventHandler(this);
 			// Register Events
-			this.AddEventHandler(typeof(IEventHandlerPlayerJoin), events, Priority.Low);
-			this.AddEventHandler(typeof(IEventHandlerSetRole), events, Priority.Normal);
+			AddEventHandler(typeof(IEventHandlerPlayerJoin), _events, Priority.Low);
+			AddEventHandler(typeof(IEventHandlerSetRole), _events);
 			// Register config settings
-			this.AddConfig(new Smod2.Config.ConfigSetting("krc_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
-			this.AddConfig(new Smod2.Config.ConfigSetting("krc_enable_legacy", true, Smod2.Config.SettingType.BOOL, true, "Enable the legacy features of RoleClass")); // This is true for now
+			AddConfig(new Smod2.Config.ConfigSetting("krc_enable", true, Smod2.Config.SettingType.BOOL, true, "Enable RoleClass"));
+			AddConfig(new Smod2.Config.ConfigSetting("krc_enable_legacy", true, Smod2.Config.SettingType.BOOL, true, "Enable the legacy features of RoleClass")); // This is true for now
 			// legacy
-			this.AddCommands(new string[] { "save", "add", "nentry" }, new Commands.SaveCommand());
-			this.AddCommands(new string[] { "del", "rem", "rentry" }, new Commands.DeleteCommand());
-			this.AddCommands(new string[] { "list", "entries" }, new Commands.ListCommand());
+			AddCommands(new[] { "save", "add", "nentry" }, new Commands.SaveCommand(this));
+			AddCommands(new[] { "del", "rem", "rentry" }, new Commands.DeleteCommand(this));
+			AddCommands(new[] { "list", "entries" }, new Commands.ListCommand(this));
 			// tba
 		}
 	}
