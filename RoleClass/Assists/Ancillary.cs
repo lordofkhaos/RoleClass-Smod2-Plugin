@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
 using Smod2;
 using Smod2.API;
+using Smod2.Events;
 
 namespace RoleClass.Assists
 {
@@ -14,7 +15,7 @@ namespace RoleClass.Assists
 	/// </summary>
 	public static class Ancillary
 	{
-		private static RoleClass _plugin;
+		private static readonly RoleClass Plugin = new RoleClass();
 
 		// # example:
 		// krc_items:
@@ -77,9 +78,6 @@ namespace RoleClass.Assists
 							case KItemType.Weapon:
 								Aliases.Accessories.TryGetValue(item, out thisItem);
 								break;
-							case KItemType.Not:
-							default:
-								break;
 						}
 						// Add the found item to the list of items
 						items.Add(thisItem);
@@ -125,77 +123,17 @@ namespace RoleClass.Assists
 			Dictionary<string, Dictionary<string, List<ItemType>>> prematureResult = new Dictionary<string, Dictionary<string, List<ItemType>>>();
 			// It's possible for all three to exist
 			if (path1Exists)
-			{
-				// Use the method to retrieve the deserialized data
-				Dictionary<string, Dictionary<string, List<string>>> deserializedData = DeserializedData(path1, bf);
-				// Retrieve the list of items
-				Dictionary<string, List<string>> classItems = new Dictionary<string, List<string>>();
-				deserializedData.TryGetValue(deserializedData.First().Key, out classItems);
-				List<ItemType> itemTypes = new List<ItemType>();
-				List<string> items = new List<string>();
-				classItems.TryGetValue(classItems.First().Key, out items);
-				// Find which item the alias refers to, and add to the list
-				foreach (var item in items)
-				{
-					if (Aliases.Keycards.TryGetValue(item, out ItemType typeK)) itemTypes.Add(typeK);
-					else if (Aliases.Accessories.TryGetValue(item, out ItemType typeA)) itemTypes.Add(typeA);
-					else if (Aliases.Weapons.TryGetValue(item, out ItemType typeW)) itemTypes.Add(typeW);
-					else if (Aliases.Ammo.TryGetValue(item, out ItemType type)) itemTypes.Add(type);
-				}
-
-				prematureResult.Add(key: deserializedData.First().Key, value: new Dictionary<string, List<ItemType>>
-				{
-					{ classItems.First().Key, itemTypes }
-				});
-			}
+				AddDeserializedData(path1,
+					bf,
+					prematureResult);
 			if (path2Exists)
-			{
-				// Use the method to retrieve the deserialized data
-				Dictionary<string, Dictionary<string, List<string>>> deserializedData = DeserializedData(path2, bf);
-				// Retrieve the list of items
-				Dictionary<string, List<string>> classItems = new Dictionary<string, List<string>>();
-				deserializedData.TryGetValue(deserializedData.First().Key, out classItems);
-				List<ItemType> itemTypes = new List<ItemType>();
-				List<string> items = new List<string>();
-				classItems.TryGetValue(classItems.First().Key, out items);
-				// Find which item the alias refers to, and add to the list
-				foreach (var item in items)
-				{
-					if (Aliases.Keycards.TryGetValue(item, out ItemType typeK)) itemTypes.Add(typeK);
-					else if (Aliases.Accessories.TryGetValue(item, out ItemType typeA)) itemTypes.Add(typeA);
-					else if (Aliases.Weapons.TryGetValue(item, out ItemType typeW)) itemTypes.Add(typeW);
-					else if (Aliases.Ammo.TryGetValue(item, out ItemType type)) itemTypes.Add(type);
-				}
-
-				prematureResult.Add(key: deserializedData.First().Key, value: new Dictionary<string, List<ItemType>>
-				{
-					{ classItems.First().Key, itemTypes }
-				});
-			}
+				AddDeserializedData(path2,
+					bf,
+					prematureResult);
 			if (path3Exists)
-			{
-				// Use the method to retrieve the deserialized data
-				Dictionary<string, Dictionary<string, List<string>>> deserializedData = DeserializedData(path3, bf);
-				// Retrieve the list of items
-				Dictionary<string, List<string>> classItems = new Dictionary<string, List<string>>();
-				deserializedData.TryGetValue(deserializedData.First().Key, out classItems);
-				List<ItemType> itemTypes = new List<ItemType>();
-				List<string> items = new List<string>();
-				classItems.TryGetValue(classItems.First().Key, out items);
-				// Find which item the alias refers to, and add to the list
-				foreach (var item in items)
-				{
-					if (Aliases.Keycards.TryGetValue(item, out ItemType typeK)) itemTypes.Add(typeK);
-					else if (Aliases.Accessories.TryGetValue(item, out ItemType typeA)) itemTypes.Add(typeA);
-					else if (Aliases.Weapons.TryGetValue(item, out ItemType typeW)) itemTypes.Add(typeW);
-					else if (Aliases.Ammo.TryGetValue(item, out ItemType type)) itemTypes.Add(type);
-				}
-
-				prematureResult.Add(key: deserializedData.First().Key, value: new Dictionary<string, List<ItemType>>
-				{
-					{ classItems.First().Key, itemTypes }
-				});
-			}
+				AddDeserializedData(path3,
+					bf,
+					prematureResult);
 			// Convert to json
 			string result = JsonConvert.SerializeObject(prematureResult);
 			string roleClassConfigLocation = GetKhaosFolder() + "RoleClass";
@@ -208,12 +146,55 @@ namespace RoleClass.Assists
 				sw.Write(result);
 			}
 			// If legacy mode is enabled, don't delete
-			if (_plugin.GetConfigBool("krc_legacy_enable")) return;
+			if (Plugin.GetConfigBool("krc_legacy_enable")) return;
 			// Delete the file(s)
 			if (path1Exists) File.Delete(path1);
 			if (path2Exists) File.Delete(path2);
 			if (path3Exists) File.Delete(path3);
-			return;
+		}
+
+		private static void AddDeserializedData(string path1, BinaryFormatter bf, Dictionary<string, Dictionary<string, List<ItemType>>> prematureResult)
+		{
+// Use the method to retrieve the deserialized data
+			Dictionary<string, Dictionary<string, List<string>>> deserializedData = DeserializedData(path1,
+				bf);
+			// Retrieve the list of items
+			deserializedData.TryGetValue(deserializedData.First()
+					.Key,
+				out Dictionary<string, List<string>> classItems);
+			List<ItemType> itemTypes = new List<ItemType>();
+			if (classItems == null) return;
+			classItems.TryGetValue(classItems.First()
+					.Key,
+				out List<string> items);
+			// Find which item the alias refers to, and add to the list
+			if (items != null)
+				foreach (string item in items)
+				{
+					if (Aliases.Keycards.TryGetValue(item,
+						out ItemType typeK))
+						itemTypes.Add(typeK);
+					else if (Aliases.Accessories.TryGetValue(item,
+						out ItemType typeA))
+						itemTypes.Add(typeA);
+					else if (Aliases.Weapons.TryGetValue(item,
+						out ItemType typeW))
+						itemTypes.Add(typeW);
+					else if (Aliases.Ammo.TryGetValue(item,
+						out ItemType type))
+						itemTypes.Add(type);
+				}
+
+			prematureResult.Add(key: deserializedData.First()
+					.Key,
+				value: new Dictionary<string, List<ItemType>>
+				{
+					{
+						classItems.First()
+							.Key,
+						itemTypes
+					}
+				});
 		}
 
 		// Internal method to read the special binary file - no need to make this public
