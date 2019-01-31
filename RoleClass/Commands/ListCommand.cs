@@ -17,10 +17,11 @@ namespace RoleClass.Commands
 {
 	internal class ListCommand : ICommandHandler
 	{
-		private RoleClass _plugin;
-		public void ListCmd(RoleClass plugin)
+		private readonly RoleClass _plugin;
+
+		public ListCommand(RoleClass plugin)
 		{
-			this._plugin = plugin;
+			_plugin = plugin;
 		}
 
 		public string GetCommandDescription()
@@ -36,91 +37,32 @@ namespace RoleClass.Commands
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
+			// Don't do anything if legacy mode is disabled
 			if (!_plugin.GetConfigBool("krc_legacy_enable")) return new string[] { };
-			Dictionary<string, string> myDeserializedData = new Dictionary<string, string>();
-			if (args != null && args.Length > 0)
+			// If the file doesn't exist, return an error message
+			if (!File.Exists(Ancillary.LegacyBinCfgPath)) return new[] { "<color=#ff0000>File not found!</color>" };
+			Dictionary<string, string> deserialized;
+			// Open the file
+			using (FileStream fileStream = File.Open(Ancillary.LegacyBinCfgPath, FileMode.Open))
 			{
-				string trueRankName = args[0].ToLower();
-				// cleanup old files
-				string path = @"rc-config.dat";
-				string path2 = @"dictionary.bin";
-				if (File.Exists(path))
-					File.Delete(path);
-				if (File.Exists(path2))
-					File.Delete(path2);
-				//
-				// parse class
-				string trueClassName = args[1].ToLower();
 				IFormatter formatter = new BinaryFormatter();
-				List<string> configurations = new List<string>();
-				if (File.Exists("roleclass.cfgbin"))
-				{
-					using (FileStream fileStream = File.Open("roleclass.cfgbin", FileMode.OpenOrCreate))
-					{
-						myDeserializedData = (Dictionary<string, string>)formatter.Deserialize(fileStream);
-					}
-					foreach (KeyValuePair<string, string> pair in myDeserializedData)
-					{
-						string myClassName = pair.Value.Substring(trueClassName.Length);
-						if (pair.Key == trueRankName && pair.Value.StartsWith(myClassName, StringComparison.Ordinal))
-						{
-							configurations.Add(pair.Value);
-						}
-					}
-					string confClassName = string.Empty;
-					string confItems = string.Empty;
-					foreach (string configuration in configurations)
-					{
-						int i = configuration.Length;
-						while (!Aliases.Humans.ContainsKey(configuration) && !Aliases.SCPs.ContainsKey(configuration) && Aliases.Other.ContainsKey(configuration))
-						{
-							configuration.Remove(i);
-							i--;
-							if (i == 0)
-								break;
-						}
-						confClassName = configuration;
-					}
-					foreach (string configuration in configurations)
-					{
-						if (configuration.StartsWith(confClassName, StringComparison.Ordinal) && !string.IsNullOrEmpty(confClassName))
-							confItems = configuration.Replace(confClassName, "");
-					}
-					return new string[] { };
-				}
-				else
-				{
-					return new string[] { "No configuration file found!" };
-				}
+				// Deserialize
+				deserialized = (Dictionary<string, string>) formatter.Deserialize(fileStream);
 			}
-			return new string[] { GetUsage() };
-
+			// Null check
+			if (deserialized == null) return new[] { GetUsage() };
+			
+			// Initialize the end variable
+			string[] result = new string[deserialized.Count];
+			int place = 0;
+			// Add each to the end variable
+			foreach (KeyValuePair<string, string> t in deserialized)
+			{
+				result[place] = $"{t.Key}::{t.Value}";
+				place++;
+			}
+			// Return
+			return result;
 		}
 	}
 }
-
-//***** Welcome to the bottom of the file *****
-//**** Here are several things I wrote out to help me code: ****
-//
-//** Example Commands: **
-//save something something 15,2,26,1
-//save owner something 1,2,3
-//save laneklfhak sakfneoiqoia 928,129u48,127487
-//
-//** Example Xml: **
-//* Note: XML is to-be-added *
-//<ranks>
-//  <owner class="scientist">
-//      <items>
-//          <item1>SomeItem</item1>
-//          <item2>SomeOtherItem</item2>
-//      </items>
-//  </owner>
-//  <admin class="class-d">
-//      <items>
-//          <item1>SomeItem</item1>
-//          <item2>CouldBeAnyItem</item2>
-//          <item3>CanHaveAsManyAsYouWant</item3>
-//      </items>
-//  </admin>
-//</ranks>
