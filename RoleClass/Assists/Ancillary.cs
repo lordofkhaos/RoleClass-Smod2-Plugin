@@ -299,7 +299,7 @@ namespace RoleClass.Assists
 			/// <summary>
 			/// If the provided player is an SCP
 			/// </summary>
-			SCP,
+			Scp,
 			/// <summary>
 			/// If the provided player is neither a Human nor an SCP
 			/// </summary>
@@ -321,7 +321,7 @@ namespace RoleClass.Assists
 			return Aliases.Humans.ContainsKey(player)
 							? KPlayerClass.Human
 								: Aliases.SCPs.ContainsKey(player)
-							? KPlayerClass.SCP
+							? KPlayerClass.Scp
 								: Aliases.Other.ContainsKey(player)
 							? KPlayerClass.Other
 								: KPlayerClass.Not;
@@ -332,12 +332,12 @@ namespace RoleClass.Assists
 		/// </summary>
 		/// <param name="ev"></param>
 		/// <param name="config"></param>
-		public static void GivePlayerItems(this Smod2.Events.PlayerSetRoleEvent ev, Dictionary<string, Dictionary<string, List<ItemType>>> config)
+		public static void GivePlayerItems(this PlayerSetRoleEvent ev, Dictionary<string, Dictionary<string, List<ItemType>>> config)
 		{
-			List<ItemType> configItems = new List<ItemType>();
-			List<ItemType> localItems1 = new List<ItemType>();
-			List<ItemType> localItems2 = new List<ItemType>();
-			List<ItemType> localItems3 = new List<ItemType>();
+			List<ItemType> configItems = new List<ItemType>(),
+				localItems1 = new List<ItemType>(),
+				localItems2 = new List<ItemType>(),
+				localItems3 = new List<ItemType>();
 			// Setup the dictionaries needed
 			Dictionary<string, List<ItemType>> localDict1 = new Dictionary<string, List<ItemType>>(),
 				localDict2 = new Dictionary<string, List<ItemType>>(),
@@ -347,8 +347,8 @@ namespace RoleClass.Assists
 			     !config.TryGetValue(ev.Player.GetRankName(), out localDict2) &&
 			     !config.TryGetValue(ev.Player.SteamId, out localDict3))) return;
 			// Check if it's their rank name or display name that is the key
-			bool	checkClassIn1 = localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
-					checkClassIn2 = localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2),
+			bool	checkClassIn1 = localDict1 != null && localDict1.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems1),
+					checkClassIn2 = localDict2 != null && localDict2.TryGetValue(ev.Player.TeamRole.Role.ToString(), out localItems2),
 					checkSteamId = localDict3.TryGetValue(ev.Player.SteamId, out localItems3);
 			if (checkClassIn1) configItems.AddRange(localItems1);
 			if (checkClassIn2) configItems.AddRange(localItems2);
@@ -365,6 +365,7 @@ namespace RoleClass.Assists
 					Vector myRot = ev.Player.GetRotation();
 					PluginManager.Manager.Server.Map.SpawnItem(it, myPos, myRot);
 				}
+				// Otherwise add the item to their inventory
 				else
 				{
 					ev.Items.Add(it);
