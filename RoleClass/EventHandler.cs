@@ -36,22 +36,14 @@ namespace RoleClass
 		{
 			try
 			{
-				#region Use JSON Config
-
 				// Read the JSON config
 				Dictionary<string, Dictionary<string, List<ItemType>>> jsonConfig = Ancillary.ReadSpecialJsonConfig();
 				// Give items
 				ev.GivePlayerItems(jsonConfig);
-
-				#endregion
-
-				#region Use Normal Config
-
 				// Read the normal config
 				Dictionary<string, Dictionary<string, List<ItemType>>> krcConfig = Ancillary.ReturnSpecialConfig("krc_items");
 				// Give items
 				ev.GivePlayerItems(krcConfig);
-				#endregion
 			}
 			catch (Exception e) { _plugin.Error($"[MESSAGE]: {e.Message}{Environment.NewLine}[STACKTRACE]: {e.StackTrace} "); }
 		}
