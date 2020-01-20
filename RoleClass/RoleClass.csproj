@@ -31,23 +31,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Smod2">
+      <HintPath>..\..\..\..\Downloads\Smod2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Smod2 (2)">
-      <HintPath>..\..\..\..\Downloads\Smod2 %282%29.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SaveCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DeleteCommand.cs" />
+    <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Aliases.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="krc_aliases_classes.txt" />
+    <Content Include="krc_aliases_items.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

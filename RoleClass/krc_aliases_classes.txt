@@ -1,0 +1,151 @@
+﻿# NTF Commander
+012:
+	mtfc
+	ntfc
+	commander
+	12
+	ntf_commander
+
+# NTF Lieutenant
+011:
+	mtfl
+	ntfl
+	lieutenant
+	11
+	ntf_lieutenant
+
+# NTF Cadet
+013:
+	cadet
+	mtf
+	ntf
+	13
+	ntf_cadet
+
+# NTF Scientist
+004:
+	mtfs
+	ntfs
+	mtfsci
+	ntfsci
+	4
+	ntf_scientist
+
+# Chaos Insurgency
+008:
+	ci
+	chaos
+	insurgency
+	insurgent
+	8
+	chaos_insurgency
+
+# Class-D Personnel
+001:
+	classd
+	dclass
+	cd
+	dc
+	1
+	class_d
+
+# Facility Guard
+015:
+	guard
+	fg
+	15
+	facility_guard
+
+# Scientist
+006:
+	sci
+	nerd
+	scientist
+	science
+	6
+
+# SCP-049
+005:
+	plaguedaddy
+	doctor
+	049
+	5
+	scp_049
+	scp-049
+	scp049
+
+# SCP-049-2
+010:
+	zombie
+	0492
+	helicopter
+	plane
+	10
+	scp_049_2
+	scp-049-2
+	scp0492
+
+
+# SCP-106
+003:
+	larry
+	106
+	3
+	scp_106
+	scp-106
+	scp106
+
+# SCP-096
+009:
+	shyguy
+	096
+	9
+	scp_096
+	scp-096
+	scp096
+
+# SCP-079
+007:
+	comp
+	computer
+	079
+	7
+	scp_079
+	scp-079
+	scp079
+
+# SCP-173
+000:
+	peanut
+	173
+	0
+	scp_173
+	scp-173
+	scp173
+
+# SCP-939-53
+016:
+	doggo
+	93953
+	16
+	scp_939_53
+	scp-939-53
+	scp93953
+
+
+# SCP-939-89
+017:
+	doggo
+	93989
+	17
+	scp_939_89
+	scp-93989
+	scp93989
+
+# Spectator
+002:
+	spec
+	specboi
+	ghost
+	2
+	spectator

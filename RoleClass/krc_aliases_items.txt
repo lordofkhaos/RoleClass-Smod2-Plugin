@@ -1,0 +1,208 @@
+﻿# Chaos Insurgency Device
+010:
+	cidevice
+	kcci
+	ci
+	chaos_insurgency_device
+
+# Coin
+017:
+	coin
+	quarter
+	25c
+	50c
+	17
+
+# COM-15 Pistol
+013:
+	pistol
+	com15
+	handgun
+	13
+	com_15
+
+# Containment Engineer Keycard
+006:
+	ce
+	containmentengineer
+	pinkcard
+	pink
+	kcce
+	6
+	containment_engineer_keycard
+
+# Cup
+018:
+	cup
+	18
+	coffee
+
+# Disarmer
+027:
+	disarm
+	disarmer
+	detain
+	detainer
+	handcuffs
+	27
+
+# Epsilon-11 Standard Rifle
+020:
+	mtfgun
+	ntfgun
+	epsilon
+	epsilon11
+	epsilonstandardrifle
+	epsilon11standardrifle
+	e11
+	esr
+	20
+	e11_standard_rifle
+
+# Facility Manager Keycard
+009:
+	redcard
+	red
+	kcfm
+	9
+	facility_manager_keycard
+
+# Flashbang
+026:
+	fb
+	stun
+	flashbang
+	stungrenade
+	26
+
+# Flashlight
+015:
+	flashlight
+	fl
+	torch
+	lamp
+	15
+
+# Fragmentation Grenade
+025:
+	frag
+	grenade
+	boom
+	25
+	frag_grenade
+
+# Guard Keycard
+004:
+	kcguard
+	guardkey
+	4
+	guard_keycard
+
+# Janitor Keycard
+000:
+	kcjan
+	janitor
+	0
+	janitor_keycard
+
+# Logicer
+024:
+	lmg
+	logicer
+	chaosgun
+	cigun
+	24
+
+# Major Scientist Keycard
+002:
+	majscikey
+	majorsci
+	majorscientist
+	majorscientistkeycard
+	2
+	major_scientist_keycard
+
+# Medkit
+014:
+	medkit
+	med
+	14
+
+# Micro-HiD
+016:
+	micro
+	microwave
+	microhid
+	supersoaker
+	16
+
+# MP7 (SMG)
+023:
+	mp7
+	mp4
+	smg
+	scorpion
+	23
+
+# MTF Commander Keycard
+008:
+	kcmtfc
+	kcntfc
+	commanderkey
+	8
+	mtf_commander_keycard
+
+# MTF Lieutenant Keycard
+007:
+	kcmtfl
+	kcntfl
+	lieutenantkey
+	7
+	mtf_lieutenant_keycard
+
+# O5 Level Keycard
+011:
+	o5
+	05
+	kco5
+	black
+	blackcard
+	11
+	o5_level_keycard
+
+# Project 90 SMG
+021:
+	p90
+	russian
+	russia
+	21
+	project90
+
+# Radio
+012:
+	rad
+	radio
+	walkietalkie
+	12
+
+# Scientist Keycard
+001:
+	sci
+	kcsci
+	1
+	scientist_keycard
+
+# Weapon Manager Tablet
+019:
+	wmt
+	tablet
+	ipad
+	19
+
+# Zone Manager Keycard
+003:
+	blue
+	zone
+	kczm
+	3
+	zone_manager_keycard
