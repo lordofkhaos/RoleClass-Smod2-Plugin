@@ -330,4 +330,5 @@ ASALocalRun/
 .mfractor/
 
 # Custom
+**/obj
 Output
